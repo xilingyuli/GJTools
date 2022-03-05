@@ -13,7 +13,7 @@ too_far_tip = cv2.imread('too_far.png')
 night_tip = cv2.imread('night_tip.png')
 
 # 脚下可开盒子区域
-box_under_footer_area = [780, 580, 500, 220]
+box_under_footer_area = [700, 580, 550, 250]
 
 # 脚下中心点
 footer_pos = [968, 635]
@@ -61,7 +61,7 @@ def find_box_in_area_color(region, is_night=False):
             cX = int(M["m10"] / cZ)
             cY = int(M["m01"] / cZ)
             pyautogui.moveTo(region[0] + cX, region[1] + cY)
-            if is_on_box_by_tip(region, is_night) or is_on_box_by_color():
+            if is_on_box_by_tip([region[0], region[1] - 50, region[2] + 150, region[3] + 50], is_night):
                 pyautogui.rightClick()
                 time.sleep(open_box_time)
                 return True
