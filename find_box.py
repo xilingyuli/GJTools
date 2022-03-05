@@ -5,10 +5,16 @@ import numpy as np
 import imutils
 import pyautogui
 
+import role_move
+
 find_tip = cv2.imread('find_tip.png')
+too_far_tip = cv2.imread('too_far.png')
 
 # 脚下可开盒子区域
 box_under_footer_area = [780, 580, 500, 220]
+
+# 脚下中心点
+footer_pos = [968, 635]
 
 # 盒子二值化参数
 threshold_value = 75
@@ -19,6 +25,9 @@ box_area_down = 400
 
 # 开盒子时间
 open_box_time = 5
+
+# 太远了提示位置
+too_far_area = [550, 200, 150, 50]
 
 
 def find_box_in_area_color(region):
@@ -56,6 +65,21 @@ def find_box_in_area_color(region):
 
 
 def find_box_under_footer():
-    if find_box_in_area_color(box_under_footer_area):
+    first_check = find_box_in_area_color(box_under_footer_area)
+    if not first_check:
+        return
+    second_check = find_box_in_area_color(box_under_footer_area)
+    if not second_check:
+        return
+    image = cv2.cvtColor(np.asarray(pyautogui.screenshot(region=too_far_area)), cv2.COLOR_RGB2BGR)
+    match_res = cv2.matchTemplate(image, too_far_tip, 3)
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(match_res)
+    if max_val > 0.95:
+        pos = pyautogui.position()
+        if pos[1] - footer_pos[1] > 150:
+            role_move.move(-2, 0)
+        if pos[1] - footer_pos[1] < -150:
+            role_move.move(2, 0)
+        if pos[0] - footer_pos[0] > 150:
+            role_move.move(0, -1)
         find_box_in_area_color(box_under_footer_area)
-
