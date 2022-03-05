@@ -61,18 +61,30 @@ def find_box_in_area_color(region, is_night=False):
             cX = int(M["m10"] / cZ)
             cY = int(M["m01"] / cZ)
             pyautogui.moveTo(region[0] + cX, region[1] + cY)
-            time.sleep(0.2)
-            if is_night:
-                tip_template = find_tip_night
-            else:
-                tip_template = find_tip
-            try_find_tip = cv2.cvtColor(np.asarray(pyautogui.screenshot(region=region)), cv2.COLOR_RGB2BGR)
-            match_res = cv2.matchTemplate(try_find_tip, tip_template, 3)
-            min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(match_res)
-            # print(max_val)
-            if max_val > 0.95:
+            if is_on_box_by_tip(region, is_night) or is_on_box_by_color():
                 pyautogui.rightClick()
                 time.sleep(open_box_time)
+                return True
+    return False
+
+
+def is_on_box_by_tip(region, is_night):
+    if is_night:
+        tip_template = find_tip_night
+    else:
+        tip_template = find_tip
+    time.sleep(0.2)
+    try_find_tip = cv2.cvtColor(np.asarray(pyautogui.screenshot(region=region)), cv2.COLOR_RGB2BGR)
+    match_res = cv2.matchTemplate(try_find_tip, tip_template, 3)
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(match_res)
+    return max_val > 0.95
+
+
+def is_on_box_by_color():
+    x, y = pyautogui.position()
+    for i in range(x-30, x+30):
+        for j in range(y-30, y+30):
+            if pyautogui.pixelMatchesColor(i, j, (235, 52, 225), tolerance=10):
                 return True
     return False
 
@@ -84,9 +96,6 @@ def find_box_under_footer():
     is_night = max_val > 0.9
     first_check = find_box_in_area_color(box_under_footer_area, is_night)
     if not first_check:
-        return
-    second_check = find_box_in_area_color(box_under_footer_area, is_night)
-    if not second_check:
         return
     image = cv2.cvtColor(np.asarray(pyautogui.screenshot(region=too_far_area)), cv2.COLOR_RGB2BGR)
     match_res = cv2.matchTemplate(image, too_far_tip, 3)
@@ -100,5 +109,6 @@ def find_box_under_footer():
         if pos[0] - footer_pos[0] < -100:
             role_move.move(-2, 0)
         if pos[1] - footer_pos[1] > 100:
-            role_move.move(0, -2)
+            role_move.move(0, -0.7)
         find_box_in_area_color(box_under_footer_area, is_night)
+    find_box_in_area_color(box_under_footer_area, is_night)
