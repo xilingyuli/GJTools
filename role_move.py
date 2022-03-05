@@ -5,6 +5,7 @@ import role_loc
 
 # 速度值
 move_speed = 0.1
+move_back_speed = 2.5
 turn_speed = 1.76
 
 # 地图式搜索时的步距
@@ -37,7 +38,7 @@ def move(x, y):
         pyautogui.keyUp('w')
     elif y < 0:
         pyautogui.keyDown('s')
-        pyautogui.sleep(- y * move_speed)
+        pyautogui.sleep(- y * move_back_speed)
         pyautogui.keyUp('s')
 
 

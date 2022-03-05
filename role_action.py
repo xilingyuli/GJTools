@@ -11,6 +11,7 @@ open_map_btn = cv2.imread('open_map.png')
 map_title = cv2.imread('map_title.png')
 buy_map_tip = cv2.imread('buy_map_tip.png')
 bag_center = cv2.imread('bag_center.png')
+store_npc = cv2.imread('store_npc.png')
 
 
 # 点开藏宝地图模式位置
@@ -27,7 +28,7 @@ begin_find_loc = [-825, -525]
 begin_find_direct = 0.6
 
 # 挖宝区域大小
-find_area = [125, 40]
+find_area = [125, 45]
 
 # 背包格子大小
 bag_item_size = 36
@@ -61,6 +62,13 @@ def clear_map(count=40):
 
 
 def buy_map():
+    role_move.move_to([-803, -714], None, 5)
+    max_val, max_loc = match_img(store_npc)
+    if max_val < 0.8:
+        role_move.move_to([-803, -714], 0.5, 5)
+        max_val, max_loc = match_img(store_npc)
+    if max_val < 0.8:
+        return
     pyautogui.press('f')
     time.sleep(0.1)
     clear_bag()
@@ -114,7 +122,7 @@ def back_to_store():
     role_move.move_to([-795, -667], None, 1)
     role_move.move_to([-795, -702], None, 2)
     role_move.move_to([-802, -702], None, 1)
-    role_move.move_to([-802, -713], None, 2)
+    role_move.move_to([-803, -714], None, 2)
 
 
 def clear_bag():
