@@ -28,7 +28,7 @@ begin_find_loc = [-825, -525]
 begin_find_direct = 0.6
 
 # 挖宝区域大小
-find_area = [125, 45]
+find_area = [125, 42]
 
 # 背包格子大小
 bag_item_size = 36
