@@ -10,7 +10,7 @@ map_in_store = cv2.imread('map_in_store.png')
 open_map_btn = cv2.imread('open_map.png')
 map_title = cv2.imread('map_title.png')
 buy_map_tip = cv2.imread('buy_map_tip.png')
-bag_center = cv2.imread('bag_center.png')
+bag_left = cv2.imread('bag_left.png')
 store_npc = cv2.imread('store_npc.png')
 
 
@@ -82,7 +82,7 @@ def buy_map():
         pyautogui.press('4')
         pyautogui.press('0')
         pyautogui.press('enter')
-    pyautogui.press('esc')
+    pyautogui.press('b')
 
 
 def open_map():
@@ -126,8 +126,8 @@ def back_to_store():
 
 
 def clear_bag():
-    max_val, max_loc = match_img(bag_center)
-    first_loc = [max_loc[0] - 2.5 * bag_item_size, max_loc[1] - 2.5 * bag_item_size]
+    max_val, max_loc = match_img(bag_left)
+    first_loc = [max_loc[0] + 100, max_loc[1] + 85]
     pyautogui.keyDown('shift')
     for j in range(0, 3):
         for i in range(0, bag_width):
