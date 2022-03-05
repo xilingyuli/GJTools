@@ -8,6 +8,7 @@ import pyautogui
 import role_move
 
 find_tip = cv2.imread('find_tip.png')
+find_tip_night = cv2.imread('find_tip_night.png')
 too_far_tip = cv2.imread('too_far.png')
 
 # 脚下可开盒子区域
@@ -18,6 +19,7 @@ footer_pos = [968, 635]
 
 # 盒子二值化参数
 threshold_value = 75
+threshold_night_value = 40
 
 # 盒子大小
 box_area_up = 1400
@@ -30,9 +32,13 @@ open_box_time = 5
 too_far_area = [550, 200, 150, 50]
 
 
-def find_box_in_area_color(region):
+def find_box_in_area_color(region, is_night=False):
+    if is_night:
+        value = threshold_night_value
+    else:
+        value = threshold_value
     image_grey = cv2.cvtColor(np.asarray(pyautogui.screenshot(region=region)), cv2.COLOR_RGB2GRAY)
-    ret, image = cv2.threshold(image_grey, threshold_value, 255, cv2.THRESH_BINARY_INV)
+    ret, image = cv2.threshold(image_grey, value, 255, cv2.THRESH_BINARY_INV)
     cnts = cv2.findContours(image.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     cnts = imutils.grab_contours(cnts)
     # cv2.imshow('img', image)
@@ -53,8 +59,12 @@ def find_box_in_area_color(region):
             cY = int(M["m01"] / cZ)
             pyautogui.moveTo(region[0] + cX, region[1] + cY)
             time.sleep(0.2)
+            if is_night:
+                tip_template = find_tip_night
+            else:
+                tip_template = find_tip
             try_find_tip = cv2.cvtColor(np.asarray(pyautogui.screenshot(region=region)), cv2.COLOR_RGB2BGR)
-            match_res = cv2.matchTemplate(try_find_tip, find_tip, 3)
+            match_res = cv2.matchTemplate(try_find_tip, tip_template, 3)
             min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(match_res)
             # print(max_val)
             if max_val > 0.95:
@@ -65,10 +75,11 @@ def find_box_in_area_color(region):
 
 
 def find_box_under_footer():
-    first_check = find_box_in_area_color(box_under_footer_area)
+    is_night = False
+    first_check = find_box_in_area_color(box_under_footer_area, is_night)
     if not first_check:
         return
-    second_check = find_box_in_area_color(box_under_footer_area)
+    second_check = find_box_in_area_color(box_under_footer_area, is_night)
     if not second_check:
         return
     image = cv2.cvtColor(np.asarray(pyautogui.screenshot(region=too_far_area)), cv2.COLOR_RGB2BGR)
@@ -82,4 +93,4 @@ def find_box_under_footer():
             role_move.move(2, 0)
         if pos[0] - footer_pos[0] > 150:
             role_move.move(0, -1)
-        find_box_in_area_color(box_under_footer_area)
+        find_box_in_area_color(box_under_footer_area, is_night)
