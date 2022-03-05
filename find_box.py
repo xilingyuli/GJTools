@@ -42,6 +42,7 @@ def find_box_in_area_color(region, is_night=False):
         value = threshold_value
     image_grey = cv2.cvtColor(np.asarray(pyautogui.screenshot(region=region)), cv2.COLOR_RGB2GRAY)
     ret, image = cv2.threshold(image_grey, value, 255, cv2.THRESH_BINARY_INV)
+    image = cv2.dilate(image, kernel=np.ones((3, 3), np.uint8), iterations=1)
     cnts = cv2.findContours(image.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     cnts = imutils.grab_contours(cnts)
     # cv2.imshow('img', image)
