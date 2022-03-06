@@ -13,10 +13,10 @@ too_far_tip = cv2.imread('too_far.png')
 night_tip = cv2.imread('night_tip.png')
 
 # 脚下可开盒子区域
-box_under_footer_area = [700, 580, 550, 250]
+box_under_footer_area = [710, 580, 500, 250]
 
 # 脚下中心点
-footer_pos = [968, 635]
+footer_pos = [960, 635]
 
 # 盒子二值化参数
 threshold_value = 75
