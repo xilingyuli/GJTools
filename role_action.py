@@ -62,15 +62,16 @@ def clear_map(count=40):
 
 
 def buy_map():
-    role_move.move_to([-803, -714], None, 5)
-    max_val, max_loc = match_img(store_npc)
-    if max_val < 0.8:
-        role_move.move_to([-803, -714], 0.5, 5)
+    while True:
+        time.sleep(0.2)
         max_val, max_loc = match_img(store_npc)
-    if max_val < 0.8:
-        return
+        print(max_val)
+        if max_val > 0.9:
+            break
+        role_move.move_to([-803, -721], None, 2)
+        role_move.move_to([-803, -716], None, 2)
     pyautogui.press('f')
-    time.sleep(0.1)
+    time.sleep(1)
     clear_bag()
     max_val, max_loc = match_img(map_in_store)
     pyautogui.moveTo(max_loc[0] + 24, max_loc[1] + 24)
@@ -122,11 +123,14 @@ def back_to_store():
     role_move.move_to([-795, -667], None, 1)
     role_move.move_to([-795, -702], None, 2)
     role_move.move_to([-802, -702], None, 1)
-    role_move.move_to([-803, -714], None, 2)
+    role_move.move_to([-803, -721], None, 2)
+    role_move.move_to([-803, -716], None, 2)
 
 
 def clear_bag():
     max_val, max_loc = match_img(bag_left)
+    if max_val < 0.9:
+        return
     first_loc = [max_loc[0] + 100, max_loc[1] + 85]
     pyautogui.keyDown('shift')
     for j in range(0, 3):

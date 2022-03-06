@@ -34,7 +34,7 @@ def get_current_loc(try_times=5):
     test_message = Image.fromarray(binary)
     text = pytesseract.image_to_string(test_message)
     text = text.replace('B', '8')
-    # print(f'位置：{text}')
+    print(f'位置：{text}')
     loc_str = re_cmp.findall(text)
     if len(loc_str) >= 2 and abs(int(loc_str[0])) > 100 and abs(int(loc_str[1])) > 100:
         return [int(loc_str[0]), int(loc_str[1])]
@@ -67,7 +67,7 @@ def get_current_direction(try_times=5):
                 res = get_two_line_angle(line0, -line2)
             if line2_len < line0_len and line2_len < line1_len:
                 res = get_two_line_angle(line1, -line0)
-            # print(f'方向：{res/math.pi}')
+            print(f'方向：{res/math.pi}')
             return res / math.pi
     if try_times > 0:
         time.sleep(5)
