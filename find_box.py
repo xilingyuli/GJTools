@@ -32,7 +32,7 @@ open_box_time = 5
 # 太远了提示位置
 too_far_area = [550, 200, 150, 100]
 
-weather_area = [1600, 33, 100, 100]
+weather_area = [1600, 33, 100, 50]
 
 
 def find_box_in_area_color(region, is_night=False):

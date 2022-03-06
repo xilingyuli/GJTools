@@ -31,12 +31,12 @@ wait_open_time = 150
 # 开始挖宝的坐标方向和大小
 begin_find_loc_1 = [-825, -525]
 begin_find_direct_1 = 0.6
-find_area_1 = [50, 45]
+find_area_1 = [55, 45]
 
 # 挖宝区域大小
 begin_find_loc_2 = [-980, -530]
 begin_find_direct_2 = -0.5
-find_area_2 = [50, 21]
+find_area_2 = [50, 27]
 
 # 背包格子大小
 bag_item_size = 36
