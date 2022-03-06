@@ -4,14 +4,19 @@ import cv2
 import numpy as np
 
 import find_box
+import role_loc
 import role_move
 
-map_in_store = cv2.imread('map_in_store.png')
-open_map_btn = cv2.imread('open_map.png')
-map_title = cv2.imread('map_title.png')
-buy_map_tip = cv2.imread('buy_map_tip.png')
-bag_left = cv2.imread('bag_left.png')
-store_npc = cv2.imread('store_npc.png')
+map_in_store = cv2.imread('img/map_in_store.png')
+open_map_btn = cv2.imread('img/open_map.png')
+map_title = cv2.imread('img/map_title.png')
+buy_map_tip = cv2.imread('img/buy_map_tip.png')
+bag_left = cv2.imread('img/bag_left.png')
+store_npc = cv2.imread('img/store_npc.png')
+open_map_error = cv2.imread('img/open_map_error.png')
+home_door_btn = cv2.imread('img/home_door_btn.png')
+home_main_btn = cv2.imread('img/home_main_btn.png')
+back_origin_btn = cv2.imread('img/back_origin_btn.png')
 
 
 # 点开藏宝地图模式位置
@@ -25,7 +30,7 @@ wait_open_time = 150
 
 # 开始挖宝的坐标和方向
 begin_find_loc = [-825, -525]
-begin_find_direct = 0.6
+begin_find_direct = 0.55
 
 # 挖宝区域大小
 find_area = [125, 36]
@@ -62,7 +67,8 @@ def clear_map(count=40):
 
 
 def buy_map():
-    while True:
+    max_val = 0
+    for i in range(0, 10):
         time.sleep(0.2)
         max_val, max_loc = match_img(store_npc)
         # print(max_val)
@@ -70,6 +76,8 @@ def buy_map():
             break
         role_move.move_to([-803, -721], None, 2)
         role_move.move_to([-803, -716], None, 2)
+    if max_val <= 0.9:
+        return False
     pyautogui.press('f')
     time.sleep(1)
     clear_bag()
@@ -83,7 +91,9 @@ def buy_map():
         pyautogui.press('4')
         pyautogui.press('0')
         pyautogui.press('enter')
-    pyautogui.press('b')
+        pyautogui.press('b')
+        return True
+    return False
 
 
 def open_map():
@@ -95,11 +105,16 @@ def open_map():
     max_val, max_loc = match_img(open_map_btn)
     pyautogui.moveTo(max_loc[0] + 24, max_loc[1] + 24)
     pyautogui.press('t')
+    pyautogui.press('shift')
     pyautogui.sleep(1)
     pyautogui.leftClick()
-    pyautogui.sleep(wait_open_time)
+    pyautogui.sleep(1)
+    max_val, max_loc = match_img(open_map_error)
+    if max_val < 0.9:
+        pyautogui.sleep(wait_open_time)
     pyautogui.moveRel(0, -100)
     pyautogui.press('t')
+    return max_val < 0.9
 
 
 def prepare_to_find():
@@ -110,12 +125,18 @@ def prepare_to_find():
     role_move.move_to([-795, -640], None, 1)
     role_move.move_to(begin_find_loc, None, 5)
     role_move.turn_to(begin_find_direct)
+    loc = role_loc.get_current_loc()
+    if abs(loc[0] - begin_find_loc[0]) < 5 and abs(loc[1] - begin_find_loc[1]) < 5:
+        return True
+    else:
+        return False
 
 
 def find_boxs():
     role_move.move_to(begin_find_loc, None, 5)
     role_move.turn_to(begin_find_direct)
     role_move.move_map(find_area[0], find_area[1], find_box.find_box_under_footer)
+    return True
 
 
 def back_to_store():
@@ -125,6 +146,11 @@ def back_to_store():
     role_move.move_to([-802, -702], None, 1)
     role_move.move_to([-803, -721], None, 2)
     role_move.move_to([-803, -716], None, 2)
+    loc = role_loc.get_current_loc()
+    if abs(-803 - loc[0]) < 5 and abs(-716 - loc[1]) < 5:
+        return True
+    else:
+        return False
 
 
 def clear_bag():
@@ -142,3 +168,38 @@ def clear_bag():
         pyautogui.rightClick()
     pyautogui.keyUp('shift')
 
+
+def reset_to_store():
+    pyautogui.press('t')
+    max_val, max_loc = match_img(home_door_btn)
+    if max_val < 0.9:
+        pyautogui.press('t')
+        return False
+    pyautogui.moveTo(max_loc[0] + 24, max_loc[1] + 24)
+    pyautogui.leftClick()
+    pyautogui.sleep(5)
+    pyautogui.press('f')
+
+    max_val, max_loc = match_img(home_main_btn)
+    if max_val < 0.9:
+        pyautogui.press('t')
+        return False
+    pyautogui.moveTo(max_loc[0] + 30, max_loc[1] + 15)
+    pyautogui.leftClick()
+    pyautogui.sleep(15)
+
+    pyautogui.move(-5, 0)
+    pyautogui.press('f')
+    max_val, max_loc = match_img(home_door_btn)
+    if max_val < 0.9:
+        pyautogui.press('t')
+        return False
+    pyautogui.moveTo(max_loc[0] + 30, max_loc[1] + 15)
+    pyautogui.leftClick()
+    pyautogui.sleep(30)
+
+    loc = role_loc.get_current_loc()
+    pyautogui.press('t')
+    if abs(-803 - loc[0]) < 5 and abs(-715 - loc[1]) < 5:
+        return True
+    return False

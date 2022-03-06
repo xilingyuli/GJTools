@@ -7,10 +7,10 @@ import pyautogui
 
 import role_move
 
-find_tip = cv2.imread('find_tip.png')
-find_tip_night = cv2.imread('find_tip_night.png')
-too_far_tip = cv2.imread('too_far.png')
-night_tip = cv2.imread('night_tip.png')
+find_tip = cv2.imread('img/find_tip.png')
+find_tip_night = cv2.imread('img/find_tip_night.png')
+too_far_tip = cv2.imread('img/too_far.png')
+night_tip = cv2.imread('img/night_tip.png')
 
 # 脚下可开盒子区域
 box_under_footer_area = [710, 580, 500, 250]
