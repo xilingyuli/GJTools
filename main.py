@@ -1,6 +1,6 @@
+import datetime
 import time
 
-import find_box
 import role_action
 
 time.sleep(3)
@@ -43,3 +43,4 @@ for i in range(0, 100):
             continue
         else:
             break
+    print(datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S') + " 第" + str(i + 1) + "次")

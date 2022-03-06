@@ -196,11 +196,11 @@ def reset_to_store():
         return False
     pyautogui.moveTo(max_loc[0] + 30, max_loc[1] + 15)
     pyautogui.leftClick()
-    pyautogui.sleep(15)
+    pyautogui.sleep(30)
 
     role_move.move(-10, 0)
     pyautogui.press('f')
-    max_val, max_loc = match_img(home_door_btn)
+    max_val, max_loc = match_img(back_origin_btn)
     if max_val < 0.9:
         pyautogui.press('t')
         return False
@@ -210,6 +210,6 @@ def reset_to_store():
 
     loc = role_loc.get_current_loc()
     pyautogui.press('t')
-    if abs(-803 - loc[0]) < 5 and abs(-715 - loc[1]) < 5:
+    if loc is not None and abs(-803 - loc[0]) < 5 and abs(-715 - loc[1]) < 5:
         return True
     return False
