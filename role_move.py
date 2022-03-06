@@ -6,7 +6,7 @@ import role_loc
 # 速度值
 move_speed = 0.1
 move_back_speed = 2.5
-turn_speed = 1.76
+turn_speed = 1.74
 
 # 地图式搜索时的步距
 move_distance_x = 4.5
@@ -50,7 +50,6 @@ def turn_around(num):
     if abs(num) <= turn_min:
         return
     if num > 0:
-        pyautogui.press(']')
         pyautogui.keyDown(']')
         pyautogui.sleep(num * turn_speed)
         pyautogui.keyUp(']')

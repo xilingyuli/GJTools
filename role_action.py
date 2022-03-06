@@ -28,12 +28,15 @@ first_map_pos = [1750, 350]
 # 打开藏宝图等待时间
 wait_open_time = 150
 
-# 开始挖宝的坐标和方向
-begin_find_loc = [-825, -525]
-begin_find_direct = 0.55
+# 开始挖宝的坐标方向和大小
+begin_find_loc_1 = [-825, -525]
+begin_find_direct_1 = 0.6
+find_area_1 = [70, 33]
 
 # 挖宝区域大小
-find_area = [125, 36]
+begin_find_loc_2 = [-980, -530]
+begin_find_direct_2 = -0.6
+find_area_2 = [50, 33]
 
 # 背包格子大小
 bag_item_size = 36
@@ -123,19 +126,22 @@ def prepare_to_find():
     role_move.move_to([-793, -677], None, 2)
     role_move.move_to([-795, -666], None, 2)
     role_move.move_to([-795, -640], None, 1)
-    role_move.move_to(begin_find_loc, None, 5)
-    role_move.turn_to(begin_find_direct)
+    role_move.move_to(begin_find_loc_1, None, 5)
+    role_move.turn_to(begin_find_direct_1)
     loc = role_loc.get_current_loc()
-    if abs(loc[0] - begin_find_loc[0]) < 5 and abs(loc[1] - begin_find_loc[1]) < 5:
+    if abs(loc[0] - begin_find_loc_1[0]) < 5 and abs(loc[1] - begin_find_loc_1[1]) < 5:
         return True
     else:
         return False
 
 
 def find_boxs():
-    role_move.move_to(begin_find_loc, None, 5)
-    role_move.turn_to(begin_find_direct)
-    role_move.move_map(find_area[0], find_area[1], find_box.find_box_under_footer)
+    role_move.move_to(begin_find_loc_1, None, 5)
+    role_move.turn_to(begin_find_direct_1)
+    role_move.move_map(find_area_1[0], find_area_1[1], find_box.find_box_under_footer)
+    role_move.move_to(begin_find_loc_2, None, 5)
+    role_move.turn_to(begin_find_direct_2)
+    role_move.move_map(find_area_2[0], find_area_2[1], find_box.find_box_under_footer)
     return True
 
 
