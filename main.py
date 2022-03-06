@@ -11,7 +11,6 @@ time.sleep(3)
 # role_action.find_boxs()
 # role_action.clear_map()
 # role_action.back_to_store()
-# role_action.buy_map()
 
 for i in range(0, 100):
     if not role_action.buy_map():

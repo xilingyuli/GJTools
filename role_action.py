@@ -31,12 +31,12 @@ wait_open_time = 150
 # 开始挖宝的坐标方向和大小
 begin_find_loc_1 = [-825, -525]
 begin_find_direct_1 = 0.6
-find_area_1 = [70, 33]
+find_area_1 = [50, 45]
 
 # 挖宝区域大小
 begin_find_loc_2 = [-980, -530]
-begin_find_direct_2 = -0.6
-find_area_2 = [50, 33]
+begin_find_direct_2 = -0.5
+find_area_2 = [50, 21]
 
 # 背包格子大小
 bag_item_size = 36
@@ -67,6 +67,7 @@ def clear_map(count=40):
     pyautogui.moveTo(first_map_pos[0] - 50, first_map_pos[1] - 50)
     pyautogui.leftClick()
     pyautogui.press('m')
+    return True
 
 
 def buy_map():
@@ -84,7 +85,7 @@ def buy_map():
     pyautogui.press('f')
     time.sleep(1)
     clear_bag()
-    max_val, max_loc = match_img(map_in_store)
+    res, max_loc = match_img(map_in_store)
     pyautogui.moveTo(max_loc[0] + 24, max_loc[1] + 24)
     pyautogui.keyDown('shift')
     pyautogui.rightClick()
@@ -94,6 +95,7 @@ def buy_map():
         pyautogui.press('4')
         pyautogui.press('0')
         pyautogui.press('enter')
+    if res > 0.9:
         pyautogui.press('b')
         return True
     return False
@@ -102,14 +104,15 @@ def buy_map():
 def open_map():
     # role_move.turn_to(-0.5)
     # role_move.move(0, 10)
-    role_move.move_to([-800, -702], None, 1)
-    role_move.move_to([-784, -702], None, 1)
+    role_move.move_to([-802, -703], None, 1)
+    role_move.move_to([-791, -702], None, 1)
+    role_move.move_to([-777, -701], None, 1)
     role_move.move_to([-756, -703], None, 5)
     max_val, max_loc = match_img(open_map_btn)
     pyautogui.moveTo(max_loc[0] + 24, max_loc[1] + 24)
     pyautogui.press('t')
     pyautogui.press('shift')
-    pyautogui.sleep(1)
+    pyautogui.sleep(2)
     pyautogui.leftClick()
     pyautogui.sleep(1)
     max_val, max_loc = match_img(open_map_error)
@@ -142,6 +145,7 @@ def find_boxs():
     role_move.move_to(begin_find_loc_2, None, 5)
     role_move.turn_to(begin_find_direct_2)
     role_move.move_map(find_area_2[0], find_area_2[1], find_box.find_box_under_footer)
+    role_move.move_to([-850, -560], None, 3)
     return True
 
 
@@ -194,7 +198,7 @@ def reset_to_store():
     pyautogui.leftClick()
     pyautogui.sleep(15)
 
-    pyautogui.move(-5, 0)
+    role_move.move(-10, 0)
     pyautogui.press('f')
     max_val, max_loc = match_img(home_door_btn)
     if max_val < 0.9:
