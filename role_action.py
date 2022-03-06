@@ -65,7 +65,7 @@ def buy_map():
     while True:
         time.sleep(0.2)
         max_val, max_loc = match_img(store_npc)
-        print(max_val)
+        # print(max_val)
         if max_val > 0.9:
             break
         role_move.move_to([-803, -721], None, 2)
@@ -87,8 +87,8 @@ def buy_map():
 
 
 def open_map():
-    role_move.turn_to(-0.5)
-    role_move.move(0, 10)
+    # role_move.turn_to(-0.5)
+    # role_move.move(0, 10)
     role_move.move_to([-800, -702], None, 1)
     role_move.move_to([-784, -702], None, 1)
     role_move.move_to([-756, -703], None, 5)
