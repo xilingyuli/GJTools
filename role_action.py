@@ -118,6 +118,8 @@ def open_map():
     max_val, max_loc = match_img(open_map_error)
     if max_val < 0.9:
         pyautogui.sleep(wait_open_time)
+    else:
+        pyautogui.press('esc')
     pyautogui.moveRel(0, -100)
     pyautogui.press('t')
     return max_val < 0.9
@@ -189,9 +191,11 @@ def reset_to_store():
     pyautogui.leftClick()
     pyautogui.sleep(5)
     pyautogui.press('f')
+    pyautogui.moveRel(-100, -100)
+    time.sleep(1)
 
     max_val, max_loc = match_img(home_main_btn)
-    if max_val < 0.9:
+    if max_val < 0.8:
         pyautogui.press('t')
         return False
     pyautogui.moveTo(max_loc[0] + 30, max_loc[1] + 15)
@@ -200,8 +204,9 @@ def reset_to_store():
 
     role_move.move(-10, 0)
     pyautogui.press('f')
+    time.sleep(1)
     max_val, max_loc = match_img(back_origin_btn)
-    if max_val < 0.9:
+    if max_val < 0.8:
         pyautogui.press('t')
         return False
     pyautogui.moveTo(max_loc[0] + 30, max_loc[1] + 15)
