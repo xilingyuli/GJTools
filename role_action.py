@@ -18,6 +18,7 @@ open_map_error = cv2.imread('img/open_map_error.png')
 home_door_btn = cv2.imread('img/home_door_btn.png')
 home_main_btn = cv2.imread('img/home_main_btn.png')
 back_origin_btn = cv2.imread('img/back_origin_btn.png')
+new_day_tip = cv2.imread('img/new_day_tip.png')
 
 
 # 点开藏宝地图模式位置
@@ -37,7 +38,7 @@ find_area_1 = [55, 45]
 # 挖宝区域大小
 begin_find_loc_2 = [-980, -530]
 begin_find_direct_2 = -0.5
-find_area_2 = [50, 27]
+find_area_2 = [50, 33]
 
 # 背包格子大小
 bag_item_size = 36
@@ -229,12 +230,18 @@ def reset_to_store():
 
 
 def try_reset():
+    max_val, max_loc = match_img(new_day_tip)
+    if max_val > 0.9:
+        pyautogui.press('esc')
     count = 0
     while not reset_to_store():
         count += 1
         send_message_with_loc("Try reset count " + str(count))
-        role_move.move(10, 10)
+        role_move.move(-10, -10)
         time.sleep(600)
+        max_val, max_loc = match_img(new_day_tip)
+        if max_val > 0.9:
+            pyautogui.press('esc')
 
 
 def send_message_with_loc(message):
