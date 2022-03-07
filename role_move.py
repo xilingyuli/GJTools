@@ -1,6 +1,8 @@
 import math
 import time
 import pyautogui
+
+import role_action
 import role_loc
 
 # 速度值
@@ -61,12 +63,16 @@ def turn_around(num):
 
 def turn_to(direct, try_times=5):
     if try_times <= 0:
+        role_action.send_message_with_loc("Turn Failed to " + str(direct))
         return
-    cloc = role_loc.get_current_direction()
-    if cloc is not None:
-        turn_around(direct - cloc)
-    else:
-        turn_to(direct, try_times-1)
+    c_direct = role_loc.get_current_direction()
+    if c_direct is None:
+        turn_to(direct, try_times - 1)
+        return
+    turn_around(direct - c_direct)
+    c_direct = role_loc.get_current_direction()
+    if c_direct is not None and abs(c_direct - direct) > turn_min:
+        turn_to(direct, try_times - 1)
 
 
 def move_map(width, height, callback_fun=None):
@@ -86,25 +92,29 @@ def move_map(width, height, callback_fun=None):
     return count
 
 
-def move_to(target_loc, target_direct, try_time=2):
+def move_to(target_loc, target_direct=None, diff=move_min, try_time=2):
+    i = 0
     for i in range(0, try_time):
-        if move_directly(target_loc):
+        if move_directly(target_loc, diff):
             break
+    if i == try_time:
+        role_action.send_message_with_loc("Move Failed to " + str(target_loc) + " with try times " + str(try_time))
 
     if target_direct is not None:
         turn_around(target_direct - role_loc.get_current_direction())
 
 
-def move_directly(target_loc, try_times=10):
-    if try_times < 0:
+def move_directly(target_loc, diff=move_min, try_times=10):
+    if try_times <= 0:
+        role_action.send_message_with_loc("Move Failed to " + str(target_loc))
         return False
     current_loc = role_loc.get_current_loc()
     if current_loc is None:
         return False
-    if abs(current_loc[0] - target_loc[0]) <= move_min and abs(current_loc[1] - target_loc[1]) <= move_min:
+    if abs(current_loc[0] - target_loc[0]) <= diff and abs(current_loc[1] - target_loc[1]) <= diff:
         return True
     diff_loc = [target_loc[0] - current_loc[0], target_loc[1] - current_loc[1]]
     temp_direct = -math.atan2(diff_loc[1], diff_loc[0]) / math.pi
     turn_to(temp_direct)
     move(0, min(math.hypot(diff_loc[0], diff_loc[1]), max_move_distance))
-    return move_directly(target_loc, try_times - 1)
+    return move_directly(target_loc, diff, try_times - 1)

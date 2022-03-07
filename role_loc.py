@@ -39,8 +39,9 @@ def get_current_loc(try_times=5):
     if len(loc_str) >= 2 and abs(int(loc_str[0])) > 100 and abs(int(loc_str[1])) > 100:
         return [int(loc_str[0]), int(loc_str[1])]
     if try_times > 0:
-        role_move.move(0, 2)
-        get_current_loc(try_times-1)
+        role_move.move(0, -1)
+        return get_current_loc(try_times-1)
+    return None
 
 
 def get_current_direction(try_times=5):
@@ -71,7 +72,8 @@ def get_current_direction(try_times=5):
             return res / math.pi
     if try_times > 0:
         time.sleep(5)
-        get_current_direction(try_times-1)
+        return get_current_direction(try_times-1)
+    return None
 
 
 def get_two_line_angle(line1, line2):

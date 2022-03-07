@@ -79,8 +79,8 @@ def buy_map():
         # print(max_val)
         if max_val > 0.9:
             break
-        role_move.move_to([-803, -721], None, 2)
-        role_move.move_to([-803, -716], None, 2)
+        role_move.move_to([-803, -721])
+        role_move.move_to([-803, -716], None, 1)
     if max_val <= 0.9:
         send_message_with_loc("Find Map NPC Error")
         return False
@@ -104,10 +104,10 @@ def buy_map():
 
 
 def open_map():
-    role_move.move_to([-802, -703], None, 2)
-    role_move.move_to([-791, -702], None, 2)
-    role_move.move_to([-777, -701], None, 2)
-    role_move.move_to([-756, -703], None, 5)
+    role_move.move_to([-802, -703])
+    role_move.move_to([-791, -702])
+    role_move.move_to([-777, -701])
+    role_move.move_to([-756, -703], None, 0, 5)
     max_val, max_loc = match_img(open_map_btn)
     pyautogui.moveTo(max_loc[0] + 24, max_loc[1] + 24)
     pyautogui.press('t')
@@ -129,12 +129,12 @@ def open_map():
 
 
 def prepare_to_find():
-    role_move.move_to([-779, -701], None, 2)
-    role_move.move_to([-793, -703], None, 2)
-    role_move.move_to([-793, -677], None, 2)
-    role_move.move_to([-795, -666], None, 2)
-    role_move.move_to([-795, -640], None, 2)
-    role_move.move_to(begin_find_loc_1, None, 5)
+    role_move.move_to([-779, -701])
+    role_move.move_to([-793, -703])
+    role_move.move_to([-793, -677])
+    role_move.move_to([-795, -666])
+    role_move.move_to([-795, -640])
+    role_move.move_to(begin_find_loc_1, None, 1, 5)
     role_move.turn_to(begin_find_direct_1)
     loc = role_loc.get_current_loc()
     if abs(loc[0] - begin_find_loc_1[0]) < 5 and abs(loc[1] - begin_find_loc_1[1]) < 5:
@@ -146,25 +146,25 @@ def prepare_to_find():
 
 def find_boxs():
     count = 0
-    role_move.move_to(begin_find_loc_1, None, 5)
+    role_move.move_to(begin_find_loc_1, None, 1, 5)
     role_move.turn_to(begin_find_direct_1)
     count += role_move.move_map(find_area_1[0], find_area_1[1], find_box.find_box_under_footer)
-    role_move.move_to(begin_find_loc_2, None, 5)
+    role_move.move_to(begin_find_loc_2, None, 1, 5)
     role_move.turn_to(begin_find_direct_2)
     count += role_move.move_map(find_area_2[0], find_area_2[1], find_box.find_box_under_footer)
-    role_move.move_to([-850, -560], None, 3)
+    role_move.move_to([-850, -560], None, 3, 3)
     if count <= 0:
         send_message_with_loc("Find No Box")
     return True
 
 
 def back_to_store():
-    role_move.move_to([-795, -644], None, 2)
-    role_move.move_to([-795, -667], None, 2)
-    role_move.move_to([-795, -702], None, 2)
-    role_move.move_to([-802, -702], None, 2)
-    role_move.move_to([-803, -721], None, 2)
-    role_move.move_to([-803, -716], None, 2)
+    role_move.move_to([-795, -644])
+    role_move.move_to([-795, -667])
+    role_move.move_to([-795, -702])
+    role_move.move_to([-802, -702])
+    role_move.move_to([-803, -721])
+    role_move.move_to([-803, -716], None, 0, 5)
     loc = role_loc.get_current_loc()
     if abs(-803 - loc[0]) < 5 and abs(-716 - loc[1]) < 5:
         return True
