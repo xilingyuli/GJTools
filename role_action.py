@@ -218,3 +218,9 @@ def reset_to_store():
     if loc is not None and abs(-803 - loc[0]) < 5 and abs(-715 - loc[1]) < 5:
         return True
     return False
+
+
+def try_reset():
+    while not reset_to_store():
+        role_move.move(10, 10)
+        time.sleep(600)
