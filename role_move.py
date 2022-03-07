@@ -72,15 +72,18 @@ def turn_to(direct, try_times=5):
 def move_map(width, height, callback_fun=None):
     x, y = 0, 0
     direct = 1
+    count = 0
     while y < height:
         while x < width:
             move(direct * move_distance_x, 0)
             x += move_distance_x
-            callback_fun()
+            count += callback_fun()
         move(0, move_distance_y)
         y += move_distance_y
+        count += callback_fun()
         x = 0
         direct = - direct
+    return count
 
 
 def move_to(target_loc, target_direct, try_time=2):

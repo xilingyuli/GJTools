@@ -97,7 +97,7 @@ def find_box_under_footer():
     is_night = max_val > 0.9
     first_check = find_box_in_area_color(box_under_footer_area, is_night)
     if not first_check:
-        return
+        return False
     image = cv2.cvtColor(np.asarray(pyautogui.screenshot(region=too_far_area)), cv2.COLOR_RGB2BGR)
     match_res = cv2.matchTemplate(image, too_far_tip, 3)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(match_res)
@@ -113,3 +113,4 @@ def find_box_under_footer():
             role_move.move(0, -0.7)
         find_box_in_area_color(box_under_footer_area, is_night)
     find_box_in_area_color(box_under_footer_area, is_night)
+    return True

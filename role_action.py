@@ -6,6 +6,7 @@ import numpy as np
 import find_box
 import role_loc
 import role_move
+import send_message
 
 map_in_store = cv2.imread('img/map_in_store.png')
 open_map_btn = cv2.imread('img/open_map.png')
@@ -81,11 +82,15 @@ def buy_map():
         role_move.move_to([-803, -721], None, 2)
         role_move.move_to([-803, -716], None, 2)
     if max_val <= 0.9:
+        send_message_with_loc("Find Map NPC Error")
         return False
     pyautogui.press('f')
     time.sleep(1)
+    max_val, max_loc = match_img(map_in_store)
+    if max_val <= 0.9:
+        send_message_with_loc("Open Map Store Error")
+        return False
     clear_bag()
-    res, max_loc = match_img(map_in_store)
     pyautogui.moveTo(max_loc[0] + 24, max_loc[1] + 24)
     pyautogui.keyDown('shift')
     pyautogui.rightClick()
@@ -95,18 +100,13 @@ def buy_map():
         pyautogui.press('4')
         pyautogui.press('0')
         pyautogui.press('enter')
-    if res > 0.9:
-        pyautogui.press('b')
-        return True
-    return False
+    return True
 
 
 def open_map():
-    # role_move.turn_to(-0.5)
-    # role_move.move(0, 10)
-    role_move.move_to([-802, -703], None, 1)
-    role_move.move_to([-791, -702], None, 1)
-    role_move.move_to([-777, -701], None, 1)
+    role_move.move_to([-802, -703], None, 2)
+    role_move.move_to([-791, -702], None, 2)
+    role_move.move_to([-777, -701], None, 2)
     role_move.move_to([-756, -703], None, 5)
     max_val, max_loc = match_img(open_map_btn)
     pyautogui.moveTo(max_loc[0] + 24, max_loc[1] + 24)
@@ -118,50 +118,58 @@ def open_map():
     max_val, max_loc = match_img(open_map_error)
     if max_val < 0.9:
         pyautogui.sleep(wait_open_time)
+        pyautogui.moveRel(0, -100)
+        pyautogui.press('t')
+        return True
     else:
         pyautogui.press('esc')
-    pyautogui.moveRel(0, -100)
-    pyautogui.press('t')
-    return max_val < 0.9
+        pyautogui.press('t')
+        send_message_with_loc("Open Map Error")
+        return False
 
 
 def prepare_to_find():
     role_move.move_to([-779, -701], None, 2)
-    role_move.move_to([-793, -703], None, 1)
+    role_move.move_to([-793, -703], None, 2)
     role_move.move_to([-793, -677], None, 2)
     role_move.move_to([-795, -666], None, 2)
-    role_move.move_to([-795, -640], None, 1)
+    role_move.move_to([-795, -640], None, 2)
     role_move.move_to(begin_find_loc_1, None, 5)
     role_move.turn_to(begin_find_direct_1)
     loc = role_loc.get_current_loc()
     if abs(loc[0] - begin_find_loc_1[0]) < 5 and abs(loc[1] - begin_find_loc_1[1]) < 5:
         return True
     else:
+        send_message_with_loc("Go to Find Box Error")
         return False
 
 
 def find_boxs():
+    count = 0
     role_move.move_to(begin_find_loc_1, None, 5)
     role_move.turn_to(begin_find_direct_1)
-    role_move.move_map(find_area_1[0], find_area_1[1], find_box.find_box_under_footer)
+    count += role_move.move_map(find_area_1[0], find_area_1[1], find_box.find_box_under_footer)
     role_move.move_to(begin_find_loc_2, None, 5)
     role_move.turn_to(begin_find_direct_2)
-    role_move.move_map(find_area_2[0], find_area_2[1], find_box.find_box_under_footer)
+    count += role_move.move_map(find_area_2[0], find_area_2[1], find_box.find_box_under_footer)
     role_move.move_to([-850, -560], None, 3)
+    if count <= 0:
+        send_message_with_loc("Find No Box")
     return True
 
 
 def back_to_store():
     role_move.move_to([-795, -644], None, 2)
-    role_move.move_to([-795, -667], None, 1)
+    role_move.move_to([-795, -667], None, 2)
     role_move.move_to([-795, -702], None, 2)
-    role_move.move_to([-802, -702], None, 1)
+    role_move.move_to([-802, -702], None, 2)
     role_move.move_to([-803, -721], None, 2)
     role_move.move_to([-803, -716], None, 2)
     loc = role_loc.get_current_loc()
     if abs(-803 - loc[0]) < 5 and abs(-716 - loc[1]) < 5:
         return True
     else:
+        send_message_with_loc("Back To Store Error")
         return False
 
 
@@ -195,7 +203,7 @@ def reset_to_store():
     time.sleep(1)
 
     max_val, max_loc = match_img(home_main_btn)
-    if max_val < 0.8:
+    if max_val < 0.9:
         pyautogui.press('t')
         return False
     pyautogui.moveTo(max_loc[0] + 30, max_loc[1] + 15)
@@ -206,7 +214,7 @@ def reset_to_store():
     pyautogui.press('f')
     time.sleep(1)
     max_val, max_loc = match_img(back_origin_btn)
-    if max_val < 0.8:
+    if max_val < 0.9:
         pyautogui.press('t')
         return False
     pyautogui.moveTo(max_loc[0] + 30, max_loc[1] + 15)
@@ -221,6 +229,15 @@ def reset_to_store():
 
 
 def try_reset():
+    count = 0
     while not reset_to_store():
+        count += 1
+        send_message_with_loc("Try reset count " + str(count))
         role_move.move(10, 10)
         time.sleep(600)
+
+
+def send_message_with_loc(message):
+    loc = role_loc.get_current_loc()
+    direct = role_loc.get_current_direction()
+    send_message.send_message(message + " " + str(loc) + " " + direct)
