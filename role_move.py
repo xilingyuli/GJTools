@@ -8,7 +8,7 @@ import role_loc
 # 速度值
 move_speed = 0.1
 move_back_speed = 2.5
-turn_speed = 1.74
+turn_speed = 1.86
 
 # 地图式搜索时的步距
 move_distance_x = 4.5
@@ -25,22 +25,21 @@ max_move_distance = 50
 
 
 def move(x, y):
-    time.sleep(0.1)
     if x > 0:
         pyautogui.keyDown('d')
-        pyautogui.sleep(x * move_speed)
+        wait_include_pause(x * move_speed)
         pyautogui.keyUp('d')
     elif x < 0:
         pyautogui.keyDown('a')
-        pyautogui.sleep(- x * move_speed)
+        wait_include_pause(- x * move_speed)
         pyautogui.keyUp('a')
     if y > 0:
         pyautogui.keyDown('w')
-        pyautogui.sleep(y * move_speed)
+        wait_include_pause(y * move_speed)
         pyautogui.keyUp('w')
     elif y < 0:
         pyautogui.keyDown('s')
-        pyautogui.sleep(- y * move_back_speed)
+        wait_include_pause(- y * move_back_speed)
         pyautogui.keyUp('s')
 
 
@@ -53,11 +52,11 @@ def turn_around(num):
         return
     if num > 0:
         pyautogui.keyDown(']')
-        pyautogui.sleep(num * turn_speed)
+        wait_include_pause(num * turn_speed)
         pyautogui.keyUp(']')
     elif num < 0:
         pyautogui.keyDown('[')
-        pyautogui.sleep(- num * turn_speed)
+        wait_include_pause(- num * turn_speed)
         pyautogui.keyUp('[')
 
 
@@ -118,3 +117,7 @@ def move_directly(target_loc, diff=move_min, try_times=10):
     turn_to(temp_direct)
     move(0, min(math.hypot(diff_loc[0], diff_loc[1]), max_move_distance))
     return move_directly(target_loc, diff, try_times - 1)
+
+
+def wait_include_pause(wait_time):
+    time.sleep(max(wait_time - pyautogui.PAUSE, 0.005))

@@ -240,4 +240,4 @@ def try_reset():
 def send_message_with_loc(message):
     loc = role_loc.get_current_loc()
     direct = role_loc.get_current_direction()
-    send_message.send_message(message + " " + str(loc) + " " + direct)
+    send_message.send_message(message + " " + str(loc) + " " + str(direct))
