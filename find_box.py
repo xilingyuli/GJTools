@@ -11,6 +11,7 @@ find_tip = cv2.imread('img/find_tip.png')
 find_tip_night = cv2.imread('img/find_tip_night.png')
 too_far_tip = cv2.imread('img/too_far.png')
 night_tip = cv2.imread('img/night_tip.png')
+rain_tip = cv2.imread('img/rain_tip.png')
 
 # 脚下可开盒子区域
 box_under_footer_area = [710, 580, 500, 250]
@@ -19,8 +20,7 @@ box_under_footer_area = [710, 580, 500, 250]
 footer_pos = [960, 635]
 
 # 盒子二值化参数
-threshold_value = 80
-threshold_night_value = 40
+threshold_value = [80, 60, 40]
 
 # 盒子大小
 box_area_up = 1400
@@ -35,13 +35,9 @@ too_far_area = [550, 200, 150, 100]
 weather_area = [1600, 33, 100, 50]
 
 
-def find_box_in_area_color(region, is_night=False):
-    if is_night:
-        value = threshold_night_value
-    else:
-        value = threshold_value
+def find_box_in_area_color(region, weather_code=0):
     image_grey = cv2.cvtColor(np.asarray(pyautogui.screenshot(region=region)), cv2.COLOR_RGB2GRAY)
-    ret, image = cv2.threshold(image_grey, value, 255, cv2.THRESH_BINARY_INV)
+    ret, image = cv2.threshold(image_grey, threshold_value[weather_code], 255, cv2.THRESH_BINARY_INV)
     image = cv2.dilate(image, kernel=np.ones((3, 3), np.uint8), iterations=1)
     cnts = cv2.findContours(image.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     cnts = imutils.grab_contours(cnts)
@@ -62,7 +58,7 @@ def find_box_in_area_color(region, is_night=False):
             cX = int(M["m10"] / cZ)
             cY = int(M["m01"] / cZ)
             pyautogui.moveTo(region[0] + cX, region[1] + cY)
-            if is_on_box_by_tip([region[0], region[1] - 50, region[2] + 150, region[3] + 50], is_night):
+            if is_on_box_by_tip([region[0], region[1] - 50, region[2] + 150, region[3] + 50], weather_code > 0):
                 pyautogui.rightClick()
                 time.sleep(open_box_time)
                 return True
@@ -95,7 +91,16 @@ def find_box_under_footer():
     match_res = cv2.matchTemplate(image, night_tip, 3)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(match_res)
     is_night = max_val > 0.95
-    first_check = find_box_in_area_color(box_under_footer_area, is_night)
+    image = cv2.cvtColor(np.asarray(pyautogui.screenshot(region=weather_area)), cv2.COLOR_RGB2BGR)
+    match_res = cv2.matchTemplate(image, rain_tip, 3)
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(match_res)
+    is_rain = max_val > 0.95
+    weather_code = 0
+    if is_night:
+        weather_code = 2
+    elif is_rain:
+        weather_code = 1
+    first_check = find_box_in_area_color(box_under_footer_area, weather_code)
     if not first_check:
         return False
     image = cv2.cvtColor(np.asarray(pyautogui.screenshot(region=too_far_area)), cv2.COLOR_RGB2BGR)
@@ -111,6 +116,6 @@ def find_box_under_footer():
             role_move.move(-2, 0)
         if pos[1] - footer_pos[1] > 100:
             role_move.move(0, -0.7)
-        find_box_in_area_color(box_under_footer_area, is_night)
-    find_box_in_area_color(box_under_footer_area, is_night)
+        find_box_in_area_color(box_under_footer_area, weather_code)
+    find_box_in_area_color(box_under_footer_area, weather_code)
     return True

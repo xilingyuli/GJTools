@@ -4,4 +4,4 @@ import find_box
 import role_action
 
 time.sleep(3)
-role_action.reset_to_store()
+find_box.find_box_under_footer()
