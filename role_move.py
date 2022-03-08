@@ -62,7 +62,7 @@ def turn_around(num):
 
 def turn_to(direct, try_times=5):
     if try_times <= 0:
-        role_action.send_message_with_loc("Turn Failed to " + str(direct))
+        role_action.print_log_with_loc("Turn Failed to " + str(direct))
         return
     c_direct = role_loc.get_current_direction()
     if c_direct is None:
@@ -70,7 +70,7 @@ def turn_to(direct, try_times=5):
         return
     turn_around(direct - c_direct)
     c_direct = role_loc.get_current_direction()
-    if c_direct is not None and abs(c_direct - direct) > turn_min:
+    if c_direct is not None and abs(c_direct - direct) % 2 > 0.1:
         turn_to(direct, try_times - 1)
 
 
@@ -97,7 +97,7 @@ def move_to(target_loc, target_direct=None, diff=move_min, try_time=2):
         if move_directly(target_loc, diff):
             break
     if i == try_time:
-        role_action.send_message_with_loc("Move Failed to " + str(target_loc) + " with try times " + str(try_time))
+        role_action.print_log_with_loc("Move Failed to " + str(target_loc) + " with try times " + str(try_time))
 
     if target_direct is not None:
         turn_around(target_direct - role_loc.get_current_direction())
@@ -105,7 +105,7 @@ def move_to(target_loc, target_direct=None, diff=move_min, try_time=2):
 
 def move_directly(target_loc, diff=move_min, try_times=10):
     if try_times <= 0:
-        role_action.send_message_with_loc("Move Failed to " + str(target_loc))
+        role_action.print_log_with_loc("Move Failed to " + str(target_loc))
         return False
     current_loc = role_loc.get_current_loc()
     if current_loc is None:

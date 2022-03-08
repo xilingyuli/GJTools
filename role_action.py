@@ -156,6 +156,7 @@ def find_boxs():
     role_move.move_to([-850, -560], None, 3, 3)
     print("开盒次数" + str(count))
     if count <= 0:
+        reset_keys()
         send_message_with_loc("Find No Box")
     return True
 
@@ -230,6 +231,18 @@ def reset_to_store():
     return False
 
 
+def reset_keys():
+    pyautogui.keyDown('shift')
+    pyautogui.keyUp('shift')
+    pyautogui.sleep(2)
+    pyautogui.moveTo(1800, 100)
+    pyautogui.sleep(2)
+    pyautogui.leftClick()
+    pyautogui.sleep(2)
+    pyautogui.rightClick()
+    pyautogui.sleep(2)
+
+
 def try_reset():
     max_val, max_loc = match_img(new_day_tip)
     if max_val > 0.9:
@@ -246,6 +259,12 @@ def try_reset():
 
 
 def send_message_with_loc(message):
+    loc = role_loc.get_current_loc()
+    direct = role_loc.get_current_direction()
+    send_message.send_message(message + " " + str(loc) + " " + str(direct))
+
+
+def print_log_with_loc(message):
     loc = role_loc.get_current_loc()
     direct = role_loc.get_current_direction()
     send_message.send_message(message + " " + str(loc) + " " + str(direct))
