@@ -140,7 +140,7 @@ def up_horse():
 
 
 def close_dialog():
-    max_val, max_loc = match_img(store_npc)
+    max_val, max_loc = match_img(close_btn)
     if max_val > 0.9:
         pyautogui.moveTo(max_loc[0] + 6, max_loc[1] + 6)
         pyautogui.leftClick()
