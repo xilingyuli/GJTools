@@ -70,7 +70,7 @@ def turn_to(direct, try_times=5):
         return
     turn_around(direct - c_direct)
     c_direct = role_loc.get_current_direction()
-    if c_direct is not None and 1.9 > abs(c_direct - direct) % 2 > 0.1:
+    if c_direct is not None and 1.9 > (abs(c_direct - direct) % 2) > 0.1:
         turn_to(direct, try_times - 1)
 
 
