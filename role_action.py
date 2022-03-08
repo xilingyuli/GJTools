@@ -19,6 +19,7 @@ home_door_btn = cv2.imread('img/home_door_btn.png')
 home_main_btn = cv2.imread('img/home_main_btn.png')
 back_origin_btn = cv2.imread('img/back_origin_btn.png')
 new_day_tip = cv2.imread('img/new_day_tip.png')
+close_btn = cv2.imread('img/close_btn.png')
 
 
 # 点开藏宝地图模式位置
@@ -111,22 +112,38 @@ def open_map():
     role_move.move_to([-756, -703], None, 0, 5)
     max_val, max_loc = match_img(open_map_btn)
     pyautogui.moveTo(max_loc[0] + 24, max_loc[1] + 24)
-    pyautogui.press('t')
-    pyautogui.press('shift')
-    pyautogui.sleep(2)
+    down_horse()
     pyautogui.leftClick()
     pyautogui.sleep(1)
     max_val, max_loc = match_img(open_map_error)
     if max_val < 0.9:
         pyautogui.sleep(wait_open_time)
         pyautogui.moveRel(0, -100)
-        pyautogui.press('t')
+        up_horse()
         return True
     else:
-        pyautogui.press('esc')
-        pyautogui.press('t')
+        close_dialog()
+        up_horse()
         send_message_with_loc("Open Map Error")
         return False
+
+
+def down_horse():
+    pyautogui.press('t')
+    pyautogui.press('shift')
+    pyautogui.sleep(3)
+
+
+def up_horse():
+    pyautogui.press('t')
+    pyautogui.sleep(3)
+
+
+def close_dialog():
+    max_val, max_loc = match_img(store_npc)
+    if max_val > 0.9:
+        pyautogui.moveTo(max_loc[0] + 6, max_loc[1] + 6)
+        pyautogui.leftClick()
 
 
 def prepare_to_find():
@@ -193,10 +210,10 @@ def clear_bag():
 
 
 def reset_to_store():
-    pyautogui.press('t')
+    down_horse()
     max_val, max_loc = match_img(home_door_btn)
     if max_val < 0.9:
-        pyautogui.press('t')
+        up_horse()
         return False
     pyautogui.moveTo(max_loc[0] + 24, max_loc[1] + 24)
     pyautogui.leftClick()
@@ -207,7 +224,7 @@ def reset_to_store():
 
     max_val, max_loc = match_img(home_main_btn)
     if max_val < 0.9:
-        pyautogui.press('t')
+        up_horse()
         return False
     pyautogui.moveTo(max_loc[0] + 30, max_loc[1] + 15)
     pyautogui.leftClick()
@@ -218,14 +235,14 @@ def reset_to_store():
     time.sleep(1)
     max_val, max_loc = match_img(back_origin_btn)
     if max_val < 0.9:
-        pyautogui.press('t')
+        up_horse()
         return False
     pyautogui.moveTo(max_loc[0] + 30, max_loc[1] + 15)
     pyautogui.leftClick()
     pyautogui.sleep(30)
 
     loc = role_loc.get_current_loc()
-    pyautogui.press('t')
+    up_horse()
     if loc is not None and abs(-803 - loc[0]) < 5 and abs(-715 - loc[1]) < 5:
         return True
     return False
@@ -250,7 +267,7 @@ def reset_keys():
 def try_reset():
     max_val, max_loc = match_img(new_day_tip)
     if max_val > 0.9:
-        pyautogui.press('esc')
+        close_dialog()
     count = 0
     while not reset_to_store():
         count += 1
@@ -259,7 +276,7 @@ def try_reset():
         time.sleep(600)
         max_val, max_loc = match_img(new_day_tip)
         if max_val > 0.9:
-            pyautogui.press('esc')
+            close_dialog()
 
 
 def send_message_with_loc(message):
