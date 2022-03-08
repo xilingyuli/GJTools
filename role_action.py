@@ -154,6 +154,7 @@ def find_boxs():
     role_move.turn_to(begin_find_direct_2)
     count += role_move.move_map(find_area_2[0], find_area_2[1], find_box.find_box_under_footer)
     role_move.move_to([-850, -560], None, 3, 3)
+    print("开盒次数" + str(count))
     if count <= 0:
         send_message_with_loc("Find No Box")
     return True
