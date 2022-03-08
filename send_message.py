@@ -2,7 +2,7 @@ from smtplib import SMTP_SSL
 from email.mime.text import MIMEText
 
 
-receive_addr = "xilingyuli@gmail.com"
+receive_addr = "786979248@qq.com"
 
 
 def send_message(message):

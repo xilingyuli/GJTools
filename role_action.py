@@ -38,7 +38,7 @@ find_area_1 = [55, 45]
 # 挖宝区域大小
 begin_find_loc_2 = [-980, -530]
 begin_find_direct_2 = -0.5
-find_area_2 = [50, 33]
+find_area_2 = [50, 27]
 
 # 背包格子大小
 bag_item_size = 36
@@ -235,11 +235,15 @@ def reset_keys():
     pyautogui.keyDown('shift')
     pyautogui.keyUp('shift')
     pyautogui.sleep(2)
-    pyautogui.moveTo(1800, 100)
+    pyautogui.moveTo(find_box.footer_pos[0], find_box.footer_pos[1])
     pyautogui.sleep(2)
-    pyautogui.leftClick()
+    pyautogui.mouseDown(button='left')
     pyautogui.sleep(2)
-    pyautogui.rightClick()
+    pyautogui.mouseUp(button='left')
+    pyautogui.sleep(2)
+    pyautogui.mouseDown(button='right')
+    pyautogui.sleep(2)
+    pyautogui.mouseUp(button='right')
     pyautogui.sleep(2)
 
 

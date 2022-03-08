@@ -70,7 +70,7 @@ def turn_to(direct, try_times=5):
         return
     turn_around(direct - c_direct)
     c_direct = role_loc.get_current_direction()
-    if c_direct is not None and abs(c_direct - direct) % 2 > 0.1:
+    if c_direct is not None and 1.9 > abs(c_direct - direct) % 2 > 0.1:
         turn_to(direct, try_times - 1)
 
 
@@ -92,20 +92,28 @@ def move_map(width, height, callback_fun=None):
 
 
 def move_to(target_loc, target_direct=None, diff=move_min, try_time=2):
-    i = 0
+    res = False
     for i in range(0, try_time):
         if move_directly(target_loc, diff):
+            res = True
             break
-    if i == try_time:
-        role_action.print_log_with_loc("Move Failed to " + str(target_loc) + " with try times " + str(try_time))
+    if not res:
+        current_loc = role_loc.get_current_loc()
+        if target_loc[0] - current_loc[0] < 0:
+            move_x = -2
+        else:
+            move_x = 2
+        move(0, -1)
+        move(move_x, 0)
+        if not move_directly(target_loc, diff):
+            role_action.print_log_with_loc("Move Failed to " + str(target_loc) + " with try times " + str(try_time))
 
     if target_direct is not None:
         turn_around(target_direct - role_loc.get_current_direction())
 
 
-def move_directly(target_loc, diff=move_min, try_times=10):
+def move_directly(target_loc, diff=move_min, try_times=5):
     if try_times <= 0:
-        role_action.print_log_with_loc("Move Failed to " + str(target_loc))
         return False
     current_loc = role_loc.get_current_loc()
     if current_loc is None:
