@@ -39,7 +39,7 @@ find_area_1 = [55, 45]
 # 挖宝区域大小
 begin_find_loc_2 = [-980, -530]
 begin_find_direct_2 = -0.5
-find_area_2 = [50, 27]
+find_area_2 = [55, 27]
 
 # 背包格子大小
 bag_item_size = 36
@@ -210,6 +210,10 @@ def clear_bag():
 
 
 def reset_to_store():
+    current_loc = role_loc.get_current_loc()
+    # 处理在商店附近情况
+    if abs(-803 - current_loc[0]) < 5 and abs(-716 - current_loc[1]) < 5:
+        role_move.move_to([-803, -721])
     down_horse()
     max_val, max_loc = match_img(home_door_btn)
     if max_val < 0.9:
