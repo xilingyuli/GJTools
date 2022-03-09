@@ -13,6 +13,13 @@ time.sleep(3)
 # role_action.back_to_store()
 
 for i in range(0, 100):
+    current_time = datetime.datetime.now()
+    if current_time.hour == 5 and current_time.minute > 45:
+        if current_time.isoweekday() == 4:  # 周四退出
+            break
+        time.sleep(16 * 60)  # 等到六点
+        role_action.close_dialog()
+
     if not role_action.buy_map():
         role_action.try_reset()
         continue
