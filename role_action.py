@@ -35,7 +35,7 @@ wait_open_time = 150
 # 开始挖宝的坐标方向和大小
 begin_find_loc_1 = [-825, -525]
 begin_find_direct_1 = 0.6
-find_area_1 = [55, 45]
+find_area_1 = [55, 51]
 
 # 挖宝区域大小
 begin_find_loc_2 = [-980, -530]

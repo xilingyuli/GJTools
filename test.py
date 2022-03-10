@@ -4,4 +4,4 @@ import find_box
 import role_action
 
 time.sleep(3)
-role_action.close_dialog()
+role_action.find_boxs()
