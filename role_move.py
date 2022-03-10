@@ -99,7 +99,7 @@ def move_to(target_loc, target_direct=None, diff=move_min, try_time=2):
             break
     if not res:
         current_loc = role_loc.get_current_loc()
-        if target_loc[0] - current_loc[0] < 0:
+        if current_loc is not None and target_loc[0] - current_loc[0] < 0:
             move_x = -2
         else:
             move_x = 2
@@ -108,8 +108,9 @@ def move_to(target_loc, target_direct=None, diff=move_min, try_time=2):
         if not move_directly(target_loc, diff):
             role_action.print_log_with_loc("Move Failed to " + str(target_loc) + " with try times " + str(try_time))
 
-    if target_direct is not None:
-        turn_around(target_direct - role_loc.get_current_direction())
+    current_direct = role_loc.get_current_direction()
+    if target_direct is not None and current_direct is not None:
+        turn_around(target_direct - current_direct)
 
 
 def move_directly(target_loc, diff=move_min, try_times=5):

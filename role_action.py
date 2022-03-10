@@ -155,7 +155,7 @@ def prepare_to_find():
     role_move.move_to(begin_find_loc_1, None, 1, 5)
     role_move.turn_to(begin_find_direct_1)
     loc = role_loc.get_current_loc()
-    if abs(loc[0] - begin_find_loc_1[0]) < 5 and abs(loc[1] - begin_find_loc_1[1]) < 5:
+    if loc is not None and abs(loc[0] - begin_find_loc_1[0]) < 5 and abs(loc[1] - begin_find_loc_1[1]) < 5:
         return True
     else:
         send_message_with_loc("Go to Find Box Error")
@@ -186,7 +186,7 @@ def back_to_store():
     role_move.move_to([-803, -721])
     role_move.move_to([-803, -716], None, 0, 5)
     loc = role_loc.get_current_loc()
-    if abs(-803 - loc[0]) < 5 and abs(-716 - loc[1]) < 5:
+    if loc is not None and abs(-803 - loc[0]) < 5 and abs(-716 - loc[1]) < 5:
         return True
     else:
         send_message_with_loc("Back To Store Error")
@@ -211,6 +211,8 @@ def clear_bag():
 
 def reset_to_store():
     current_loc = role_loc.get_current_loc()
+    if current_loc is None:
+        return False
     # 处理在商店附近情况
     if abs(-803 - current_loc[0]) < 5 and abs(-716 - current_loc[1]) < 5:
         role_move.move_to([-803, -721])
