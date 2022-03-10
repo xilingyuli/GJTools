@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 
 import find_box
+import log_message
 import role_loc
 import role_move
 import send_message
@@ -294,4 +295,4 @@ def send_message_with_loc(message):
 def print_log_with_loc(message):
     loc = role_loc.get_current_loc()
     direct = role_loc.get_current_direction()
-    print(message + " " + str(loc) + " " + str(direct))
+    log_message.log_error(message + " " + str(loc) + " " + str(direct))
