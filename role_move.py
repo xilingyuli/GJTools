@@ -98,13 +98,7 @@ def move_to(target_loc, target_direct=None, diff=move_min, try_time=2):
             res = True
             break
     if not res:
-        current_loc = role_loc.get_current_loc()
-        if current_loc is not None and target_loc[0] - current_loc[0] < 0:
-            move_x = -2
-        else:
-            move_x = 2
-        move(0, -1)
-        move(move_x, 0)
+        move_bad_case(target_loc)
         if not move_directly(target_loc, diff):
             role_action.print_log_with_loc("Move Failed to " + str(target_loc) + " with try times " + str(try_time))
 
@@ -130,3 +124,16 @@ def move_directly(target_loc, diff=move_min, try_times=5):
 
 def wait_include_pause(wait_time):
     time.sleep(max(wait_time - pyautogui.PAUSE, 0.005))
+
+
+def move_bad_case(target_loc):
+    current_loc = role_loc.get_current_loc()
+    if current_loc is not None and -682 >= current_loc[1] >= -683 and -799 >= current_loc[0] >= -806:
+        move(current_loc[0] - 794, 0)
+    else:
+        if current_loc is not None and target_loc[0] - current_loc[0] < 0:
+            move_x = -2
+        else:
+            move_x = 2
+        move(0, -1)
+        move(move_x, 0)
