@@ -130,6 +130,11 @@ def move_bad_case(target_loc):
     current_loc = role_loc.get_current_loc()
     if current_loc is not None and -682 >= current_loc[1] >= -683 and -799 >= current_loc[0] >= -806:
         move(current_loc[0] - 794, 0)
+    elif current_loc is not None and -633 >= current_loc[1] >= -633 and -799 >= current_loc[0] >= -806:
+        move(current_loc[0] - 794, 0)
+    elif current_loc is not None and -689 >= current_loc[1] >= -690 and -789 >= current_loc[0] >= -789:
+        move(0, -2)
+        move(2, 0)
     else:
         if current_loc is not None and target_loc[0] - current_loc[0] < 0:
             move_x = -2
