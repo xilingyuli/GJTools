@@ -30,7 +30,7 @@ open_box_map_pos = [500, 50]
 first_map_pos = [1750, 350]
 
 # 打开藏宝图等待时间
-wait_open_time = 135
+wait_open_time = 180
 
 # 开始挖宝的坐标方向和大小
 begin_find_loc_1 = [-825, -525]
