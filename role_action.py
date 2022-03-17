@@ -29,6 +29,9 @@ open_box_map_pos = [500, 50]
 # 要丢掉的首张图位值
 first_map_pos = [1750, 350]
 
+# 确定按钮位置
+confirm_pos = [880, 450]
+
 # 打开藏宝图等待时间
 wait_open_time = 135
 
@@ -67,7 +70,8 @@ def clear_map(count=40):
         pyautogui.rightClick()
         pyautogui.moveTo(first_map_pos[0] + 50, first_map_pos[1] + 30)
         pyautogui.leftClick()
-        pyautogui.press('enter')
+        pyautogui.moveTo(confirm_pos[0], confirm_pos[1])
+        pyautogui.leftClick()
     pyautogui.moveTo(first_map_pos[0] - 50, first_map_pos[1] - 50)
     pyautogui.leftClick()
     pyautogui.press('m')
