@@ -13,6 +13,7 @@ map_in_store = cv2.imread('img/map_in_store.png')
 open_map_btn = cv2.imread('img/open_map.png')
 map_title = cv2.imread('img/map_title.png')
 buy_map_tip = cv2.imread('img/buy_map_tip.png')
+confirm_btn = cv2.imread('img/confirm_btn.png')
 bag_left = cv2.imread('img/bag_left.png')
 store_npc = cv2.imread('img/store_npc.png')
 open_map_error = cv2.imread('img/open_map_error.png')
@@ -70,8 +71,9 @@ def clear_map(count=20):
         pyautogui.rightClick()
         pyautogui.moveTo(first_map_pos[0] + 50, first_map_pos[1] + 30)
         pyautogui.leftClick()
-        pyautogui.moveTo(confirm_pos[0], confirm_pos[1])
-        pyautogui.leftClick()
+        pyautogui.press('enter')
+        # pyautogui.moveTo(confirm_pos[0], confirm_pos[1])
+        # pyautogui.leftClick()
     pyautogui.moveTo(first_map_pos[0] - 50, first_map_pos[1] - 50)
     pyautogui.leftClick()
     pyautogui.press('m')
@@ -107,6 +109,10 @@ def buy_map():
         pyautogui.press('4')
         pyautogui.press('0')
         pyautogui.press('enter')
+        # max_val, max_loc = match_img(confirm_btn)
+        # if max_val > 0.9:
+        #     pyautogui.moveTo(max_loc[0] + 50, max_loc[1] + 15)
+        #     pyautogui.leftClick()
     return True
 
 
