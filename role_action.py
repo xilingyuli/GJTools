@@ -71,8 +71,9 @@ def clear_map(count=40):
         pyautogui.rightClick()
         pyautogui.moveTo(first_map_pos[0] + 50, first_map_pos[1] + 30)
         pyautogui.leftClick()
-        pyautogui.moveTo(confirm_pos[0], confirm_pos[1])
-        pyautogui.leftClick()
+        pyautogui.press('enter')
+        # pyautogui.moveTo(confirm_pos[0], confirm_pos[1])
+        # pyautogui.leftClick()
     pyautogui.moveTo(first_map_pos[0] - 50, first_map_pos[1] - 50)
     pyautogui.leftClick()
     pyautogui.press('m')
@@ -107,10 +108,11 @@ def buy_map():
     if max_val > 0.9:
         pyautogui.press('4')
         pyautogui.press('0')
-        max_val, max_loc = match_img(confirm_btn)
-        if max_val > 0.9:
-            pyautogui.moveTo(max_loc[0] + 50, max_loc[1] + 15)
-            pyautogui.leftClick()
+        pyautogui.press('enter')
+        # max_val, max_loc = match_img(confirm_btn)
+        # if max_val > 0.9:
+        #     pyautogui.moveTo(max_loc[0] + 50, max_loc[1] + 15)
+        #     pyautogui.leftClick()
     return True
 
 
