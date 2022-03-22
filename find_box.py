@@ -27,7 +27,7 @@ box_area_up = 1400
 box_area_down = 400
 
 # 开盒子时间
-open_box_time = 5
+open_box_time = 3.5
 
 # 太远了提示位置
 too_far_area = [550, 200, 150, 100]
