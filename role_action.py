@@ -2,6 +2,7 @@ import time
 import pyautogui
 import cv2
 import numpy as np
+import datetime
 
 import find_box
 import log_message
@@ -282,18 +283,27 @@ def reset_keys():
 
 
 def try_reset():
-    max_val, max_loc = match_img(new_day_tip)
-    if max_val > 0.9:
-        close_dialog()
+    if not deal_new_day():
+        return
     count = 0
     while not reset_to_store():
         count += 1
         send_message_with_loc("Try reset count " + str(count))
         role_move.move(-10, -10)
         time.sleep(600)
-        max_val, max_loc = match_img(new_day_tip)
-        if max_val > 0.9:
-            close_dialog()
+        if not deal_new_day():
+            return
+
+
+def deal_new_day():
+    current_time = datetime.datetime.now()
+    if 10 > current_time.hour > 5 and current_time.isoweekday() == 4:
+        # 关服了
+        return False
+    max_val, max_loc = match_img(new_day_tip)
+    if max_val > 0.9:
+        close_dialog()
+    return True
 
 
 def send_message_with_loc(message):
