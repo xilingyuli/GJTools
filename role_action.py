@@ -23,7 +23,7 @@ home_main_btn = cv2.imread('img/home_main_btn.png')
 back_origin_btn = cv2.imread('img/back_origin_btn.png')
 new_day_tip = cv2.imread('img/new_day_tip.png')
 close_btn = cv2.imread('img/close_btn.png')
-
+horse = cv2.imread('img/horse.png')
 
 # 点开藏宝地图模式位置
 open_box_map_pos = [500, 50]
@@ -141,12 +141,16 @@ def open_map():
 
 
 def down_horse():
+    if not is_on_horse():
+        return
     pyautogui.press('t')
     pyautogui.press('shift')
     pyautogui.sleep(3)
 
 
 def up_horse():
+    if is_on_horse():
+        return
     pyautogui.press('t')
     pyautogui.sleep(3)
 
@@ -304,6 +308,11 @@ def deal_new_day():
     if max_val > 0.9:
         close_dialog()
     return True
+
+
+def is_on_horse():
+    max_val, max_loc = match_img(horse)
+    return max_val > 0.9
 
 
 def send_message_with_loc(message):

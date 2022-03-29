@@ -83,6 +83,7 @@ def move_map(width, height, callback_fun=None):
             move(direct * move_distance_x, 0)
             x += move_distance_x
             count += callback_fun()
+        role_action.up_horse()
         move(0, move_distance_y)
         y += move_distance_y
         count += callback_fun()
