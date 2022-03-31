@@ -14,7 +14,9 @@ time.sleep(3)
 
 for i in range(0, 100):
     current_time = datetime.datetime.now()
-    if current_time.hour == 5 and current_time.minute > 45:
+    if 10 > current_time.hour > 5 and current_time.isoweekday() == 4:
+        break
+    elif current_time.hour == 5 and current_time.minute > 45:
         if current_time.isoweekday() == 4:  # 周四退出
             break
         time.sleep(16 * 60)  # 等到六点
