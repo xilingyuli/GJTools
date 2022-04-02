@@ -315,11 +315,6 @@ def is_on_horse():
     return max_val > 0.9
 
 
-def is_on_horse():
-    max_val, max_loc = match_img(horse)
-    return max_val > 0.9
-
-
 def send_message_with_loc(message):
     loc = role_loc.get_current_loc()
     direct = role_loc.get_current_direction()
