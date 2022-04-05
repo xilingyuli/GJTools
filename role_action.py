@@ -3,6 +3,8 @@ import pyautogui
 import cv2
 import numpy as np
 import datetime
+import win32api
+import win32con
 
 import find_box
 import log_message
@@ -263,6 +265,8 @@ def reset_to_store():
     pyautogui.leftClick()
     pyautogui.sleep(30)
 
+    reset_visual_field()
+
     loc = role_loc.get_current_loc()
     up_horse()
     if loc is not None and abs(-803 - loc[0]) < 5 and abs(-715 - loc[1]) < 5:
@@ -313,6 +317,19 @@ def deal_new_day():
 def is_on_horse():
     max_val, max_loc = match_img(horse)
     return max_val > 0.9
+
+
+def reset_visual_field():
+    x, y = 1000, 100
+    win32api.SetCursorPos((x, y))
+    time.sleep(0.5)
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, x, y)
+    time.sleep(0.5)
+    win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, 0, 300)
+    time.sleep(0.5)
+    win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, 0, -200)
+    time.sleep(0.5)
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
 
 
 def send_message_with_loc(message):
