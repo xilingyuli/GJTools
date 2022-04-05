@@ -53,6 +53,9 @@ find_area_2 = [55, 27]
 bag_item_size = 36
 bag_width = 12
 
+# 家园走到门口的位移距离
+home_to_door = [-10, 0]
+
 
 def match_img(template):
     image = cv2.cvtColor(np.asarray(pyautogui.screenshot()), cv2.COLOR_RGB2BGR)
@@ -254,7 +257,7 @@ def reset_to_store():
     pyautogui.leftClick()
     pyautogui.sleep(30)
 
-    role_move.move(-10, 0)
+    role_move.move(home_to_door[0], home_to_door[1])
     pyautogui.press('f')
     time.sleep(1)
     max_val, max_loc = match_img(back_origin_btn)
