@@ -3,6 +3,8 @@ import pyautogui
 import cv2
 import numpy as np
 import datetime
+import win32api
+import win32con
 
 import find_box
 import log_message
@@ -50,6 +52,9 @@ find_area_2 = [55, 27]
 # 背包格子大小
 bag_item_size = 36
 bag_width = 12
+
+# 家园走到门口的位移距离
+home_to_door = [-10, 0]
 
 
 def match_img(template):
@@ -252,7 +257,7 @@ def reset_to_store():
     pyautogui.leftClick()
     pyautogui.sleep(30)
 
-    role_move.move(-10, 0)
+    role_move.move(home_to_door[0], home_to_door[1])
     pyautogui.press('f')
     time.sleep(1)
     max_val, max_loc = match_img(back_origin_btn)
@@ -262,6 +267,8 @@ def reset_to_store():
     pyautogui.moveTo(max_loc[0] + 30, max_loc[1] + 15)
     pyautogui.leftClick()
     pyautogui.sleep(30)
+
+    reset_visual_field()
 
     loc = role_loc.get_current_loc()
     up_horse()
@@ -313,6 +320,19 @@ def deal_new_day():
 def is_on_horse():
     max_val, max_loc = match_img(horse)
     return max_val > 0.9
+
+
+def reset_visual_field():
+    x, y = 1000, 100
+    win32api.SetCursorPos((x, y))
+    time.sleep(0.5)
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, x, y)
+    time.sleep(0.5)
+    win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, 0, 300)
+    time.sleep(0.5)
+    win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, 0, -200)
+    time.sleep(0.5)
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
 
 
 def send_message_with_loc(message):
