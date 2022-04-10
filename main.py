@@ -12,7 +12,7 @@ time.sleep(3)
 # role_action.clear_map()
 # role_action.back_to_store()
 
-for i in range(0, 100):
+for i in range(0, 200):
     current_time = datetime.datetime.now()
     if 10 > current_time.hour > 5 and current_time.isoweekday() == 4:
         break
