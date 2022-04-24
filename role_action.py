@@ -37,7 +37,7 @@ first_map_pos = [1750, 350]
 confirm_pos = [880, 450]
 
 # 打开藏宝图等待时间
-wait_open_time = 120
+wait_open_time = 115
 
 # 开始挖宝的坐标方向和大小
 begin_find_loc_1 = [-825, -525]
@@ -64,7 +64,7 @@ def match_img(template):
     return max_val, max_loc
 
 
-def clear_map(count=42):
+def clear_map(count=44):
     pyautogui.press('m')
     time.sleep(0.5)
     max_val, max_loc = match_img(map_title)
@@ -113,7 +113,7 @@ def buy_map():
     max_val, max_loc = match_img(buy_map_tip)
     if max_val > 0.9:
         pyautogui.press('4')
-        pyautogui.press('2')
+        pyautogui.press('4')
         pyautogui.press('enter')
         # max_val, max_loc = match_img(confirm_btn)
         # if max_val > 0.9:
