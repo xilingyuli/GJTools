@@ -218,14 +218,14 @@ def clear_bag():
     max_val, max_loc = match_img(bag_left)
     if max_val < 0.9:
         return
-    first_loc = [max_loc[0] + 100, max_loc[1] + 85]
+    first_loc = [max_loc[0] + 100, max_loc[1] + 49]
     pyautogui.keyDown('shift')
-    for j in range(0, 3):
+    for j in range(0, 4):
         for i in range(0, bag_width):
             pyautogui.moveTo(first_loc[0] + i * bag_item_size, first_loc[1] + j * bag_item_size)
             pyautogui.rightClick()
     for i in range(0, 10):
-        pyautogui.moveTo(first_loc[0] + i * bag_item_size, first_loc[1] + 3 * bag_item_size + 25)
+        pyautogui.moveTo(first_loc[0] + i * bag_item_size, first_loc[1] + 4 * bag_item_size + 25)
         pyautogui.rightClick()
     pyautogui.keyUp('shift')
 
