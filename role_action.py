@@ -56,6 +56,9 @@ bag_width = 12
 # 家园走到门口的位移距离
 home_to_door = [-10, 0]
 
+# 买图次数
+buy_map_times = 2
+
 
 def match_img(template):
     image = cv2.cvtColor(np.asarray(pyautogui.screenshot()), cv2.COLOR_RGB2BGR)
@@ -106,19 +109,20 @@ def buy_map():
         send_message_with_loc("Open Map Store Error")
         return False
     clear_bag()
-    pyautogui.moveTo(max_loc[0] + 24, max_loc[1] + 24)
-    pyautogui.keyDown('shift')
-    pyautogui.rightClick()
-    pyautogui.keyUp('shift')
-    max_val, max_loc = match_img(buy_map_tip)
-    if max_val > 0.9:
-        pyautogui.press('4')
-        pyautogui.press('4')
-        pyautogui.press('enter')
-        # max_val, max_loc = match_img(confirm_btn)
-        # if max_val > 0.9:
-        #     pyautogui.moveTo(max_loc[0] + 50, max_loc[1] + 15)
-        #     pyautogui.leftClick()
+    for i in range(0, buy_map_times):
+        pyautogui.moveTo(max_loc[0] + 24, max_loc[1] + 24)
+        pyautogui.keyDown('shift')
+        pyautogui.rightClick()
+        pyautogui.keyUp('shift')
+        max_val, max_loc = match_img(buy_map_tip)
+        if max_val > 0.9:
+            pyautogui.press('4')
+            pyautogui.press('4')
+            pyautogui.press('enter')
+            # max_val, max_loc = match_img(confirm_btn)
+            # if max_val > 0.9:
+            #     pyautogui.moveTo(max_loc[0] + 50, max_loc[1] + 15)
+            #     pyautogui.leftClick()
     return True
 
 
