@@ -104,13 +104,13 @@ def buy_map():
         return False
     pyautogui.press('f')
     time.sleep(1)
-    max_val, max_loc = match_img(map_in_store)
-    if max_val <= 0.9:
+    buy_map_max_val, buy_map_max_loc = match_img(map_in_store)
+    if buy_map_max_val <= 0.9:
         send_message_with_loc("Open Map Store Error")
         return False
     clear_bag()
     for i in range(0, buy_map_times):
-        pyautogui.moveTo(max_loc[0] + 24, max_loc[1] + 24)
+        pyautogui.moveTo(buy_map_max_loc[0] + 24 - i * 4, buy_map_max_loc[1] + 24)
         pyautogui.keyDown('shift')
         pyautogui.rightClick()
         pyautogui.keyUp('shift')
@@ -119,6 +119,7 @@ def buy_map():
             pyautogui.press('4')
             pyautogui.press('4')
             pyautogui.press('enter')
+            time.sleep(0.5)
             # max_val, max_loc = match_img(confirm_btn)
             # if max_val > 0.9:
             #     pyautogui.moveTo(max_loc[0] + 50, max_loc[1] + 15)
