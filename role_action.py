@@ -54,6 +54,7 @@ find_area_2 = [55, 27]
 # 背包格子大小
 bag_item_size = 36
 bag_width = 12
+bag_empty_lines = 3
 
 # 家园走到门口的位移距离
 home_to_door = [-10, 0]
@@ -230,14 +231,14 @@ def clear_bag():
     max_val, max_loc = match_img(bag_left)
     if max_val < 0.9:
         return
-    first_loc = [max_loc[0] + 100, max_loc[1] + 49]
+    first_loc = [max_loc[0] + 100, max_loc[1] + 193 - bag_item_size * bag_empty_lines]
     pyautogui.keyDown('shift')
-    for j in range(0, 4):
+    for j in range(0, bag_empty_lines):
         for i in range(0, bag_width):
             pyautogui.moveTo(first_loc[0] + i * bag_item_size, first_loc[1] + j * bag_item_size)
             pyautogui.rightClick()
     for i in range(0, 10):
-        pyautogui.moveTo(first_loc[0] + i * bag_item_size, first_loc[1] + 4 * bag_item_size + 25)
+        pyautogui.moveTo(first_loc[0] + i * bag_item_size, first_loc[1] + bag_empty_lines * bag_item_size + 25)
         pyautogui.rightClick()
     pyautogui.keyUp('shift')
 
