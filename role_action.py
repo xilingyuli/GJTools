@@ -139,7 +139,7 @@ def open_map():
         pyautogui.moveRel(0, -100)
         for i in range(0, wait_open_time, wait_open_time_step):
             max_val, max_loc = match_img(flower_debuff)
-            if max_val > 0.9:
+            if max_val > 0.92:
                 pyautogui.moveTo(max_loc[0] + 13, max_loc[1] + 13)
                 pyautogui.rightClick()
             pyautogui.sleep(wait_open_time_step)
