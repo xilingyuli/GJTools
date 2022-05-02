@@ -26,6 +26,8 @@ back_origin_btn = cv2.imread('img/back_origin_btn.png')
 new_day_tip = cv2.imread('img/new_day_tip.png')
 close_btn = cv2.imread('img/close_btn.png')
 horse = cv2.imread('img/horse.png')
+equip_box = cv2.imread('img/equip_box.png')
+equip_empty = cv2.imread('img/equip_empty.png')
 
 # 点开藏宝地图模式位置
 open_box_map_pos = [500, 50]
@@ -134,8 +136,9 @@ def open_map():
     pyautogui.sleep(1)
     max_val, max_loc = match_img(open_map_error)
     if max_val < 0.9:
-        pyautogui.sleep(wait_open_time)
         pyautogui.moveRel(0, -100)
+        change_equip()
+        pyautogui.sleep(wait_open_time)
         up_horse()
         return True
     else:
@@ -333,6 +336,22 @@ def reset_visual_field():
     win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, 0, -200)
     time.sleep(0.5)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
+
+
+def change_equip():
+    pyautogui.press('c')
+    pyautogui.sleep(0.5)
+    max_val, max_loc = match_img(equip_empty)
+    if max_val > 0.9:
+        pyautogui.moveTo(max_loc[0] + 14, max_loc[1] + 14)
+        pyautogui.click()
+    pyautogui.sleep(1)
+    max_val, max_loc = match_img(equip_box)
+    if max_val > 0.9:
+        pyautogui.moveTo(max_loc[0] + 14, max_loc[1] + 14)
+        pyautogui.click()
+    pyautogui.sleep(0.5)
+    pyautogui.press('c')
 
 
 def send_message_with_loc(message):
