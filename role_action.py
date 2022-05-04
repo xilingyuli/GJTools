@@ -6,6 +6,7 @@ import datetime
 import win32api
 import win32con
 
+import cfg
 import find_box
 import log_message
 import role_loc
@@ -28,45 +29,6 @@ close_btn = cv2.imread('img/close_btn.png')
 horse = cv2.imread('img/horse.png')
 flower_debuff = cv2.imread('img/flower_debuff.png')
 
-# 点开藏宝地图模式位置
-open_box_map_pos = [500, 50]
-
-# 要丢掉的首张图位值
-first_map_pos = [1750, 350]
-
-# 确定按钮位置
-confirm_pos = [880, 450]
-
-# 打开藏宝图等待时间
-wait_open_time = 175
-wait_open_time_step = 5
-
-# 开始挖宝的坐标方向和大小
-begin_find_loc_1 = [-825, -525]
-begin_find_direct_1 = 0.6
-find_area_1 = [55, 51]
-
-# 挖宝区域大小
-begin_find_loc_2 = [-980, -530]
-begin_find_direct_2 = -0.5
-find_area_2 = [55, 27]
-
-# 背包格子大小
-bag_item_size = 44
-bag_width = 10
-bag_empty_lines = 2
-
-# 家园走到门口的位移距离
-home_to_door = [-10, 0]
-
-# 买图次数
-buy_map_times = 2
-
-# 下马判断
-judge_horse = False
-
-judge_flower = False
-
 
 def match_img(template):
     image = cv2.cvtColor(np.asarray(pyautogui.screenshot()), cv2.COLOR_RGB2BGR)
@@ -81,17 +43,17 @@ def clear_map(count=46):
     max_val, max_loc = match_img(map_title)
     # print(max_val)
     if max_val < 0.95:
-        pyautogui.moveTo(open_box_map_pos[0], open_box_map_pos[1])
+        pyautogui.moveTo(cfg.open_box_map_pos[0], cfg.open_box_map_pos[1])
         pyautogui.leftClick()
     for i in range(0, count):
-        pyautogui.moveTo(first_map_pos[0], first_map_pos[1])
+        pyautogui.moveTo(cfg.first_map_pos[0], cfg.first_map_pos[1])
         pyautogui.rightClick()
-        pyautogui.moveTo(first_map_pos[0] + 50, first_map_pos[1] + 30)
+        pyautogui.moveTo(cfg.first_map_pos[0] + 50, cfg.first_map_pos[1] + 30)
         pyautogui.leftClick()
         pyautogui.press('enter')
         # pyautogui.moveTo(confirm_pos[0], confirm_pos[1])
         # pyautogui.leftClick()
-    pyautogui.moveTo(first_map_pos[0] - 50, first_map_pos[1] - 50)
+    pyautogui.moveTo(cfg.first_map_pos[0] - 50, cfg.first_map_pos[1] - 50)
     pyautogui.leftClick()
     pyautogui.press('m')
     return True
@@ -117,7 +79,7 @@ def buy_map():
         send_message_with_loc("Open Map Store Error")
         return False
     clear_bag()
-    for i in range(0, buy_map_times):
+    for i in range(0, cfg.buy_map_times):
         pyautogui.moveTo(buy_map_max_loc[0] + 24 - i * 4, buy_map_max_loc[1] + 24)
         pyautogui.keyDown('shift')
         pyautogui.rightClick()
@@ -148,15 +110,15 @@ def open_map():
     max_val, max_loc = match_img(open_map_error)
     if max_val < 0.9:
         pyautogui.moveRel(0, -100)
-        if judge_flower:
-            for i in range(0, wait_open_time, wait_open_time_step):
+        if cfg.judge_flower:
+            for i in range(0, cfg.wait_open_time, cfg.wait_open_time_step):
                 max_val, max_loc = match_img(flower_debuff)
                 if max_val > 0.95:
                     pyautogui.moveTo(max_loc[0] + 13, max_loc[1] + 13)
                     pyautogui.rightClick()
-                pyautogui.sleep(wait_open_time_step)
+                pyautogui.sleep(cfg.wait_open_time_step)
         else:
-            pyautogui.sleep(wait_open_time)
+            pyautogui.sleep(cfg.wait_open_time)
         up_horse()
         return True
     else:
@@ -167,7 +129,7 @@ def open_map():
 
 
 def down_horse():
-    if judge_horse and not is_on_horse():
+    if cfg.judge_horse and not is_on_horse():
         return
     pyautogui.press('t')
     pyautogui.press('shift')
@@ -175,7 +137,7 @@ def down_horse():
 
 
 def up_horse():
-    if judge_horse and is_on_horse():
+    if cfg.judge_horse and is_on_horse():
         return
     pyautogui.press('t')
     pyautogui.sleep(3)
@@ -194,10 +156,10 @@ def prepare_to_find():
     role_move.move_to([-793, -677])
     role_move.move_to([-795, -666])
     role_move.move_to([-795, -640])
-    role_move.move_to(begin_find_loc_1, None, 1, 5)
-    role_move.turn_to(begin_find_direct_1)
+    role_move.move_to(cfg.begin_find_loc_1, None, 1, 5)
+    role_move.turn_to(cfg.begin_find_direct_1)
     loc = role_loc.get_current_loc()
-    if loc is not None and abs(loc[0] - begin_find_loc_1[0]) < 5 and abs(loc[1] - begin_find_loc_1[1]) < 5:
+    if loc is not None and abs(loc[0] - cfg.begin_find_loc_1[0]) < 5 and abs(loc[1] - cfg.begin_find_loc_1[1]) < 5:
         return True
     else:
         send_message_with_loc("Go to Find Box Error")
@@ -206,12 +168,12 @@ def prepare_to_find():
 
 def find_boxs():
     count = 0
-    role_move.move_to(begin_find_loc_1, None, 1, 5)
-    role_move.turn_to(begin_find_direct_1)
-    count += role_move.move_map(find_area_1[0], find_area_1[1], find_box.find_box_under_footer)
-    role_move.move_to(begin_find_loc_2, None, 1, 5)
-    role_move.turn_to(begin_find_direct_2)
-    count += role_move.move_map(find_area_2[0], find_area_2[1], find_box.find_box_under_footer)
+    role_move.move_to(cfg.begin_find_loc_1, None, 1, 5)
+    role_move.turn_to(cfg.begin_find_direct_1)
+    count += role_move.move_map(cfg.find_area_1[0], cfg.find_area_1[1], find_box.find_box_under_footer)
+    role_move.move_to(cfg.begin_find_loc_2, None, 1, 5)
+    role_move.turn_to(cfg.begin_find_direct_2)
+    count += role_move.move_map(cfg.find_area_2[0], cfg.find_area_2[1], find_box.find_box_under_footer)
     role_move.move_to([-850, -560], None, 3, 3)
     print("开盒次数" + str(count))
     if count <= 0:
@@ -239,14 +201,14 @@ def clear_bag():
     max_val, max_loc = match_img(bag_left)
     if max_val < 0.9:
         return
-    first_loc = [max_loc[0] + 100, max_loc[1] + 210 - bag_item_size * bag_empty_lines]
+    first_loc = [max_loc[0] + 100, max_loc[1] + 210 - cfg.bag_item_size * cfg.bag_empty_lines]
     pyautogui.keyDown('shift')
-    for j in range(0, bag_empty_lines):
-        for i in range(0, bag_width):
-            pyautogui.moveTo(first_loc[0] + i * bag_item_size, first_loc[1] + j * bag_item_size)
+    for j in range(0, cfg.bag_empty_lines):
+        for i in range(0, cfg.bag_width):
+            pyautogui.moveTo(first_loc[0] + i * cfg.bag_item_size, first_loc[1] + j * cfg.bag_item_size)
             pyautogui.rightClick()
     for i in range(0, 10):
-        pyautogui.moveTo(first_loc[0] + i * bag_item_size, first_loc[1] + bag_empty_lines * bag_item_size + 25)
+        pyautogui.moveTo(first_loc[0] + i * cfg.bag_item_size, first_loc[1] + cfg.bag_empty_lines * cfg.bag_item_size + 25)
         pyautogui.rightClick()
     pyautogui.keyUp('shift')
 
@@ -278,7 +240,7 @@ def reset_to_store():
     pyautogui.leftClick()
     pyautogui.sleep(30)
 
-    role_move.move(home_to_door[0], home_to_door[1])
+    role_move.move(cfg.home_to_door[0], cfg.home_to_door[1])
     pyautogui.press('f')
     time.sleep(1)
     max_val, max_loc = match_img(back_origin_btn)

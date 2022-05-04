@@ -2,44 +2,27 @@ import math
 import time
 import pyautogui
 
+import cfg
 import role_action
 import role_loc
-
-# 速度值
-move_speed = 0.1
-move_back_speed = 2.5
-turn_speed = 1.55
-
-# 地图式搜索时的步距
-move_distance_x = 4.5
-move_distance_y = 3
-
-# 转动可识别的最小角度
-turn_min = 0.025
-
-# 移动可识别的最小坐标差
-move_min = 1
-
-# 最多移动多少距离后校准方向
-max_move_distance = 50
 
 
 def move(x, y):
     if x > 0:
         pyautogui.keyDown('d')
-        wait_include_pause(x * move_speed)
+        wait_include_pause(x * cfg.move_speed)
         pyautogui.keyUp('d')
     elif x < 0:
         pyautogui.keyDown('a')
-        wait_include_pause(- x * move_speed)
+        wait_include_pause(- x * cfg.move_speed)
         pyautogui.keyUp('a')
     if y > 0:
         pyautogui.keyDown('w')
-        wait_include_pause(y * move_speed)
+        wait_include_pause(y * cfg.move_speed)
         pyautogui.keyUp('w')
     elif y < 0:
         pyautogui.keyDown('s')
-        wait_include_pause(- y * move_back_speed)
+        wait_include_pause(- y * cfg.move_back_speed)
         pyautogui.keyUp('s')
 
 
@@ -48,15 +31,15 @@ def turn_around(num):
         num = num - 2
     while num < -1:
         num = num + 2
-    if abs(num) <= turn_min:
+    if abs(num) <= cfg.turn_min:
         return
     if num > 0:
         pyautogui.keyDown(']')
-        wait_include_pause(num * turn_speed)
+        wait_include_pause(num * cfg.turn_speed)
         pyautogui.keyUp(']')
     elif num < 0:
         pyautogui.keyDown('[')
-        wait_include_pause(- num * turn_speed)
+        wait_include_pause(- num * cfg.turn_speed)
         pyautogui.keyUp('[')
 
 
@@ -80,20 +63,20 @@ def move_map(width, height, callback_fun=None):
     count = 0
     while y < height:
         while x < width:
-            move(direct * move_distance_x, 0)
-            x += move_distance_x
+            move(direct * cfg.move_distance_x, 0)
+            x += cfg.move_distance_x
             count += callback_fun()
-        if role_action.judge_horse:
+        if cfg.judge_horse:
             role_action.up_horse()
-        move(0, move_distance_y)
-        y += move_distance_y
+        move(0, cfg.move_distance_y)
+        y += cfg.move_distance_y
         count += callback_fun()
         x = 0
         direct = - direct
     return count
 
 
-def move_to(target_loc, target_direct=None, diff=move_min, try_time=2):
+def move_to(target_loc, target_direct=None, diff=cfg.move_min, try_time=2):
     res = False
     for i in range(0, try_time):
         if move_directly(target_loc, diff):
@@ -109,7 +92,7 @@ def move_to(target_loc, target_direct=None, diff=move_min, try_time=2):
         turn_around(target_direct - current_direct)
 
 
-def move_directly(target_loc, diff=move_min, try_times=5):
+def move_directly(target_loc, diff=cfg.move_min, try_times=5):
     if try_times <= 0:
         return False
     current_loc = role_loc.get_current_loc()
@@ -120,7 +103,7 @@ def move_directly(target_loc, diff=move_min, try_times=5):
     diff_loc = [target_loc[0] - current_loc[0], target_loc[1] - current_loc[1]]
     temp_direct = -math.atan2(diff_loc[1], diff_loc[0]) / math.pi
     turn_to(temp_direct)
-    move(0, min(math.hypot(diff_loc[0], diff_loc[1]), max_move_distance))
+    move(0, min(math.hypot(diff_loc[0], diff_loc[1]), cfg.max_move_distance))
     return move_directly(target_loc, diff, try_times - 1)
 
 
