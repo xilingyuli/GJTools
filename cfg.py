@@ -91,4 +91,4 @@ move_min = 1
 # 最多移动多少距离后校准方向
 max_move_distance = 50
 
-receive_addr = "786979248@qq.com"
+receive_addr = ""
