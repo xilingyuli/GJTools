@@ -92,3 +92,13 @@ move_min = 1
 max_move_distance = 50
 
 receive_addr = "786979248@qq.com"
+
+
+# 角色选择参数
+first_role_loc = [1836, 105]
+next_page_role_loc = [1836, 137]
+role_distance = 97
+role_page_count = 7
+
+open_role_wait_time = 20
+close_role_wait_time = 10
