@@ -5,12 +5,19 @@ import pyautogui
 
 import cfg
 import role_action
+import send_message
 
 gold_btn = cv2.imread('img/gold_btn.png')
 gold_tips = cv2.imread('img/gold_tips.png')
 menu_btn = cv2.imread('img/menu_btn.png')
 role_back_btn = cv2.imread('img/role_back_btn.png')
 confirm_btn = cv2.imread('img/confirm_btn.png')
+exit_confirm_btn = cv2.imread('img/exit_confirm_btn.png')
+leave_game_btn = cv2.imread('img/leave_game_btn.png')
+open_game_in_role = cv2.imread('img/open_game_in_role.png')
+in_game_tip = cv2.imread('img/in_game_tip.png')
+open_game_in_login = cv2.imread('img/open_game_in_login.png')
+login_states = cv2.imread('img/login_states.png')
 
 
 def find_and_click(image, offset, level=0.9):
@@ -31,16 +38,18 @@ def open_gold_btn():
     return False
 
 
-def close_role():
+def close_role(wait_times=10):
     if find_and_click(menu_btn, 11):
         if find_and_click(role_back_btn, 25):
             if find_and_click(confirm_btn, 15):
-                time.sleep(cfg.close_role_wait_time)
-                return True
+                for i in range(0, wait_times):
+                    time.sleep(cfg.check_game_state_step)
+                    if is_in_role_choose():
+                        return True
     return False
 
 
-def open_role(index):
+def open_role(index, wait_times=10):
     if index < cfg.role_page_count:
         pyautogui.moveTo(cfg.first_role_loc[0], cfg.first_role_loc[1] + index * cfg.role_distance)
     else:
@@ -50,4 +59,45 @@ def open_role(index):
     pyautogui.leftClick()
     time.sleep(1)
     pyautogui.press('enter')
-    time.sleep(cfg.open_role_wait_time)
+    for i in range(0, wait_times):
+        time.sleep(cfg.check_game_state_step)
+        if is_in_game():
+            return True
+    return False
+
+
+def is_in_role_choose():
+    max_val, max_loc = role_action.match_img(open_game_in_role)
+    return max_val > 0.9
+
+
+def is_in_game():
+    max_val, max_loc = role_action.match_img(in_game_tip)
+    return max_val > 0.9
+
+
+def is_in_login():
+    max_val, max_loc = role_action.match_img(open_game_in_login)
+    return max_val > 0.9
+
+
+def close_regional(wait_times=10):
+    width, height = pyautogui.size()
+    if is_in_role_choose():
+        pyautogui.moveTo(width - 15, 15)
+        pyautogui.leftClick()
+        find_and_click(exit_confirm_btn, 15)
+    elif is_in_game():
+        pyautogui.moveTo(width - 15, 15)
+        pyautogui.leftClick()
+        find_and_click(leave_game_btn, 15)
+    for i in range(0, wait_times):
+        time.sleep(cfg.check_game_state_step)
+        if is_in_login():
+            max_val, max_loc = role_action.match_img(login_states)
+            if max_val > 0.9:
+                return True
+            else:
+                send_message.send_message("Login States Error")
+                return False
+    return False

@@ -100,5 +100,4 @@ next_page_role_loc = [1836, 137]
 role_distance = 97
 role_page_count = 7
 
-open_role_wait_time = 20
-close_role_wait_time = 10
+check_game_state_step = 5
