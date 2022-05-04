@@ -33,6 +33,7 @@ def find_and_click(image, offset, level=0.9):
 
 def open_gold_btn():
     if find_and_click(gold_btn, 21):
+        pyautogui.moveRel(0, -100)
         time.sleep(8)
         max_val, max_loc = role_action.match_img(gold_tips)
         if max_val > 0.9:
@@ -70,17 +71,17 @@ def open_role(index, wait_times=10):
 
 def is_in_role_choose():
     max_val, max_loc = role_action.match_img(open_game_in_role)
-    return max_val > 0.9
+    return max_val > 0.95
 
 
 def is_in_game():
     max_val, max_loc = role_action.match_img(in_game_tip)
-    return max_val > 0.9
+    return max_val > 0.95
 
 
 def is_in_login():
     max_val, max_loc = role_action.match_img(open_game_in_login)
-    return max_val > 0.9
+    return max_val > 0.95
 
 
 def close_regional(wait_times=10):
@@ -105,7 +106,8 @@ def close_regional(wait_times=10):
     return False
 
 
-def open_regional(column, line, wait_times=10):
+def open_regional(line, column, wait_times=10):
+    width, height = pyautogui.size()
     max_val, max_loc = role_action.match_img(open_game_in_login)
     if max_val < 0.9:
         return False
@@ -117,7 +119,6 @@ def open_regional(column, line, wait_times=10):
         first_pos = [max_loc[0] + cfg.first_regional_loc[0], max_loc[1] + cfg.first_regional_loc[1]]
         pyautogui.moveTo(first_pos[0] + column * cfg.regional_size[0], first_pos[1] + line * cfg.regional_size[1])
     else:
-        width, height = pyautogui.size()
         pyautogui.moveTo(width / 2, height / 2)
         pyautogui.scroll(-20000)
         first_pos = [max_loc[0] + cfg.next_page_regional_loc[0], max_loc[1] + cfg.next_page_regional_loc[1]]
@@ -125,6 +126,14 @@ def open_regional(column, line, wait_times=10):
     pyautogui.leftClick()
     find_and_click(regional_confirm_btn, 25)
     find_and_click(open_game_in_login, 40)
+
+    time.sleep(cfg.open_game_time)
+    pyautogui.moveTo(width / 2, height / 2)
+    pyautogui.leftClick()
+    pyautogui.sleep(3)
+    pyautogui.leftClick()
+    pyautogui.sleep(5)
+
     for i in range(0, wait_times):
         time.sleep(cfg.check_game_state_step)
         if is_in_role_choose():

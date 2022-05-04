@@ -109,3 +109,5 @@ first_regional_loc = [110, 95]
 next_page_regional_loc = [110, 130]
 regional_size = [215, 87]
 regional_page_line_count = 4
+
+open_game_time = 40

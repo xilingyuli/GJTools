@@ -5,3 +5,7 @@ logging.basicConfig(filename='log.txt', format='%(asctime)s  %(message)s', level
 
 def log_error(message):
     logging.error(message)
+
+
+def log_info(message):
+    logging.info(message)
