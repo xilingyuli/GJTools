@@ -18,6 +18,8 @@ open_game_in_role = cv2.imread('img/open_game_in_role.png')
 in_game_tip = cv2.imread('img/in_game_tip.png')
 open_game_in_login = cv2.imread('img/open_game_in_login.png')
 login_states = cv2.imread('img/login_states.png')
+first_regional_tip = cv2.imread('img/first_regional_tip.png')
+regional_confirm_btn = cv2.imread('img/regional_confirm_btn.png')
 
 
 def find_and_click(image, offset, level=0.9):
@@ -100,4 +102,31 @@ def close_regional(wait_times=10):
             else:
                 send_message.send_message("Login States Error")
                 return False
+    return False
+
+
+def open_regional(column, line, wait_times=10):
+    max_val, max_loc = role_action.match_img(open_game_in_login)
+    if max_val < 0.9:
+        return False
+    pyautogui.moveTo(max_loc[0] + cfg.choose_regional_distance[0], max_loc[1] + cfg.choose_regional_distance[1])
+    pyautogui.leftClick()
+    pyautogui.sleep(5)
+    max_val, max_loc = role_action.match_img(first_regional_tip)
+    if line < cfg.regional_page_line_count:
+        first_pos = [max_loc[0] + cfg.first_regional_loc[0], max_loc[1] + cfg.first_regional_loc[1]]
+        pyautogui.moveTo(first_pos[0] + column * cfg.regional_size[0], first_pos[1] + line * cfg.regional_size[1])
+    else:
+        width, height = pyautogui.size()
+        pyautogui.moveTo(width / 2, height / 2)
+        pyautogui.scroll(-20000)
+        first_pos = [max_loc[0] + cfg.next_page_regional_loc[0], max_loc[1] + cfg.next_page_regional_loc[1]]
+        pyautogui.moveTo(first_pos[0] + column * cfg.regional_size[0], first_pos[1] + (line - 2) * cfg.regional_size[1])
+    pyautogui.leftClick()
+    find_and_click(regional_confirm_btn, 25)
+    find_and_click(open_game_in_login, 40)
+    for i in range(0, wait_times):
+        time.sleep(cfg.check_game_state_step)
+        if is_in_role_choose():
+            return True
     return False

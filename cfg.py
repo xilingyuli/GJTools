@@ -94,10 +94,18 @@ max_move_distance = 50
 receive_addr = "786979248@qq.com"
 
 
-# 角色选择参数
+check_game_state_step = 5
+
+# 角色选择界面参数
 first_role_loc = [1836, 105]
 next_page_role_loc = [1836, 137]
 role_distance = 97
 role_page_count = 7
 
-check_game_state_step = 5
+# 区服选择界面参数
+# 区服选择按钮和开始游戏按钮距离
+choose_regional_distance = [-100, 45]
+first_regional_loc = [110, 95]
+next_page_regional_loc = [110, 130]
+regional_size = [215, 87]
+regional_page_line_count = 4
