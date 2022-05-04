@@ -38,7 +38,7 @@ first_map_pos = [1750, 350]
 confirm_pos = [880, 450]
 
 # 打开藏宝图等待时间
-wait_open_time = 120
+wait_open_time = 175
 wait_open_time_step = 5
 
 # 开始挖宝的坐标方向和大小
@@ -52,15 +52,20 @@ begin_find_direct_2 = -0.5
 find_area_2 = [55, 27]
 
 # 背包格子大小
-bag_item_size = 36
-bag_width = 12
-bag_empty_lines = 3
+bag_item_size = 44
+bag_width = 10
+bag_empty_lines = 2
 
 # 家园走到门口的位移距离
 home_to_door = [-10, 0]
 
 # 买图次数
 buy_map_times = 2
+
+# 下马判断
+judge_horse = False
+
+judge_flower = False
 
 
 def match_img(template):
@@ -143,12 +148,15 @@ def open_map():
     max_val, max_loc = match_img(open_map_error)
     if max_val < 0.9:
         pyautogui.moveRel(0, -100)
-        for i in range(0, wait_open_time, wait_open_time_step):
-            max_val, max_loc = match_img(flower_debuff)
-            if max_val > 0.95:
-                pyautogui.moveTo(max_loc[0] + 13, max_loc[1] + 13)
-                pyautogui.rightClick()
-            pyautogui.sleep(wait_open_time_step)
+        if judge_flower:
+            for i in range(0, wait_open_time, wait_open_time_step):
+                max_val, max_loc = match_img(flower_debuff)
+                if max_val > 0.95:
+                    pyautogui.moveTo(max_loc[0] + 13, max_loc[1] + 13)
+                    pyautogui.rightClick()
+                pyautogui.sleep(wait_open_time_step)
+        else:
+            pyautogui.sleep(wait_open_time)
         up_horse()
         return True
     else:
@@ -159,7 +167,7 @@ def open_map():
 
 
 def down_horse():
-    if not is_on_horse():
+    if judge_horse and not is_on_horse():
         return
     pyautogui.press('t')
     pyautogui.press('shift')
@@ -167,7 +175,7 @@ def down_horse():
 
 
 def up_horse():
-    if is_on_horse():
+    if judge_horse and is_on_horse():
         return
     pyautogui.press('t')
     pyautogui.sleep(3)
@@ -231,7 +239,7 @@ def clear_bag():
     max_val, max_loc = match_img(bag_left)
     if max_val < 0.9:
         return
-    first_loc = [max_loc[0] + 100, max_loc[1] + 193 - bag_item_size * bag_empty_lines]
+    first_loc = [max_loc[0] + 100, max_loc[1] + 210 - bag_item_size * bag_empty_lines]
     pyautogui.keyDown('shift')
     for j in range(0, bag_empty_lines):
         for i in range(0, bag_width):
@@ -341,9 +349,9 @@ def reset_visual_field():
     time.sleep(0.5)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, x, y)
     time.sleep(0.5)
-    win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, 0, 300)
+    win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, 0, 150)
     time.sleep(0.5)
-    win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, 0, -200)
+    win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, 0, -100)
     time.sleep(0.5)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
 

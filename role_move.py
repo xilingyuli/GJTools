@@ -8,7 +8,7 @@ import role_loc
 # 速度值
 move_speed = 0.1
 move_back_speed = 2.5
-turn_speed = 1.86
+turn_speed = 1.55
 
 # 地图式搜索时的步距
 move_distance_x = 4.5
@@ -83,7 +83,8 @@ def move_map(width, height, callback_fun=None):
             move(direct * move_distance_x, 0)
             x += move_distance_x
             count += callback_fun()
-        role_action.up_horse()
+        if role_action.judge_horse:
+            role_action.up_horse()
         move(0, move_distance_y)
         y += move_distance_y
         count += callback_fun()
