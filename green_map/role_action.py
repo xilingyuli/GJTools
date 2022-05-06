@@ -7,11 +7,9 @@ import win32api
 import win32con
 
 import cfg
-import find_box
-import log_message
-import role_loc
-import role_move
-import send_message
+from green_map import find_box
+from message import log_message, send_message
+from common import role_loc, role_move
 
 map_in_store = cv2.imread('img/map_in_store.png')
 open_map_btn = cv2.imread('img/open_map.png')
@@ -35,6 +33,15 @@ def match_img(template):
     match_res = cv2.matchTemplate(image, template, 3)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(match_res)
     return max_val, max_loc
+
+
+def find_and_click(image, offset, level=0.9):
+    max_val, max_loc = match_img(image)
+    if max_val > level:
+        pyautogui.moveTo(max_loc[0] + offset, max_loc[1] + offset)
+        pyautogui.leftClick()
+        return True
+    return False
 
 
 def clear_map(count=46):

@@ -2,8 +2,7 @@ import time
 
 import pyautogui
 
-import role_loc
-import role_move
+from common import role_loc, role_move
 import math
 
 time.sleep(3)

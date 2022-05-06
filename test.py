@@ -1,8 +1,6 @@
 import time
 
-import find_box
-import role_action
-import role_action_gold
+from common import role_change
 
 time.sleep(3)
-role_action_gold.is_in_game()
+role_change.is_in_game()

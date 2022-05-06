@@ -10,8 +10,7 @@ import re
 import pyautogui
 
 import cfg
-import role_move
-
+from common import role_move
 
 re_cmp = re.compile('-?[1-9]\d*')
 

@@ -1,7 +1,7 @@
 import datetime
 import time
 
-import role_action
+from green_map import role_action
 
 time.sleep(3)
 

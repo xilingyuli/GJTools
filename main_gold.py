@@ -1,9 +1,9 @@
 import datetime
 import time
 
-import log_message
+from common import role_change
+from message import log_message, send_message
 import role_action_gold
-import send_message
 
 time.sleep(3)
 
@@ -20,13 +20,13 @@ for i in range(0, 200):
     region_count = 0
 
     for region in region_list:
-        role_action_gold.open_regional(region[0], region[1])
+        role_change.open_regional(region[0], region[1])
         for role_index in range(0, region[2]):
-            role_action_gold.open_role(role_index)
+            role_change.open_role(role_index)
             if role_action_gold.open_gold_btn():
                 message = message + str(region_count) + ',' + str(role_index) + '  '
-            role_action_gold.close_role()
-        role_action_gold.close_regional()
+            role_change.close_role()
+        role_change.close_regional()
         region_count = region_count + 1
 
     date_str = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S')

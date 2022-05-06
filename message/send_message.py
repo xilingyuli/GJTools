@@ -2,7 +2,7 @@ from smtplib import SMTP_SSL
 from email.mime.text import MIMEText
 
 import cfg
-import log_message
+from message import log_message
 
 
 def send_message(message):

@@ -3,8 +3,8 @@ import time
 import pyautogui
 
 import cfg
-import role_action
-import role_loc
+from common import role_loc
+from green_map import role_action
 
 
 def move(x, y):

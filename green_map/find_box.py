@@ -6,7 +6,7 @@ import imutils
 import pyautogui
 
 import cfg
-import role_move
+from common import role_move
 
 find_tip = cv2.imread('img/find_tip.png')
 find_tip_night = cv2.imread('img/find_tip_night.png')
