@@ -2,8 +2,7 @@ import datetime
 import time
 
 from common import role_change
-from message import log_message, send_message
-import role_action_gold
+from gold_symbol import role_action_gold
 
 time.sleep(3)
 
