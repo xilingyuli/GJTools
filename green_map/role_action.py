@@ -35,7 +35,7 @@ def match_img(template):
     return max_val, max_loc
 
 
-def find_and_click(image, offset, level=0.9):
+def find_and_click(image, offset, level=0.98):
     max_val, max_loc = match_img(image)
     if max_val > level:
         pyautogui.moveTo(max_loc[0] + offset, max_loc[1] + offset)

@@ -9,6 +9,13 @@ time.sleep(3)
 
 region_list = [[0, 4, 9]]
 
+
+def each_role_action(region_count, role_index):
+    if role_action_gold.open_gold_btn():
+        print('Gold Symbol: regional ' + str(region_count) + ', role ' + str(role_index) + '  ')
+        # 加上挖紫图逻辑
+
+
 for i in range(0, 200):
     current_time = datetime.datetime.now()
     if 10 > current_time.hour > 5 and current_time.isoweekday() == 4:
@@ -16,24 +23,12 @@ for i in range(0, 200):
     elif current_time.hour == 5 and current_time.isoweekday() == 4 and current_time.minute > 30:
         break
 
-    message = "Gold: \n"
-    region_count = 0
+    # 开八卦镜
+    role_change.for_each_role(region_list, each_role_action)
 
-    for region in region_list:
-        role_change.open_regional(region[0], region[1])
-        for role_index in range(0, region[2]):
-            role_change.open_role(role_index)
-            if role_action_gold.open_gold_btn():
-                message = message + str(region_count) + ',' + str(role_index) + '  '
-            role_change.close_role()
-        role_change.close_regional()
-        region_count = region_count + 1
+    interval_time = 4 * 60 * 60 + 10 * 60
+    target_time = current_time.timestamp() + interval_time
 
-    date_str = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S')
-    message = date_str + message
-
-    print(message)
-    log_message.log_info(message)
-    send_message.send_message(message)
-
-    time.sleep(4 * 60 * 60 + 15 * 60)
+    while datetime.datetime.now().timestamp() < target_time:
+        # 换成切角色挖绿逻辑
+        time.sleep(10 * 60 * 60)

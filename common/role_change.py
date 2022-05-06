@@ -50,17 +50,17 @@ def open_role(index, wait_times=10):
 
 def is_in_role_choose():
     max_val, max_loc = role_action.match_img(open_game_in_role)
-    return max_val > 0.95
+    return max_val > 0.98
 
 
 def is_in_game():
     max_val, max_loc = role_action.match_img(in_game_tip)
-    return max_val > 0.95
+    return max_val > 0.98
 
 
 def is_in_login():
     max_val, max_loc = role_action.match_img(open_game_in_login)
-    return max_val > 0.95
+    return max_val > 0.98
 
 
 def close_regional(wait_times=10):
@@ -118,3 +118,15 @@ def open_regional(line, column, wait_times=10):
         if is_in_role_choose():
             return True
     return False
+
+
+def for_each_role(region_list, callback_fun=None):
+    region_count = 0
+    for region in region_list:
+        open_regional(region[0], region[1])
+        for role_index in range(0, region[2]):
+            open_role(role_index)
+            callback_fun(region_count, role_index)
+            close_role()
+        close_regional()
+        region_count = region_count + 1

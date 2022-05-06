@@ -14,6 +14,6 @@ def open_gold_btn():
         pyautogui.moveRel(0, -100)
         time.sleep(8)
         max_val, max_loc = role_action.match_img(gold_tips)
-        if max_val > 0.9:
+        if max_val > 0.97:
             return True
     return False
