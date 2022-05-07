@@ -111,3 +111,5 @@ regional_size = [215, 87]
 regional_page_line_count = 4
 
 open_game_time = 40
+
+goto_huanglangyuan_time = 40

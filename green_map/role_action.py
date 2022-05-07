@@ -44,6 +44,14 @@ def find_and_click(image, offset, level=0.98):
     return False
 
 
+def find_and_move(image, offset, level=0.98):
+    max_val, max_loc = match_img(image)
+    if max_val > level:
+        pyautogui.moveTo(max_loc[0] + offset, max_loc[1] + offset)
+        return True
+    return False
+
+
 def clear_map(count=46):
     pyautogui.press('m')
     time.sleep(0.5)
@@ -313,16 +321,35 @@ def is_on_horse():
 
 
 def reset_visual_field():
+    reset_look_down()
+
+    x, y = 1000, 700
+    win32api.SetCursorPos((x, y))
+    time.sleep(0.1)
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, x, y)
+    time.sleep(0.1)
+    for i in range(0, 3):
+        win32api.SetCursorPos((x, y))
+        time.sleep(0.1)
+        win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, 0, -100)
+        time.sleep(0.1)
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
+    time.sleep(0.1)
+
+
+def reset_look_down():
     x, y = 1000, 100
     win32api.SetCursorPos((x, y))
-    time.sleep(0.5)
+    time.sleep(0.1)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, x, y)
-    time.sleep(0.5)
-    win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, 0, 150)
-    time.sleep(0.5)
-    win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, 0, -100)
-    time.sleep(0.5)
+    time.sleep(0.1)
+    for i in range(0, 3):
+        win32api.SetCursorPos((x, y))
+        time.sleep(0.1)
+        win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, 0, 300)
+        time.sleep(0.1)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
+    time.sleep(0.1)
 
 
 def send_message_with_loc(message):
