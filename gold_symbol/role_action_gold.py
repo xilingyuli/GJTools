@@ -2,15 +2,17 @@ import math
 import time
 
 import cv2
+import numpy as np
 import pyautogui
 
 import cfg
 from common import role_move, role_loc
-from green_map import role_action
+from green_map import role_action, find_box
 
 gold_btn = cv2.imread('img/gold_btn.png')
 gold_tips = cv2.imread('img/gold_tips.png')
 hide_all_mark_check = cv2.imread('img/hide_all_mark_check.png')
+find_box_mark = cv2.imread('img/find_box_mark.png')
 
 
 def open_gold_btn():
@@ -74,3 +76,39 @@ def move_directly_in_sky(target_loc, diff=cfg.move_min, try_times=5):
     role_move.turn_to(temp_direct)
     role_move.move(min(math.hypot(diff_loc[0], diff_loc[1]), cfg.max_move_distance), 0)
     return move_directly_in_sky(target_loc, diff, try_times - 1)
+
+
+def move_to_box_mark():
+    image = cv2.cvtColor(np.asarray(pyautogui.screenshot()), cv2.COLOR_RGB2BGR)
+    match_res = cv2.matchTemplate(image, find_box_mark, 3)
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(match_res)
+    if max_val > 0.9:
+        distance_params = 0.075
+        max_loc = [max_loc[0] + 12, max_loc[1] + 24]
+        pyautogui.moveTo(max_loc[0], max_loc[1])
+        diff_loc = [max_loc[0] - cfg.role_screen_pos[0], max_loc[1] - cfg.role_screen_pos[1]]
+        role_move.move(diff_loc[0] * distance_params, 0)
+        role_move.turn_around(0.5)
+        role_move.move(diff_loc[1] * distance_params, 0)
+
+
+def is_on_box_by_tip():
+    time.sleep(0.2)
+    try_find_tip = cv2.cvtColor(np.asarray(pyautogui.screenshot()), cv2.COLOR_RGB2BGR)
+    match_res = cv2.matchTemplate(try_find_tip, find_box.find_tip, 3)
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(match_res)
+    return max_val > 0.95
+
+
+def dig_purple_map_box():
+    move_to_box_mark()
+    role_action.down_horse()
+    role_action.reset_visual_field()
+    pyautogui.moveTo(cfg.footer_pos[0], cfg.footer_pos[1])
+    if is_on_box_by_tip():
+        pyautogui.rightClick()
+        time.sleep(cfg.open_box_time)
+        return True
+    return False
+
+
