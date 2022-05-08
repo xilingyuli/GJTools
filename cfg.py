@@ -94,6 +94,10 @@ max_move_distance = 50
 receive_addr = "786979248@qq.com"
 
 
+# 金像间隔
+gold_interval_time = 4 * 60 * 60
+
+# 游戏界面变化检查时间
 check_game_state_step = 5
 
 # 角色选择界面参数
@@ -113,3 +117,6 @@ regional_page_line_count = 4
 open_game_time = 40
 
 goto_huanglangyuan_time = 40
+
+# 要开的区
+region_list = [[2, 3, 3]]

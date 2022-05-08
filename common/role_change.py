@@ -122,6 +122,8 @@ def open_regional(line, column, wait_times=10):
 
 def for_each_role(region_list, callback_fun=None):
     region_count = 0
+    if not close_regional():
+        return False
     for region in region_list:
         if not open_regional(region[0], region[1]):
             return False
@@ -134,4 +136,14 @@ def for_each_role(region_list, callback_fun=None):
         if not close_regional():
             return False
         region_count = region_count + 1
+    return True
+
+
+def try_open_role(region_index, role_index):
+    if not close_regional():
+        return False
+    if not open_regional(cfg.region_list[region_index][0], cfg.region_list[region_index][1]):
+        return False
+    if not open_role(role_index):
+        return False
     return True

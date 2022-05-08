@@ -1,18 +1,20 @@
 import datetime
 import time
 
+import cfg
 from common import role_change
 from gold_symbol import role_action_gold
+from green_map import dig_green_map, role_action
+from message import csv_message, file_message
 
 time.sleep(3)
 
-region_list = [[0, 4, 9]]
-
 
 def each_role_action(region_count, role_index):
-    if role_action_gold.open_gold_btn():
-        print('Gold Symbol: regional ' + str(region_count) + ', role ' + str(role_index) + '  ')
-        # 加上挖紫图逻辑
+    role_action.close_dialog()
+    has_gold = role_action_gold.open_gold_btn()
+    csv_message.set_gold_symbols(region_count, role_index, has_gold, datetime.datetime.now().timestamp())
+    # 加上挖紫图逻辑
 
 
 for i in range(0, 200):
@@ -22,12 +24,21 @@ for i in range(0, 200):
     elif current_time.hour == 5 and current_time.isoweekday() == 4 and current_time.minute > 30:
         break
 
+    csv_message.load_gold_symbols_record()
+
+    last_time = csv_message.get_last_gold_symbols_time()
+    target_time = last_time + cfg.gold_interval_time
+
+    # 挖绿图
+    if target_time > datetime.datetime.now().timestamp():
+        region_index, role_index = file_message.get_next_dig_green_role()
+        if role_change.try_open_role(region_index, role_index):
+            if dig_green_map.dig_green_before_target_time(target_time):
+                file_message.set_dig_green_role(region_index, role_index)
+
+    if target_time > datetime.datetime.now().timestamp():
+        time.sleep(datetime.datetime.now().timestamp() - target_time)
+
     # 开八卦镜
-    role_change.for_each_role(region_list, each_role_action)
-
-    interval_time = 4 * 60 * 60 + 10 * 60
-    target_time = current_time.timestamp() + interval_time
-
-    while datetime.datetime.now().timestamp() < target_time:
-        # 换成切角色挖绿逻辑
-        time.sleep(10 * 60 * 60)
+    role_change.for_each_role(cfg.region_list, each_role_action)
+    csv_message.save_gold_symbols_record()
