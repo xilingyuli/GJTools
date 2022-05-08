@@ -338,7 +338,7 @@ def reset_visual_field():
 
 
 def reset_look_down():
-    x, y = 1000, 100
+    x, y = 1000, 120
     win32api.SetCursorPos((x, y))
     time.sleep(0.1)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, x, y)

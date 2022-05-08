@@ -117,6 +117,7 @@ regional_page_line_count = 4
 open_game_time = 40
 
 goto_huanglangyuan_time = 40
+goto_changheshan_time = 30
 
 # 要开的区
 region_list = [[2, 3, 1]]

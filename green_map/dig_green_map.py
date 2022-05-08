@@ -11,7 +11,7 @@ from green_map import role_action
 big_fly_btn = cv2.imread('img/big_fly_btn.png')
 hide_all_mark = cv2.imread('img/hide_all_mark.png')
 hide_all_mark_check = cv2.imread('img/hide_all_mark_check.png')
-zhilingjing_btn = cv2.imread('img/map/zhilingjing_btn.png')
+zhilingjing_btn = cv2.imread('img/zhilingjing_btn.png')
 huanglangyuan = cv2.imread('img/map/huanglangyuan.png')
 wuyezhen = cv2.imread('img/map/wuyezhen.png')
 
