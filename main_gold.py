@@ -30,14 +30,11 @@ for i in range(0, 200):
     target_time = last_time + cfg.gold_interval_time
 
     # 挖绿图
-    if target_time > datetime.datetime.now().timestamp():
+    while target_time > datetime.datetime.now().timestamp():
         region_index, role_index = file_message.get_next_dig_green_role()
         if role_change.try_open_role(region_index, role_index):
             dig_green_map.dig_green_before_target_time(target_time)
             file_message.set_dig_green_role(region_index, role_index)
-
-    if target_time > datetime.datetime.now().timestamp():
-        time.sleep(datetime.datetime.now().timestamp() - target_time)
 
     # 开八卦镜
     role_change.for_each_role(cfg.region_list, each_role_action)
