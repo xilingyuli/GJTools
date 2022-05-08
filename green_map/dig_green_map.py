@@ -34,7 +34,8 @@ def init_to_store():
             pyautogui.moveTo(max_loc[0] + 10, max_loc[1] + 10)
             pyautogui.click()
     pyautogui.press('m')
-    role_action.up_horse()
+    if not role_action.is_on_horse():
+        role_action.up_horse()
 
     role_move.turn_to(0)
     role_action.reset_look_down()
