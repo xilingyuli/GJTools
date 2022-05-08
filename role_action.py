@@ -306,16 +306,35 @@ def is_on_horse():
 
 
 def reset_visual_field():
-    x, y = 1000, 100
+    reset_look_down()
+
+    x, y = 1000, 700
     win32api.SetCursorPos((x, y))
-    time.sleep(0.5)
+    time.sleep(0.1)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, x, y)
-    time.sleep(0.5)
-    win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, 0, 150)
-    time.sleep(0.5)
-    win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, 0, -100)
-    time.sleep(0.5)
+    time.sleep(0.1)
+    for i in range(0, 3):
+        win32api.SetCursorPos((x, y))
+        time.sleep(0.1)
+        win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, 0, -100)
+        time.sleep(0.1)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
+    time.sleep(0.1)
+
+
+def reset_look_down():
+    x, y = 1000, 120
+    win32api.SetCursorPos((x, y))
+    time.sleep(0.1)
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, x, y)
+    time.sleep(0.1)
+    for i in range(0, 3):
+        win32api.SetCursorPos((x, y))
+        time.sleep(0.1)
+        win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, 0, 300)
+        time.sleep(0.1)
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
+    time.sleep(0.1)
 
 
 def send_message_with_loc(message):
