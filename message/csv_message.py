@@ -8,25 +8,27 @@ csv_rows = []
 
 
 def load_gold_symbols_record():
+    csv_rows.clear()
+
     file_name = 'gold_symbols.csv'
-    with open(file_name, 'w+') as csv_file:
-        csv_rows.clear()
+    with open(file_name, 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         for row in csv_reader:
-            csv_rows.append(row)
+            if len(row) >= 2:
+                csv_rows.append([bool(row[0]), int(row[1])])
 
     while len(csv_rows) < len(cfg.region_list) * 10:
         csv_rows.append([False, 0])
 
-    create_time = time.strftime('%Y%m%d%H%M%S', time.localtime(os.path.getmtime(file_name)))
-    os.rename(file_name, 'gold_symbols_' + create_time + '.csv')
-
 
 def save_gold_symbols_record():
     file_name = 'gold_symbols.csv'
-    with open(file_name, 'w+') as csv_file:
+    create_time = time.strftime('%Y%m%d%H%M%S', time.localtime(os.path.getmtime(file_name)))
+    os.rename(file_name, 'gold_symbols_' + create_time + '.csv')
+    with open(file_name, 'w+', newline='') as csv_file:
         csv_writer = csv.writer(csv_file)
-        csv_writer.writerows(csv_rows)
+        for row in csv_rows:
+            csv_writer.writerow(row)
 
 
 def set_gold_symbols(regional, role, has_gold_symbols, open_time):

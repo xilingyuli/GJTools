@@ -4,4 +4,5 @@
 *.xml
 /.idea
 *.iml
-log.txt
+*.txt
+*.csv

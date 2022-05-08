@@ -119,4 +119,4 @@ open_game_time = 40
 goto_huanglangyuan_time = 40
 
 # 要开的区
-region_list = [[2, 3, 3]]
+region_list = [[2, 3, 1]]
