@@ -82,7 +82,7 @@ move_distance_y = 3
 # 速度值
 move_speed = 0.1
 move_back_speed = 2.5
-turn_speed = 1.55
+turn_speed = 1.5
 # 转动可识别的最小角度
 turn_min = 0.025
 # 移动可识别的最小坐标差

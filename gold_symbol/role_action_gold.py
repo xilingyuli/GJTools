@@ -13,6 +13,7 @@ gold_btn = cv2.imread('img/gold_btn.png')
 gold_tips = cv2.imread('img/gold_tips.png')
 hide_all_mark_check = cv2.imread('img/hide_all_mark_check.png')
 find_box_mark = cv2.imread('img/find_box_mark.png')
+find_box_mark_nearby = cv2.imread('img/find_box_mark_nearby.png')
 
 
 def open_gold_btn():
@@ -78,18 +79,43 @@ def move_directly_in_sky(target_loc, diff=cfg.move_min, try_times=5):
     return move_directly_in_sky(target_loc, diff, try_times - 1)
 
 
-def move_to_box_mark():
+def move_to_box_mark_in_sky():
+    target_loc = get_box_mark_loc()
+    if target_loc is None:
+        return False
+    diff_loc = [target_loc[0] - cfg.role_screen_pos[0], target_loc[1] - cfg.role_screen_pos[1]]
+    temp_direct = math.atan2(diff_loc[1], diff_loc[0]) / math.pi
+    role_move.turn_around(temp_direct)
+
+    target_loc = get_box_mark_loc()
+    if target_loc is None:
+        return False
+    diff_loc = [target_loc[0] - cfg.role_screen_pos[0], target_loc[1] - cfg.role_screen_pos[1]]
+    distance0 = math.hypot(diff_loc[0], diff_loc[1])
+
+    test_step = 5
+    role_move.move(test_step, 0)
+
+    target_loc = get_box_mark_loc()
+    if target_loc is None:
+        return False
+    diff_loc = [target_loc[0] - cfg.role_screen_pos[0], target_loc[1] - cfg.role_screen_pos[1]]
+    distance1 = math.hypot(diff_loc[0], diff_loc[1])
+
+    sky_speed = (distance1 - distance0) / test_step
+    if sky_speed != 0:
+        role_move.move(- distance1 / sky_speed, 0)
+        return True
+    return False
+
+
+def get_box_mark_loc():
     image = cv2.cvtColor(np.asarray(pyautogui.screenshot()), cv2.COLOR_RGB2BGR)
     match_res = cv2.matchTemplate(image, find_box_mark, 3)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(match_res)
     if max_val > 0.9:
-        distance_params = 0.075
-        max_loc = [max_loc[0] + 12, max_loc[1] + 24]
-        pyautogui.moveTo(max_loc[0], max_loc[1])
-        diff_loc = [max_loc[0] - cfg.role_screen_pos[0], max_loc[1] - cfg.role_screen_pos[1]]
-        role_move.move(diff_loc[0] * distance_params, 0)
-        role_move.turn_around(0.5)
-        role_move.move(diff_loc[1] * distance_params, 0)
+        return [max_loc[0] + 11, max_loc[1] + 21]
+    return None
 
 
 def is_on_box_by_tip():
@@ -101,14 +127,18 @@ def is_on_box_by_tip():
 
 
 def dig_purple_map_box():
-    move_to_box_mark()
+    move_to_box_mark_in_sky()
     role_action.down_horse()
-    role_action.reset_visual_field()
-    pyautogui.moveTo(cfg.footer_pos[0], cfg.footer_pos[1])
-    if is_on_box_by_tip():
-        pyautogui.rightClick()
-        time.sleep(cfg.open_box_time)
-        return True
+    pyautogui.scroll(2000)
+    max_val, max_loc = role_action.match_img(find_box_mark_nearby)
+    if max_val > 0.9:
+        pyautogui.moveTo(max_loc[0] + 7, max_loc[1] + 7)
+        if is_on_box_by_tip():
+            pyautogui.rightClick()
+            time.sleep(cfg.open_box_time)
+            pyautogui.scroll(-2000)
+            return True
+    pyautogui.scroll(-2000)
     return False
 
 
