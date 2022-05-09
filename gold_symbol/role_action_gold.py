@@ -138,6 +138,16 @@ def dig_purple_map_box():
             time.sleep(cfg.open_box_time)
             pyautogui.scroll(-2000)
             return True
+    else:
+        role_move.turn_around(0.25)
+        max_val, max_loc = role_action.match_img(find_box_mark_nearby)
+        if max_val > 0.9:
+            pyautogui.moveTo(max_loc[0] + 7, max_loc[1] + 7)
+            if is_on_box_by_tip():
+                pyautogui.rightClick()
+                time.sleep(cfg.open_box_time)
+                pyautogui.scroll(-2000)
+                return True
     pyautogui.scroll(-2000)
     return False
 
