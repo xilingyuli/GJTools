@@ -13,7 +13,8 @@ hide_all_mark_check = cv2.imread('img/hide_all_mark_check.png')
 changheshan = cv2.imread('img/map/changheshan.png')
 
 
-position_list = [[-333, -259, True],
+position_list = [[-403, 55, True], [-400, 85, True], [-410, 120, True],
+                 [-395, -2, False], [-332, -170, False], [-333, -259, True],
                  [-365, -258, True]]
 
 
