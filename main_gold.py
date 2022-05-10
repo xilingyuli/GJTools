@@ -3,7 +3,7 @@ import time
 
 import cfg
 from common import role_change
-from gold_symbol import role_action_gold
+from gold_symbol import role_action_gold, dig_changheshan
 from green_map import dig_green_map, role_action
 from message import csv_message, file_message
 
@@ -13,8 +13,10 @@ time.sleep(3)
 def each_role_action(region_count, role_index):
     role_action.close_dialog()
     has_gold = role_action_gold.open_gold_btn()
-    csv_message.set_gold_symbols(region_count, role_index, has_gold, int(datetime.datetime.now().timestamp()))
-    # 加上挖紫图逻辑
+    dig_result = False
+    if has_gold:
+        dig_result = dig_changheshan.try_dig_map()
+    csv_message.set_gold_symbols(region_count, role_index, has_gold, int(datetime.datetime.now().timestamp()), dig_result)
 
 
 for i in range(0, 200):

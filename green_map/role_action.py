@@ -26,6 +26,7 @@ new_day_tip = cv2.imread('img/new_day_tip.png')
 close_btn = cv2.imread('img/close_btn.png')
 horse = cv2.imread('img/horse.png')
 flower_debuff = cv2.imread('img/flower_debuff.png')
+zhilingjing_btn = cv2.imread('img/zhilingjing_btn.png')
 
 
 def match_img(template):
@@ -350,6 +351,11 @@ def reset_look_down():
         time.sleep(0.1)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
     time.sleep(0.1)
+
+
+def goto_zhilingjing():
+    find_and_click(zhilingjing_btn, 20)
+    time.sleep(15)
 
 
 def send_message_with_loc(message):

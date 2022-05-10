@@ -1,6 +1,9 @@
 import time
 
-from gold_symbol import role_action_gold
+from common import role_loc
+from gold_symbol import role_action_gold, dig_changheshan
 
 time.sleep(3)
-role_action_gold.dig_purple_map_box()
+# dig_changheshan.try_dig_map()
+# role_action_gold.get_box_mark_loc()
+role_loc.get_current_loc()

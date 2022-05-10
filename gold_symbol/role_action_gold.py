@@ -11,6 +11,7 @@ from green_map import role_action, find_box
 
 gold_btn = cv2.imread('img/gold_btn.png')
 gold_tips = cv2.imread('img/gold_tips.png')
+magic_mirror = cv2.imread('img/magic_mirror.png')
 hide_all_mark_check = cv2.imread('img/hide_all_mark_check.png')
 find_box_mark = cv2.imread('img/find_box_mark.png')
 find_box_mark_nearby = cv2.imread('img/find_box_mark_nearby.png')
@@ -87,7 +88,8 @@ def move_to_box_mark_in_sky():
     temp_direct = math.atan2(diff_loc[1], diff_loc[0]) / math.pi
     role_move.turn_around(temp_direct)
 
-    target_loc = get_box_mark_loc()
+    screen_width, screen_height = pyautogui.size()
+    target_loc = get_box_mark_loc([screen_width / 2 - 100, screen_height / 2 - 150, screen_width / 2, 300])
     if target_loc is None:
         return False
     diff_loc = [target_loc[0] - cfg.role_screen_pos[0], target_loc[1] - cfg.role_screen_pos[1]]
@@ -96,7 +98,7 @@ def move_to_box_mark_in_sky():
     test_step = 5
     role_move.move(test_step, 0)
 
-    target_loc = get_box_mark_loc()
+    target_loc = get_box_mark_loc([screen_width / 2 - 400, screen_height / 2 - 150, screen_width / 2 + 300, 300])
     if target_loc is None:
         return False
     diff_loc = [target_loc[0] - cfg.role_screen_pos[0], target_loc[1] - cfg.role_screen_pos[1]]
@@ -109,11 +111,12 @@ def move_to_box_mark_in_sky():
     return False
 
 
-def get_box_mark_loc():
-    image = cv2.cvtColor(np.asarray(pyautogui.screenshot()), cv2.COLOR_RGB2BGR)
+def get_box_mark_loc(region=None):
+    image = cv2.cvtColor(np.asarray(pyautogui.screenshot(region=region)), cv2.COLOR_RGB2BGR)
     match_res = cv2.matchTemplate(image, find_box_mark, 3)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(match_res)
-    if max_val > 0.9:
+    print(max_val)
+    if max_val > 0.98:
         return [max_loc[0] + 11, max_loc[1] + 21]
     return None
 
@@ -126,8 +129,9 @@ def is_on_box_by_tip():
     return max_val > 0.95
 
 
-def dig_purple_map_box():
-    move_to_box_mark_in_sky()
+def dig_purple_map_box(sky_height):
+    if not move_to_box_mark_in_sky():
+        return False
     role_action.down_horse()
     pyautogui.scroll(2000)
     max_val, max_loc = role_action.match_img(find_box_mark_nearby)
@@ -149,6 +153,22 @@ def dig_purple_map_box():
                 pyautogui.scroll(-2000)
                 return True
     pyautogui.scroll(-2000)
+    reset_to_sky(sky_height)
     return False
 
 
+def dig_box_on_position_list(position_list, sky_height):
+    if not role_action.find_and_click(magic_mirror, 20):
+        return False
+    time.sleep(5)
+    hide_map_mark()
+    reset_to_sky(sky_height)
+    for position in position_list:
+        move_to_in_sky([position[0], position[1]])
+        if not position[2]:
+            continue
+        if dig_purple_map_box(sky_height):
+            role_action.goto_zhilingjing()
+            return True
+    role_action.goto_zhilingjing()
+    return False

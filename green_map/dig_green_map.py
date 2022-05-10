@@ -11,7 +11,6 @@ from green_map import role_action
 big_fly_btn = cv2.imread('img/big_fly_btn.png')
 hide_all_mark = cv2.imread('img/hide_all_mark.png')
 hide_all_mark_check = cv2.imread('img/hide_all_mark_check.png')
-zhilingjing_btn = cv2.imread('img/zhilingjing_btn.png')
 huanglangyuan = cv2.imread('img/map/huanglangyuan.png')
 wuyezhen = cv2.imread('img/map/wuyezhen.png')
 
@@ -58,7 +57,7 @@ def init_to_store():
 
 def dig_green_before_target_time(target_time):
     if not goto_huanglangyuan():
-        goto_zhilingjing()
+        role_action.goto_zhilingjing()
         return False
     init_to_store()
     try_times = 0
@@ -76,12 +75,8 @@ def dig_green_before_target_time(target_time):
         if not role_action.back_to_store():
             return False
         try_times = try_times + 1
-    goto_zhilingjing()
+    role_action.goto_zhilingjing()
     if datetime.datetime.now().timestamp() >= target_time:
         return True
     return False
 
-
-def goto_zhilingjing():
-    role_action.find_and_click(zhilingjing_btn, 20)
-    time.sleep(15)

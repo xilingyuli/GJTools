@@ -13,12 +13,12 @@ judge_flower = False
 
 
 # 获取绝对坐标的屏幕位置
-current_loc_area = [1810, 35, 110, 30]
+current_loc_area = [1810, 33, 110, 30]
 # 获取绝对坐标二值化参数
 loc_threshold_param = 220
 
 # 小地图的屏幕位置
-small_map_area = [1650, 60, 250, 240]
+small_map_area = [1618, 70, 300, 236]
 # 小地图箭头颜色范围
 arrow_color_high = [120, 255, 255]
 arrow_color_low = [20, 140, 190]

@@ -22,9 +22,9 @@ def get_current_loc(try_times=5):
     test_message = Image.fromarray(binary)
     text = pytesseract.image_to_string(test_message)
     text = text.replace('B', '8')
-    # print(f'位置：{text}')
+    print(f'位置：{text}')
     loc_str = re_cmp.findall(text)
-    if len(loc_str) >= 2 and abs(int(loc_str[0])) > 100 and abs(int(loc_str[1])) > 100:
+    if len(loc_str) >= 2 and (abs(int(loc_str[0])) > 0 or abs(int(loc_str[1])) > 0):
         return [int(loc_str[0]), int(loc_str[1])]
     if try_times > 0:
         role_move.move(0, -1)
