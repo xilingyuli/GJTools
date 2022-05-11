@@ -8,8 +8,6 @@ from gold_symbol import role_action_gold
 from green_map import role_action
 
 big_fly_btn = cv2.imread('img/big_fly_btn.png')
-hide_all_mark = cv2.imread('img/hide_all_mark.png')
-hide_all_mark_check = cv2.imread('img/hide_all_mark_check.png')
 changheshan = cv2.imread('img/map/changheshan.png')
 
 

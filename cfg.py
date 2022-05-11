@@ -123,4 +123,4 @@ goto_changheshan_time = 30
 role_screen_pos = [965, 520]
 
 # 要开的区
-region_list = [[2, 3, 1]]
+region_list = [[2, 3, 10]]
