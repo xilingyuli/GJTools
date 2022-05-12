@@ -5,7 +5,7 @@ import cfg
 from common import role_change
 from gold_symbol import role_action_gold, dig_changheshan
 from green_map import dig_green_map, role_action
-from message import csv_message, file_message
+from message import csv_message, file_message, send_message
 
 time.sleep(3)
 
@@ -41,3 +41,4 @@ for i in range(0, 200):
     # 开八卦镜
     role_change.for_each_role(cfg.region_list, each_role_action)
     csv_message.save_gold_symbols_record()
+    send_message.send_message('Gold Result: ' + str(csv_message.csv_rows))

@@ -13,9 +13,9 @@ def send_message(message):
         # 邮件内容
         msg = MIMEText(message, 'plain', _charset="utf-8")
         msg["Subject"] = "GJTool"
-        msg["from"] = "xilingyuli_test"
+        msg["from"] = "GJTool"
         msg["to"] = "GJTool"
-        msg["Cc"] = ""
+        msg["Cc"] = "GJTool"
         with SMTP_SSL(host="smtp.163.com", port=465) as smtp:
             # 登录发邮件服务器
             smtp.login(user=user, password=password)
