@@ -56,6 +56,7 @@ def init_to_store():
 
 
 def dig_green_before_target_time(target_time):
+    role_action.goto_zhilingjing()
     if not goto_huanglangyuan():
         role_action.goto_zhilingjing()
         return False

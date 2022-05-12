@@ -50,9 +50,9 @@ confirm_pos = [880, 450]
 # 背包格子大小
 bag_item_size = 44
 bag_width = 10
-bag_empty_lines = 2
+bag_empty_lines = 3
 # 买图次数
-buy_map_times = 2
+buy_map_times = 1
 
 # 家园走到门口的位移距离
 home_to_door = [-10, 0]

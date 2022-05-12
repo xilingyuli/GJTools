@@ -355,8 +355,8 @@ def reset_look_down():
 
 
 def goto_zhilingjing():
-    find_and_click(zhilingjing_btn, 20)
-    time.sleep(15)
+    if find_and_click(zhilingjing_btn, 20):
+        time.sleep(15)
 
 
 def send_message_with_loc(message):
