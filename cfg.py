@@ -121,6 +121,8 @@ goto_changheshan_time = 30
 
 # 角色在屏幕里中心点
 role_screen_pos = [965, 520]
+# 发邮件截图区
+screenshot_region = [760, 340, 400, 400]
 
 # 要开的区
 region_list = [[2, 3, 10]]

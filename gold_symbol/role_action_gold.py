@@ -178,7 +178,5 @@ def dig_box_on_position_list(position_list, sky_height):
         if not position[2]:
             continue
         if dig_purple_map_box(sky_height):
-            role_action.goto_zhilingjing()
             return True
-    role_action.goto_zhilingjing()
     return False
