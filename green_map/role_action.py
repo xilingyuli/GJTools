@@ -105,7 +105,7 @@ def buy_map():
             pyautogui.press('3')
             pyautogui.press('5')
             pyautogui.press('enter')
-            pyautogui.rightClick(interval=15, duration=0.001)
+            pyautogui.rightClick(clicks=15, interval=0.001)
             time.sleep(0.5)
             # max_val, max_loc = match_img(confirm_btn)
             # if max_val > 0.9:
