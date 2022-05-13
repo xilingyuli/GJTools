@@ -139,4 +139,4 @@ auto_kill_monster = True
 auto_dig_gold_symbols = False
 
 # 要开的区
-region_list = [[2, 3, 10]]
+region_list = [[2, 3, 10], [2, 2, 10]]
