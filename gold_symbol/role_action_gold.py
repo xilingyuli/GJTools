@@ -75,7 +75,7 @@ def move_directly_in_sky(target_loc, diff=cfg.move_min, try_times=5):
     if abs(current_loc[0] - target_loc[0]) <= diff and abs(current_loc[1] - target_loc[1]) <= diff:
         return True
     diff_loc = [target_loc[0] - current_loc[0], target_loc[1] - current_loc[1]]
-    temp_direct = -math.atan2(diff_loc[1], diff_loc[0]) / math.pi - 0.5
+    temp_direct = (-math.atan2(diff_loc[1], diff_loc[0]) / math.pi) - 0.5
     role_move.turn_to(temp_direct)
     role_move.move(min(math.hypot(diff_loc[0], diff_loc[1]), cfg.max_move_distance), 0)
     return move_directly_in_sky(target_loc, diff, try_times - 1)
@@ -106,10 +106,10 @@ def move_to_box_mark_in_sky():
     current_distance = math.hypot(diff_loc[0], diff_loc[1])
 
     sky_speed = (current_distance - distance0) / test_step
-    if sky_speed == 0:
-        return False
+    if sky_speed < cfg.sky_speed_min or sky_speed > cfg.sky_speed_max:
+        sky_speed = cfg.sky_speed_default
 
-    for i in range(0, 2):
+    for i in range(0, cfg.sky_move_times):
         if current_distance < 50:
             return True
         role_move.move(- current_distance / sky_speed, 0)

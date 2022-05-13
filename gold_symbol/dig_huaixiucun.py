@@ -10,7 +10,7 @@ from green_map import role_action
 
 big_fly_btn = cv2.imread('img/big_fly_btn.png')
 huaixiucun = cv2.imread('img/map/huaixiucun.png')
-hide_all_mark_check = cv2.imread('img/hide_all_mark_check_huaixiu.png')
+hide_all_mark_check = cv2.imread('img/map/hide_all_mark_check_huaixiu.png')
 
 
 position_list = [[-180, -25, True], [-135, -25, True], [-90, -25, True],

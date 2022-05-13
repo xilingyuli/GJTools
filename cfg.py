@@ -13,7 +13,7 @@ judge_flower = False
 
 
 # 获取绝对坐标的屏幕位置
-current_loc_area = [1810, 33, 110, 28]
+current_loc_area = [1815, 33, 105, 28]
 # 获取绝对坐标二值化参数
 loc_threshold_param = 220
 
@@ -119,11 +119,18 @@ open_game_time = 30
 goto_huanglangyuan_time = 40
 goto_changheshan_time = 30
 goto_huaixiucun_time = 30
+goto_huahai_time = 30
 
 # 角色在屏幕里中心点
 role_screen_pos = [965, 520]
 # 发邮件截图区
 screenshot_region = [760, 340, 400, 400]
+
+# 空中移动参数
+sky_speed_default = -22.7
+sky_speed_min = -30
+sky_speed_max = -10
+sky_move_times = 5
 
 # 入战处理
 auto_kill_monster = True

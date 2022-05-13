@@ -15,13 +15,39 @@ from common import role_move
 re_cmp = re.compile('-?[1-9]\d*')
 
 
+def format_loc_str(loc_str):
+    text = loc_str
+    text = text.replace('B', '8')
+    first_index = text.find('(')
+    if first_index > 0:
+        text = text[first_index:]
+    first_index = text.find('[')
+    if first_index > 0:
+        text = text[first_index:]
+    first_index = text.find('{')
+    if first_index > 0:
+        text = text[first_index:]
+    last_index = text.rfind(')')
+    if last_index > 0:
+        text = text[:last_index + 1]
+    last_index = text.rfind(']')
+    if last_index > 0:
+        text = text[:last_index + 1]
+    last_index = text.rfind('}')
+    if last_index > 0:
+        text = text[:last_index + 1]
+    return text
+
+
 def get_current_loc(try_times=5):
     image = cv2.cvtColor(np.asarray(pyautogui.screenshot(region=cfg.current_loc_area)), cv2.COLOR_RGB2GRAY)
     ret, binary = cv2.threshold(image, cfg.loc_threshold_param, 255, cv2.THRESH_BINARY)
+    # cv2.imshow('img', binary)
+    # cv2.waitKey()
     cv2.bitwise_not(binary, binary)
     test_message = Image.fromarray(binary)
     text = pytesseract.image_to_string(test_message)
-    text = text.replace('B', '8')
+    text = format_loc_str(text)
     # print(f'位置：{text}')
     loc_str = re_cmp.findall(text)
     if len(loc_str) >= 2 and (abs(int(loc_str[0])) > 0 or abs(int(loc_str[1])) > 0):
