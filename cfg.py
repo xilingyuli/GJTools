@@ -13,7 +13,7 @@ judge_flower = False
 
 
 # 获取绝对坐标的屏幕位置
-current_loc_area = [1810, 33, 110, 30]
+current_loc_area = [1810, 33, 110, 28]
 # 获取绝对坐标二值化参数
 loc_threshold_param = 220
 
