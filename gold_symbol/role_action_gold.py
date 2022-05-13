@@ -169,14 +169,14 @@ def dig_purple_map_box(sky_height):
     return False
 
 
-def dig_box_on_position_list(position_list, sky_height):
+def dig_box_on_position_list(position_list, sky_height, diff_distance):
     if not role_action.find_and_click(magic_mirror, 20):
         return False
     time.sleep(5)
     hide_map_mark()
     reset_to_sky(sky_height)
     for position in position_list:
-        move_to_in_sky([position[0], position[1]])
+        move_to_in_sky([position[0], position[1]], diff=diff_distance)
         if not position[2]:
             continue
         if dig_purple_map_box(sky_height):

@@ -26,7 +26,7 @@ def goto_changheshan():
 
 def try_dig_map():
     if goto_changheshan():
-        return role_action_gold.dig_box_on_position_list(position_list, 5)
+        return role_action_gold.dig_box_on_position_list(position_list, 5, 2)
     return False
 
 
