@@ -20,6 +20,9 @@ first_regional_tip = cv2.imread('img/first_regional_tip.png')
 regional_confirm_btn = cv2.imread('img/regional_confirm_btn.png')
 
 
+role_current_region = None
+
+
 def close_role(wait_times=10):
     if role_action.find_and_click(menu_btn, 11):
         if role_action.find_and_click(role_back_btn, 25):
@@ -78,6 +81,7 @@ def close_regional(wait_times=10):
         if is_in_login():
             max_val, max_loc = role_action.match_img(login_states)
             if max_val > 0.9:
+                role_current_region = None
                 return True
             else:
                 send_message.send_message("Login States Error")
@@ -109,13 +113,13 @@ def open_regional(line, column, wait_times=10):
     time.sleep(cfg.open_game_time)
     pyautogui.moveTo(width / 2, height / 2)
     pyautogui.leftClick()
-    pyautogui.sleep(3)
     pyautogui.leftClick()
     pyautogui.sleep(5)
 
     for i in range(0, wait_times):
         time.sleep(cfg.check_game_state_step)
         if is_in_role_choose():
+            role_current_region = [line, column]
             return True
     return False
 
@@ -140,10 +144,12 @@ def for_each_role(region_list, callback_fun=None):
 
 
 def try_open_role(region_index, role_index):
-    if not close_regional():
-        return False
-    if not open_regional(cfg.region_list[region_index][0], cfg.region_list[region_index][1]):
-        return False
+    target_region = [cfg.region_list[region_index][0], cfg.region_list[region_index][1]]
+    if target_region != role_current_region:
+        if not close_regional():
+            return False
+        if not open_regional(target_region[0], target_region[1]):
+            return False
     if not open_role(role_index):
         return False
     return True

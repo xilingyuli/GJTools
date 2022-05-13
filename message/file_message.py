@@ -2,7 +2,7 @@ import cfg
 
 
 def get_next_dig_green_role():
-    with open('dig_green_log.txt', 'r') as f:
+    with open('gold_report/dig_green_log.txt', 'r') as f:
         content = f.read().split(' ')
         if len(content) >= 2:
             region_index = int(content[0])
@@ -19,7 +19,7 @@ def get_next_dig_green_role():
 
 
 def set_dig_green_role(region_index, role_index):
-    with open('dig_green_log.txt', 'w+') as f:
+    with open('gold_report/dig_green_log.txt', 'w+') as f:
         content = str(region_index) + ' ' + str(role_index)
         f.write(content)
 

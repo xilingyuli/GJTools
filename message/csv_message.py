@@ -10,7 +10,7 @@ csv_rows = []
 def load_gold_symbols_record():
     csv_rows.clear()
 
-    file_name = 'gold_symbols.csv'
+    file_name = 'gold_report/gold_symbols.csv'
     with open(file_name, 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         for row in csv_reader:
@@ -22,9 +22,9 @@ def load_gold_symbols_record():
 
 
 def save_gold_symbols_record():
-    file_name = 'gold_symbols.csv'
+    file_name = 'gold_report/gold_symbols.csv'
     create_time = time.strftime('%Y%m%d%H%M%S', time.localtime(os.path.getmtime(file_name)))
-    os.rename(file_name, 'gold_symbols_' + create_time + '.csv')
+    os.rename(file_name, 'gold_report/gold_symbols_' + create_time + '.csv')
     with open(file_name, 'w+', newline='') as csv_file:
         csv_writer = csv.writer(csv_file)
         for row in csv_rows:

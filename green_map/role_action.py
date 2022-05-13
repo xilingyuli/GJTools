@@ -281,7 +281,7 @@ def reset_keys():
     pyautogui.keyDown('shift')
     pyautogui.keyUp('shift')
     pyautogui.sleep(2)
-    pyautogui.moveTo(find_box.footer_pos[0], find_box.footer_pos[1])
+    pyautogui.moveTo(cfg.footer_pos[0], cfg.footer_pos[1])
     pyautogui.sleep(2)
     pyautogui.mouseDown(button='left')
     pyautogui.sleep(2)
