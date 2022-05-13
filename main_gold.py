@@ -18,7 +18,7 @@ def each_role_action(region_count, role_index):
     role_action.close_dialog()
     has_gold = role_action_gold.open_gold_btn()
     dig_result = False
-    if has_gold:
+    if has_gold and cfg.auto_dig_gold_symbols:
         dig_result = dig_huaixiucun.try_dig_map()
         if dig_result:
             gold_box_images.append(pyautogui.screenshot(cfg.screenshot_region))

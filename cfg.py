@@ -128,5 +128,8 @@ screenshot_region = [760, 340, 400, 400]
 # 入战处理
 auto_kill_monster = True
 
+# 自动挖金像
+auto_dig_gold_symbols = False
+
 # 要开的区
 region_list = [[2, 3, 10]]
