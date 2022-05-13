@@ -90,7 +90,7 @@ def move_to_box_mark_in_sky():
     role_move.turn_around(temp_direct)
 
     screen_width, screen_height = pyautogui.size()
-    target_loc = get_box_mark_loc([screen_width / 2 - 100, screen_height / 2 - 250, screen_width / 2, 500])
+    target_loc = get_box_mark_loc([screen_width / 2 - 100, screen_height / 2 - 250, screen_width / 2 + 100 - 1, 500])
     if target_loc is None:
         return False
     diff_loc = [target_loc[0] - cfg.role_screen_pos[0], target_loc[1] - cfg.role_screen_pos[1]]
@@ -99,7 +99,7 @@ def move_to_box_mark_in_sky():
     test_step = 5
     role_move.move(test_step, 0)
 
-    target_loc = get_box_mark_loc([screen_width / 2 - 400, screen_height / 2 - 250, screen_width / 2 + 300, 500])
+    target_loc = get_box_mark_loc([screen_width / 2 - 400, screen_height / 2 - 250, screen_width / 2 + 400 - 1, 500])
     if target_loc is None:
         return False
     diff_loc = [target_loc[0] - cfg.role_screen_pos[0], target_loc[1] - cfg.role_screen_pos[1]]
@@ -113,7 +113,7 @@ def move_to_box_mark_in_sky():
         if current_distance < 50:
             return True
         role_move.move(- current_distance / sky_speed, 0)
-        target_loc = get_box_mark_loc([screen_width / 2 - 400, screen_height / 2 - 250, screen_width / 2 + 300, 500])
+        target_loc = get_box_mark_loc([screen_width / 2 - 400, screen_height / 2 - 250, screen_width / 2 + 400 - 1, 500])
         if target_loc is None:
             return False
         diff_loc = [target_loc[0] - cfg.role_screen_pos[0], target_loc[1] - cfg.role_screen_pos[1]]
