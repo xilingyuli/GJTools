@@ -9,4 +9,5 @@ from message import send_message
 
 time.sleep(3)
 # dig_changheshan.try_dig_map()
-send_message.send_message('test image', [pyautogui.screenshot(cfg.screenshot_region)])
+# send_message.send_message('test image', [pyautogui.screenshot(cfg.screenshot_region)])
+role_action_gold.try_kill_monster()

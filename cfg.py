@@ -124,5 +124,8 @@ role_screen_pos = [965, 520]
 # 发邮件截图区
 screenshot_region = [760, 340, 400, 400]
 
+# 入战处理
+auto_kill_monster = True
+
 # 要开的区
 region_list = [[2, 3, 10]]

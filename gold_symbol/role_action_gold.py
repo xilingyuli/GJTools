@@ -15,6 +15,7 @@ magic_mirror = cv2.imread('img/magic_mirror.png')
 hide_all_mark_check = cv2.imread('img/hide_all_mark_check.png')
 find_box_mark = cv2.imread('img/find_box_mark.png')
 find_box_mark_nearby = cv2.imread('img/find_box_mark_nearby.png')
+kill_monster_tips = cv2.imread('img/kill_monster_tips.png')
 
 
 def open_gold_btn():
@@ -155,6 +156,7 @@ def dig_purple_map_box(sky_height):
     role_action.down_horse()
     pyautogui.scroll(2000)
     time.sleep(0.5)
+    try_kill_monster()
     width, height = pyautogui.size()
     for i in range(int(width / 2), 0, -80):
         for j in range(int(height / 2), 200, -80):
@@ -180,3 +182,18 @@ def dig_box_on_position_list(position_list, sky_height):
         if dig_purple_map_box(sky_height):
             return True
     return False
+
+
+def try_kill_monster():
+    if not cfg.auto_kill_monster:
+        return
+    time.sleep(3)
+    max_val, max_loc = role_action.match_img(kill_monster_tips)
+    if max_val < 0.95:
+        return
+    try_times = 10
+    while max_val >= 0.95 and try_times > 0:
+        pyautogui.press('~', presses=10)
+        role_move.turn_around(0.5)
+        max_val, max_loc = role_action.match_img(kill_monster_tips)
+        try_times -= 1
