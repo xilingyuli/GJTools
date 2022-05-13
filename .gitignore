@@ -6,4 +6,4 @@
 *.iml
 *.txt
 *.csv
-*.png
+/gold_report
