@@ -64,6 +64,7 @@ def dig_green_before_target_time(target_time):
     init_to_store()
     try_times = 0
     while datetime.datetime.now().timestamp() < target_time:
+        role_action.deal_new_day()
         if not role_action.buy_map():
             return False
         if not role_action.open_map():
