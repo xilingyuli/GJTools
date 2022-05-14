@@ -4,4 +4,6 @@
 *.xml
 /.idea
 *.iml
-log.txt
+*.txt
+*.csv
+/gold_report
