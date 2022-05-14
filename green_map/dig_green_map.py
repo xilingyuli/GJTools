@@ -17,7 +17,9 @@ wuyezhen = cv2.imread('img/map/wuyezhen.png')
 
 def goto_huanglangyuan():
     if role_action.find_and_click(big_fly_btn, 20):
+        time.sleep(1)
         role_action.find_and_click(huanglangyuan, 40)
+        time.sleep(1)
         if role_action.find_and_click(wuyezhen, 10):
             time.sleep(cfg.goto_huanglangyuan_time)
             return True
