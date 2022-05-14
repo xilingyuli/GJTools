@@ -5,7 +5,7 @@ import pyautogui
 
 import cfg
 from common import role_change
-from gold_symbol import role_action_gold, dig_changheshan, dig_huaixiucun
+from gold_symbol import role_action_gold, dig_changheshan, dig_huaixiucun, dig_huahai
 from green_map import dig_green_map, role_action
 from message import csv_message, file_message, send_message
 
@@ -14,12 +14,22 @@ gold_box_images = []
 time.sleep(3)
 
 
+def do_dig_map(region_count, role_index):
+    if region_count == 0:
+        return dig_huaixiucun.try_dig_map()
+    if region_count == 1:
+        return dig_huaixiucun.try_dig_map()
+    if region_count == 2:
+        return dig_huahai.try_dig_map()
+    return False
+
+
 def each_role_action(region_count, role_index):
     role_action.close_dialog()
     has_gold = role_action_gold.open_gold_btn()
     dig_result = False
     if has_gold and cfg.auto_dig_gold_symbols:
-        dig_result = dig_huaixiucun.try_dig_map()
+        dig_result = do_dig_map(region_count, role_index)
         if dig_result:
             gold_box_images.append(pyautogui.screenshot(region=cfg.screenshot_region))
         role_action.goto_zhilingjing()
