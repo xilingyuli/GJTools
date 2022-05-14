@@ -17,23 +17,10 @@ re_cmp = re.compile('-?[1-9]\d*')
 
 def format_loc_str(loc_str):
     text = loc_str
-    text = text.replace('B', '8')
     first_index = text.find('(')
     if first_index > 0:
         text = text[first_index:]
-    first_index = text.find('[')
-    if first_index > 0:
-        text = text[first_index:]
-    first_index = text.find('{')
-    if first_index > 0:
-        text = text[first_index:]
     last_index = text.rfind(')')
-    if last_index > 0:
-        text = text[:last_index + 1]
-    last_index = text.rfind(']')
-    if last_index > 0:
-        text = text[:last_index + 1]
-    last_index = text.rfind('}')
     if last_index > 0:
         text = text[:last_index + 1]
     return text
@@ -46,7 +33,7 @@ def get_current_loc(try_times=5):
     # cv2.waitKey()
     cv2.bitwise_not(binary, binary)
     test_message = Image.fromarray(binary)
-    text = pytesseract.image_to_string(test_message)
+    text = pytesseract.image_to_string(test_message, config='--psm 7 -c tessedit_char_whitelist=0123456789-()')
     text = format_loc_str(text)
     # print(f'位置：{text}')
     loc_str = re_cmp.findall(text)

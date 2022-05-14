@@ -3,7 +3,7 @@
 open_box_time = 5
 
 # 打开藏宝图等待时间
-wait_open_time = 175
+wait_open_time = 240
 wait_open_time_step = 5
 
 # 下马判断
@@ -13,7 +13,7 @@ judge_flower = False
 
 
 # 获取绝对坐标的屏幕位置
-current_loc_area = [1815, 33, 105, 28]
+current_loc_area = [1815, 33, 105, 30]
 # 获取绝对坐标二值化参数
 loc_threshold_param = 220
 
