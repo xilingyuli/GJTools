@@ -1,3 +1,4 @@
+import datetime
 import math
 import re
 import time
@@ -146,7 +147,8 @@ def move_to_box_mark_on_ground():
     text = re_cmp.findall(text)
     if len(text) > 0:
         distance = float(text[0]) * 2
-        role_move.move(0, min(15.0, distance))
+        if distance < 15:
+            role_move.move(0, distance)
 
 
 def get_box_mark_loc(region=None):
@@ -203,10 +205,15 @@ def dig_box_on_position_list(position_list, sky_height, diff_distance, hide_map_
     if not role_action.find_and_click(magic_mirror, 20):
         return False
     time.sleep(5)
+    start_time = datetime.datetime.now().timestamp()
     hide_map_mark_fun()
     reset_to_sky(sky_height)
     for position in position_list:
+        if datetime.datetime.now().timestamp() - start_time > 5 * 60:
+            return False
         move_to_in_sky([position[0], position[1]], diff=diff_distance)
+        if datetime.datetime.now().timestamp() - start_time > 5 * 60:
+            return False
         if not position[2]:
             continue
         if dig_purple_map_box(sky_height):
@@ -223,7 +230,7 @@ def try_kill_monster():
         return
     try_times = 10
     while max_val >= 0.95 and try_times > 0:
-        pyautogui.press('~', presses=10)
+        pyautogui.press('~', presses=10, interval=0.5)
         role_move.turn_around(0.5)
         max_val, max_loc = role_action.match_img(kill_monster_tips)
         try_times -= 1

@@ -149,6 +149,7 @@ def down_horse():
     if cfg.judge_horse and not is_on_horse():
         return
     pyautogui.press('t')
+    time.sleep(0.5)
     pyautogui.press('shift')
     pyautogui.sleep(3)
 

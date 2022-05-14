@@ -13,12 +13,12 @@ huaixiucun = cv2.imread('img/map/huaixiucun.png')
 hide_all_mark_check = cv2.imread('img/map/hide_all_mark_check_huaixiu.png')
 
 
-position_list = [[-180, -25, True], [-135, -25, True], [-90, -25, True],
-                 [-45, -25, True], [0, -25, True], [45, -25, True],
-                 [90, -25, True], [135, -25, True], [160, -25, True],
-                 [95, -70, False], [135, -140, True], [90, -140, True],
-                 [45, -140, True], [0, -140, True], [-45, -140, True],
-                 [-90, -140, True], [-135, -140, True], [-160, -180, True]]
+position_list = [[-25, -175, True], [0, -140, True], [45, -140, True],
+                 [90, -140, True], [135, -140, True], [95, -70, False],
+                 [160, -25, True], [135, -25, True], [90, -25, True],
+                 [45, -25, True], [0, -25, True], [-45, -25, True],
+                 [-90, -25, True], [-135, -25, True], [-135, -140, True],
+                 [-160, -180, True], [-90, -140, True], [-45, -140, True]]
 
 
 def goto_huaixiucun():
