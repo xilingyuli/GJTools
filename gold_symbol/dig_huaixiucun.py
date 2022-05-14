@@ -24,7 +24,7 @@ position_list = [[-180, -25, True], [-135, -25, True], [-90, -25, True],
 def goto_huaixiucun():
     if role_action.find_and_click(big_fly_btn, 20):
         time.sleep(1)
-        if role_action.find_and_click(huaixiucun, 40):
+        if role_action.find_and_click(huaixiucun, 20):
             time.sleep(cfg.goto_huaixiucun_time)
             return True
     return False

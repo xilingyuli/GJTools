@@ -133,10 +133,16 @@ def for_each_role(region_list, callback_fun=None):
             return False
         for role_index in range(0, region[2]):
             if not open_role(role_index):
-                return False
+                if close_regional() and open_regional(region[0], region[1]) and open_role(role_index):
+                    continue
+                else:
+                    return False
             callback_fun(region_count, role_index)
             if not close_role():
-                return False
+                if close_regional() and open_regional(region[0], region[1]):
+                    continue
+                else:
+                    return False
         if not close_regional():
             return False
         region_count = region_count + 1
