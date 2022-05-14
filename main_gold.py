@@ -23,7 +23,7 @@ def each_role_action(region_count, role_index):
         if dig_result:
             gold_box_images.append(pyautogui.screenshot(cfg.screenshot_region))
         role_action.goto_zhilingjing()
-    csv_message.set_gold_symbols(region_count, role_index, has_gold, int(datetime.datetime.now().timestamp()), dig_result)
+    csv_message.set_gold_symbols(region_count, role_index, has_gold, int(datetime.datetime.now().timestamp()), dig_result, region_count, role_index)
 
 
 for i in range(0, 200):
