@@ -21,7 +21,7 @@ def each_role_action(region_count, role_index):
     if has_gold and cfg.auto_dig_gold_symbols:
         dig_result = dig_huaixiucun.try_dig_map()
         if dig_result:
-            gold_box_images.append(pyautogui.screenshot(cfg.screenshot_region))
+            gold_box_images.append(pyautogui.screenshot(region=cfg.screenshot_region))
         role_action.goto_zhilingjing()
     csv_message.set_gold_symbols(region_count, role_index, has_gold, int(datetime.datetime.now().timestamp()), dig_result, region_count, role_index)
 
