@@ -124,7 +124,7 @@ goto_huahai_time = 30
 # 角色在屏幕里中心点
 role_screen_pos = [965, 520]
 # 发邮件截图区
-screenshot_region = [760, 340, 400, 400]
+screenshot_region = [660, 240, 600, 600]
 
 # 空中移动参数
 sky_speed_default = -22.7

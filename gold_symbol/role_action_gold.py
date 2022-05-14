@@ -191,6 +191,7 @@ def dig_purple_map_box(sky_height):
         for j in range(int(height / 2), 200, -80):
             if open_box_of_position(i, j) or open_box_of_position(i, height - j) or open_box_of_position(width - i, j) or open_box_of_position(width - i, height - j):
                 pyautogui.scroll(-2000)
+                time.sleep(2)
                 return True
     pyautogui.scroll(-2000)
     reset_to_sky(sky_height)
