@@ -358,8 +358,10 @@ def reset_look_down():
 
 def goto_zhilingjing():
     if find_and_click(zhilingjing_btn, 20):
+        pyautogui.moveRel(0, -100)
         time.sleep(15)
-    pyautogui.moveRel(0, -100)
+    else:
+        pyautogui.moveRel(0, -100)
 
 
 def send_message_with_loc(message):
