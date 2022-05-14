@@ -4,7 +4,7 @@ import pyautogui
 
 import cfg
 from common import role_loc
-from gold_symbol import role_action_gold, dig_changheshan, dig_huaixiucun, dig_huahai
+from gold_symbol import role_action_gold, dig_changheshan, dig_huaixiucun, dig_huahai, dig_zhongnanshan
 from message import send_message
 
 time.sleep(3)
@@ -14,4 +14,5 @@ time.sleep(3)
 # print(role_loc.get_current_loc())
 # dig_changheshan.try_dig_map()
 # dig_huaixiucun.try_dig_map()
-dig_huahai.try_dig_map()
+# dig_huahai.try_dig_map()
+dig_zhongnanshan.try_dig_map()

@@ -120,6 +120,7 @@ goto_huanglangyuan_time = 40
 goto_changheshan_time = 30
 goto_huaixiucun_time = 30
 goto_huahai_time = 30
+goto_zhongnanshan_time = 30
 
 # 角色在屏幕里中心点
 role_screen_pos = [965, 520]
