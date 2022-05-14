@@ -53,7 +53,7 @@ def find_and_move(image, offset, level=0.98):
     return False
 
 
-def clear_map(count=50):
+def clear_map(count=36):
     pyautogui.press('m')
     time.sleep(0.5)
     max_val, max_loc = match_img(map_title)
@@ -103,9 +103,9 @@ def buy_map():
         max_val, max_loc = match_img(buy_map_tip)
         if max_val > 0.9:
             pyautogui.press('3')
-            pyautogui.press('5')
+            pyautogui.press('6')
             pyautogui.press('enter')
-            pyautogui.click(clicks=15, interval=0.001, button='right')
+            # pyautogui.click(clicks=15, interval=0.001, button='right')
             time.sleep(0.5)
             # max_val, max_loc = match_img(confirm_btn)
             # if max_val > 0.9:

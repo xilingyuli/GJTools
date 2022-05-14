@@ -3,7 +3,7 @@
 open_box_time = 5
 
 # 打开藏宝图等待时间
-wait_open_time = 240
+wait_open_time = 175
 wait_open_time_step = 5
 
 # 下马判断
