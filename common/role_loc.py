@@ -33,7 +33,7 @@ def get_current_loc(try_times=5):
     # cv2.waitKey()
     cv2.bitwise_not(binary, binary)
     test_message = Image.fromarray(binary)
-    text = pytesseract.image_to_string(test_message, config='--psm 7 -c tessedit_char_whitelist=0123456789-()')
+    text = pytesseract.image_to_string(test_message, config='--psm 7 -c tessedit_char_whitelist=0123456789-(),')
     text = format_loc_str(text)
     # print(f'位置：{text}')
     loc_str = re_cmp.findall(text)
