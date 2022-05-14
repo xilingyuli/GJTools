@@ -1,9 +1,12 @@
 import math
+import re
 import time
 
 import cv2
 import numpy as np
 import pyautogui
+from PIL import Image
+from pytesseract import pytesseract
 
 import cfg
 from common import role_move, role_loc
@@ -16,6 +19,9 @@ hide_all_mark_check = cv2.imread('img/hide_all_mark_check.png')
 find_box_mark = cv2.imread('img/find_box_mark.png')
 find_box_mark_nearby = cv2.imread('img/find_box_mark_nearby.png')
 kill_monster_tips = cv2.imread('img/kill_monster_tips.png')
+
+
+re_cmp = re.compile('[1-9]\d*\.*\d*')
 
 
 def open_gold_btn():
@@ -121,6 +127,28 @@ def move_to_box_mark_in_sky():
     return False
 
 
+def move_to_box_mark_on_ground():
+    target_loc = get_box_mark_loc()
+    if target_loc is None:
+        return True
+    diff_loc = [target_loc[0] - cfg.role_screen_pos[0], target_loc[1] - cfg.role_screen_pos[1]]
+    temp_direct = math.atan2(diff_loc[1], diff_loc[0]) / math.pi + 0.5
+    role_move.turn_around(temp_direct)
+
+    target_loc = get_box_mark_loc()
+    if target_loc is None:
+        return True
+    image = cv2.cvtColor(np.asarray(pyautogui.screenshot(region=[target_loc[0] - 30, target_loc[1] + 15, 60, 30])), cv2.COLOR_RGB2GRAY)
+    ret, binary = cv2.threshold(image, 190, 255, cv2.THRESH_BINARY)
+    cv2.bitwise_not(binary, binary)
+    test_message = Image.fromarray(binary)
+    text = pytesseract.image_to_string(test_message, config='--psm 7 -c tessedit_char_whitelist=0123456789.')
+    text = re_cmp.findall(text)
+    if len(text) > 0:
+        distance = float(text[0]) * 2
+        role_move.move(0, min(15.0, distance))
+
+
 def get_box_mark_loc(region=None):
     image = cv2.cvtColor(np.asarray(pyautogui.screenshot(region=region)), cv2.COLOR_RGB2BGR)
     match_res = cv2.matchTemplate(image, find_box_mark, 3)
@@ -156,6 +184,7 @@ def dig_purple_map_box(sky_height):
     role_action.down_horse()
     pyautogui.scroll(2000)
     time.sleep(0.5)
+    move_to_box_mark_on_ground()
     try_kill_monster()
     width, height = pyautogui.size()
     for i in range(int(width / 2), 0, -80):
@@ -165,7 +194,7 @@ def dig_purple_map_box(sky_height):
                 return True
     pyautogui.scroll(-2000)
     reset_to_sky(sky_height)
-    time.sleep(20)
+    time.sleep(2)
     return False
 
 
