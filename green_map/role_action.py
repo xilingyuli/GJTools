@@ -185,6 +185,8 @@ def prepare_to_find():
 
 def find_boxs():
     count = 0
+    pyautogui.moveTo(1000, 400)
+    pyautogui.scroll(-2000)
     role_move.move_to(cfg.begin_find_loc_1, None, 1, 5)
     role_move.turn_to(cfg.begin_find_direct_1)
     count += role_move.move_map(cfg.find_area_1[0], cfg.find_area_1[1], find_box.find_box_under_footer)
@@ -357,6 +359,7 @@ def reset_look_down():
 def goto_zhilingjing():
     if find_and_click(zhilingjing_btn, 20):
         time.sleep(15)
+    pyautogui.moveRel(0, -100)
 
 
 def send_message_with_loc(message):
