@@ -193,9 +193,11 @@ def dig_purple_map_box(sky_height):
         for j in range(int(height / 2), 200, -80):
             if open_box_of_position(i, j) or open_box_of_position(i, height - j) or open_box_of_position(width - i, j) or open_box_of_position(width - i, height - j):
                 pyautogui.scroll(-2000)
+                try_kill_monster()
                 time.sleep(2)
                 return True
     pyautogui.scroll(-2000)
+    try_kill_monster()
     reset_to_sky(sky_height)
     time.sleep(2)
     return False
@@ -230,6 +232,7 @@ def try_kill_monster():
         return
     try_times = 10
     while max_val >= 0.95 and try_times > 0:
+        pyautogui.press('tab')
         pyautogui.press('~', presses=10, interval=0.5)
         role_move.turn_around(0.5)
         max_val, max_loc = role_action.match_img(kill_monster_tips)
