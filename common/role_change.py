@@ -156,8 +156,12 @@ def try_open_role(region_index, role_index):
     if target_region != role_current_region:
         if not close_regional():
             return False
+    if is_in_game():
+        if not close_role():
+            return False
+    if is_in_login():
         if not open_regional(target_region[0], target_region[1]):
             return False
-    if not open_role(role_index):
+    if not is_in_role_choose() or not open_role(role_index):
         return False
     return True

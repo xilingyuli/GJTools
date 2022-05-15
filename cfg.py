@@ -97,6 +97,9 @@ receive_addr = "786979248@qq.com"
 # 金像间隔
 gold_interval_time = 4 * 60 * 60
 
+# 绿图换角色间隔
+green_interval_time = 1.5 * 60 * 60
+
 # 游戏界面变化检查时间
 check_game_state_step = 5
 
