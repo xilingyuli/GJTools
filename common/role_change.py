@@ -67,6 +67,7 @@ def is_in_login():
 
 
 def close_regional(wait_times=10):
+    global role_current_region
     width, height = pyautogui.size()
     if is_in_role_choose():
         pyautogui.moveTo(width - 15, 15)
@@ -90,6 +91,7 @@ def close_regional(wait_times=10):
 
 
 def open_regional(line, column, wait_times=10):
+    global role_current_region
     width, height = pyautogui.size()
     max_val, max_loc = role_action.match_img(open_game_in_login)
     if max_val < 0.9:
