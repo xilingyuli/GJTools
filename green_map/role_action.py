@@ -145,11 +145,11 @@ def open_map():
         return False
 
 
-def down_horse():
+def down_horse(sleep_time=0.1):
     if cfg.judge_horse and not is_on_horse():
         return
     pyautogui.press('t')
-    time.sleep(0.5)
+    time.sleep(sleep_time)
     pyautogui.press('shift')
     pyautogui.sleep(3)
 
