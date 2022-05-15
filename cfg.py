@@ -121,6 +121,7 @@ goto_changheshan_time = 30
 goto_huaixiucun_time = 30
 goto_huahai_time = 30
 goto_zhongnanshan_time = 30
+goto_baicaogu_time = 30
 
 # 角色在屏幕里中心点
 role_screen_pos = [965, 520]
@@ -133,6 +134,8 @@ sky_speed_min = -30
 sky_speed_max = -10
 sky_move_times = 5
 
+map_debug = False
+
 # 入战处理
 auto_kill_monster = True
 
@@ -140,4 +143,4 @@ auto_kill_monster = True
 auto_dig_gold_symbols = True
 
 # 要开的区
-region_list = [[2, 2, 10], [2, 3, 10]]
+region_list = [[2, 2, 10], [2, 3, 10], [2, 4, 10]]

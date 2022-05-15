@@ -21,6 +21,8 @@ position_list = [[-95, -145, True], [-50, -130, True], [-20, -90, True],
 
 
 def goto_huahai():
+    if cfg.map_debug:
+        return True
     if role_action.find_and_click(big_fly_btn, 20):
         time.sleep(1)
         if role_action.find_and_click(huahai, 20):

@@ -9,25 +9,22 @@ from gold_symbol import role_action_gold
 from green_map import role_action
 
 big_fly_btn = cv2.imread('img/big_fly_btn.png')
-zhongnanshan = cv2.imread('img/map/zhongnanshan.png')
-tongzuotai = cv2.imread('img/map/tongzuotai.png')
-hide_all_mark_check = cv2.imread('img/map/hide_all_mark_check_zhongnanshan.png')
+baicaogu = cv2.imread('img/map/baicaogu.png')
+hide_all_mark_check = cv2.imread('img/map/hide_all_mark_check_huaixiu.png')
 
 
-position_list = [[-451, 450, True], [-285, 460, True], [-225, 490, True],
-                 [-180, 490, True], [-140, 490, True], [-160, 460, True],
-                 [-200, 440, True], [-240, 410, True], [-280, 400, True]]
+position_list = [[-360, 42, False], [-400, 80, True], [-470, 60, True],
+                 [-430, 150, True], [-100, 180, False], [-30, 230, True],
+                 [70, 240, True]]
 
 
-def goto_zhongnanshan():
+def goto_baicaogu():
     if cfg.map_debug:
         return True
     if role_action.find_and_click(big_fly_btn, 20):
         time.sleep(1)
-        role_action.find_and_click(zhongnanshan, 30)
-        time.sleep(1)
-        if role_action.find_and_click(tongzuotai, 10):
-            time.sleep(cfg.goto_zhongnanshan_time)
+        if role_action.find_and_click(baicaogu, 20):
+            time.sleep(cfg.goto_baicaogu_time)
             return True
     return False
 
@@ -44,7 +41,7 @@ def hide_map_mark():
 
 
 def try_dig_map():
-    if goto_zhongnanshan():
+    if goto_baicaogu():
         return role_action_gold.dig_box_on_position_list(position_list, 5, 5, hide_map_mark)
     return False
 

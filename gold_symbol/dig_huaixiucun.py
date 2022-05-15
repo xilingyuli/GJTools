@@ -22,6 +22,8 @@ position_list = [[-25, -175, True], [0, -140, True], [45, -140, True],
 
 
 def goto_huaixiucun():
+    if cfg.map_debug:
+        return True
     if role_action.find_and_click(big_fly_btn, 20):
         time.sleep(1)
         if role_action.find_and_click(huaixiucun, 20):

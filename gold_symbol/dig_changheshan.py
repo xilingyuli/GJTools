@@ -17,6 +17,8 @@ position_list = [[-403, 55, True], [-400, 85, True], [-410, 120, True],
 
 
 def goto_changheshan():
+    if cfg.map_debug:
+        return True
     if role_action.find_and_click(big_fly_btn, 20):
         time.sleep(1)
         if role_action.find_and_click(changheshan, 40):
