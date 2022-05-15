@@ -15,7 +15,7 @@ def load_gold_symbols_record():
         csv_reader = csv.reader(csv_file)
         for row in csv_reader:
             if len(row) >= 5:
-                csv_rows.append([bool(row[0]), int(row[1]), bool(row[2])])
+                csv_rows.append([bool(row[0]), int(row[1]), bool(row[2]), int(row[3]), int(row[4])])
             else:
                 csv_rows.append([False, 0, False, -1, -1])
 
