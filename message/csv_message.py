@@ -15,7 +15,7 @@ def load_gold_symbols_record():
         csv_reader = csv.reader(csv_file)
         for row in csv_reader:
             if len(row) >= 5:
-                csv_rows.append([bool(row[0]), int(row[1]), bool(row[2]), int(row[3]), int(row[4])])
+                csv_rows.append([row[0] == 'True', int(row[1]), row[2] == 'True', int(row[3]), int(row[4])])
             else:
                 csv_rows.append([False, 0, False, -1, -1])
 
@@ -33,8 +33,8 @@ def save_gold_symbols_record():
             csv_writer.writerow(row)
 
 
-def set_gold_symbols(regional, role, has_gold_symbols, open_time, dig_result, region_index, role_index):
-    csv_rows[regional * 10 + role] = [has_gold_symbols, open_time, dig_result, region_index, role_index]
+def set_gold_symbols(regional, role, has_gold_symbols, open_time, dig_result):
+    csv_rows[regional * 10 + role] = [has_gold_symbols, open_time, dig_result, regional, role]
 
 
 def get_gold_symbols(regional, role):
