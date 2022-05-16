@@ -143,7 +143,7 @@ map_debug = False
 auto_kill_monster = True
 
 # 自动挖金像
-auto_dig_gold_symbols = False
+auto_dig_gold_symbols = True
 
 # 要开的区
 region_list = [[2, 2, 10], [2, 3, 10], [2, 4, 10]]
