@@ -184,6 +184,7 @@ def dig_purple_map_box(sky_height):
     if not move_to_box_mark_in_sky():
         return False
     role_action.down_horse(0.5)
+    role_move.turn_around(1)
     pyautogui.scroll(2000)
     time.sleep(0.5)
     move_to_box_mark_on_ground()
