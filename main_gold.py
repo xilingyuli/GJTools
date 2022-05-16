@@ -5,7 +5,7 @@ import pyautogui
 
 import cfg
 from common import role_change
-from gold_symbol import role_action_gold, dig_changheshan, dig_huaixiucun, dig_huahai
+from gold_symbol import role_action_gold, dig_changheshan, dig_huaixiucun, dig_huahai, dig_zhongnanshan
 from green_map import dig_green_map, role_action
 from message import csv_message, file_message, send_message
 
@@ -18,7 +18,7 @@ def do_dig_map(region_count, role_index):
     if region_count == 0:
         return dig_huaixiucun.try_dig_map()
     if region_count == 1:
-        return dig_huaixiucun.try_dig_map()
+        return dig_zhongnanshan.try_dig_map()
     if region_count == 2:
         return dig_huahai.try_dig_map()
     return False
