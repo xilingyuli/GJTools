@@ -116,13 +116,12 @@ def open_regional(line, column, wait_times=10):
     in_game_start = False
     for i in range(0, wait_times):
         time.sleep(cfg.check_game_state_step)
-        if role_action.match_img(game_start):
+        if role_action.find_and_move(game_start, 30):
             in_game_start = True
             break
     if not in_game_start:
         return False
 
-    pyautogui.moveTo(width / 2, height / 2)
     pyautogui.doubleClick()
 
     for i in range(0, wait_times):
