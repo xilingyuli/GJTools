@@ -16,6 +16,7 @@ open_game_in_role = cv2.imread('img/open_game_in_role.png')
 in_game_tip = cv2.imread('img/in_game_tip.png')
 open_game_in_login = cv2.imread('img/open_game_in_login.png')
 login_states = cv2.imread('img/login_states.png')
+game_start = cv2.imread('img/game_start.png')
 first_regional_tip = cv2.imread('img/first_regional_tip.png')
 regional_confirm_btn = cv2.imread('img/regional_confirm_btn.png')
 
@@ -112,11 +113,17 @@ def open_regional(line, column, wait_times=10):
     role_action.find_and_click(regional_confirm_btn, 25)
     role_action.find_and_click(open_game_in_login, 40)
 
-    time.sleep(cfg.open_game_time)
+    in_game_start = False
+    for i in range(0, wait_times):
+        time.sleep(cfg.check_game_state_step)
+        if role_action.match_img(game_start):
+            in_game_start = True
+            break
+    if not in_game_start:
+        return False
+
     pyautogui.moveTo(width / 2, height / 2)
-    pyautogui.leftClick()
-    pyautogui.leftClick()
-    pyautogui.sleep(5)
+    pyautogui.doubleClick()
 
     for i in range(0, wait_times):
         time.sleep(cfg.check_game_state_step)
