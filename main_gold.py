@@ -53,6 +53,7 @@ for i in range(0, 200):
     while target_time > current_time_stamp:
         region_index, role_index = file_message.get_next_dig_green_role()
         if role_change.try_open_role(region_index, role_index):
+            send_message.send_message('Begin dig region ' + str(region_index) + ', role ' + str(role_index))
             file_message.set_dig_green_role(region_index, role_index)
             dig_green_map.dig_green_before_target_time(min(target_time, current_time_stamp + cfg.green_interval_time))
             role_change.close_role()
@@ -60,7 +61,8 @@ for i in range(0, 200):
 
     # 开八卦镜
     gold_box_images.clear()
-    role_change.for_each_role(cfg.region_list, each_role_action)
+    if not role_change.for_each_role(cfg.region_list, each_role_action):
+        send_message.send_message('Gold Result Error')
     csv_message.save_gold_symbols_record()
     send_message.send_message('Gold Result: <br>' + str(csv_message.csv_rows).replace('],', '],<br>'), gold_box_images)
     gold_box_images.clear()
