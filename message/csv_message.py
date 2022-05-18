@@ -1,4 +1,5 @@
 import csv
+import datetime
 import os
 import time
 
@@ -42,9 +43,9 @@ def get_gold_symbols(regional, role):
 
 
 def get_last_gold_symbols_time():
-    last_time = 0
+    last_time = datetime.datetime.now().timestamp()
     for row in csv_rows:
-        if row[1] > last_time:
+        if last_time > row[1] > 0:
             last_time = row[1]
     return last_time
 
