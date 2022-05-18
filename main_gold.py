@@ -63,6 +63,7 @@ for i in range(0, 200):
     gold_box_images.clear()
     if not role_change.for_each_role(cfg.region_list, each_role_action):
         send_message.send_message('Gold Result Error')
+    else:
+        send_message.send_message('Gold Result: <br>' + str(csv_message.csv_rows).replace('],', '],<br>'), gold_box_images)
     csv_message.save_gold_symbols_record()
-    send_message.send_message('Gold Result: <br>' + str(csv_message.csv_rows).replace('],', '],<br>'), gold_box_images)
     gold_box_images.clear()

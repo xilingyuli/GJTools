@@ -15,7 +15,8 @@ hide_all_mark_check = cv2.imread('img/map/hide_all_mark_check_zhongnanshan.png')
 
 
 position_list = [[-451, 450, True], [-285, 460, True], [-225, 490, True],
-                 [-180, 490, True], [-140, 490, True], [-160, 460, True],
+                 [-180, 490, True], [-140, 490, True], [-130, 440, True],
+                 [-120, 400, True], [-140, 430, True], [-160, 460, True],
                  [-200, 440, True], [-240, 410, True], [-280, 400, True]]
 
 
