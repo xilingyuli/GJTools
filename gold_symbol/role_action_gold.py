@@ -20,6 +20,11 @@ hide_all_mark_check = cv2.imread('img/hide_all_mark_check.png')
 find_box_mark = cv2.imread('img/find_box_mark.png')
 find_box_mark_nearby = cv2.imread('img/find_box_mark_nearby.png')
 kill_monster_tips = cv2.imread('img/kill_monster_tips.png')
+auto_fight_btn = cv2.imread('img/auto_fight_btn.png')
+add_fight_npc = cv2.imread('img/add_fight_npc.png')
+fight_npc_1 = cv2.imread('img/fight_npc_1.png')
+fight_npc_select = cv2.imread('img/fight_npc_select.png')
+fight_npc_confirm = cv2.imread('img/fight_npc_confirm.png')
 
 
 re_cmp = re.compile('[1-9]\d*\.*\d*')
@@ -232,10 +237,23 @@ def try_kill_monster():
     max_val, max_loc = role_action.match_img(kill_monster_tips)
     if max_val < 0.95:
         return
+
+    res = False
+    if role_action.find_and_click(auto_fight_btn, 20):
+        time.sleep(2)
+        if role_action.find_and_click(add_fight_npc, 15):
+            if role_action.find_and_click(fight_npc_1, 30):
+                if role_action.find_and_click(fight_npc_select, 15):
+                    time.sleep(0.5)
+                    if role_action.find_and_click(fight_npc_confirm, 15):
+                        res = True
+    if not res:
+        return
+
     try_times = 10
     while max_val >= 0.95 and try_times > 0:
-        pyautogui.press('tab')
-        pyautogui.press('~', presses=10, interval=0.5)
-        role_move.turn_around(0.5)
         max_val, max_loc = role_action.match_img(kill_monster_tips)
+        if max_val < 0.95:
+            return
+        time.sleep(5)
         try_times -= 1

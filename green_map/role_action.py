@@ -9,7 +9,7 @@ import win32con
 import cfg
 from green_map import find_box
 from message import log_message, send_message
-from common import role_loc, role_move
+from common import role_loc, role_move, role_change
 
 map_in_store = cv2.imread('img/map_in_store.png')
 open_map_btn = cv2.imread('img/open_map.png')
@@ -357,10 +357,13 @@ def reset_look_down():
     time.sleep(0.1)
 
 
-def goto_zhilingjing():
+def goto_zhilingjing(wait_times=10):
     if find_and_click(zhilingjing_btn, 20):
         pyautogui.moveRel(0, -100)
-        time.sleep(15)
+        for i in range(0, wait_times):
+            if role_change.is_in_game():
+                return
+            time.sleep(cfg.check_game_state_step)
     else:
         pyautogui.moveRel(0, -100)
 
