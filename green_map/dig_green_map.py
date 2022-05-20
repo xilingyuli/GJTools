@@ -13,6 +13,7 @@ hide_all_mark = cv2.imread('img/hide_all_mark.png')
 hide_all_mark_check = cv2.imread('img/hide_all_mark_check.png')
 huanglangyuan = cv2.imread('img/map/huanglangyuan.png')
 wuyezhen = cv2.imread('img/map/wuyezhen.png')
+big_fly_ball = cv2.imread('img/big_fly_ball.png')
 
 
 def goto_huanglangyuan():
@@ -61,8 +62,14 @@ def dig_green_before_target_time(target_time):
     role_action.close_dialog()
     role_action.goto_zhilingjing()
     if not goto_huanglangyuan():
-        role_action.goto_zhilingjing()
-        return False
+        res = False
+        if role_action.find_and_click(big_fly_ball, 20):
+            time.sleep(1)
+            if goto_huanglangyuan():
+                res = True
+        if not res:
+            role_action.goto_zhilingjing()
+            return False
     init_to_store()
     try_times = 0
     while datetime.datetime.now().timestamp() < target_time:
