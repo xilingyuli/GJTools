@@ -360,6 +360,7 @@ def reset_look_down():
 def goto_zhilingjing(wait_times=10):
     if find_and_click(zhilingjing_btn, 20):
         pyautogui.moveRel(0, -100)
+        time.sleep(15)
         for i in range(0, wait_times):
             if role_change.is_in_game():
                 return
