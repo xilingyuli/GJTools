@@ -62,7 +62,7 @@ for i in range(0, 200):
     # 开八卦镜
     gold_box_images.clear()
     if not role_change.for_each_role(cfg.region_list, each_role_action):
-        send_message.send_message('Gold Result Error')
+        send_message.send_message('Gold Result Error With: <br>' + str(csv_message.csv_rows).replace('],', '],<br>'), gold_box_images)
     else:
         send_message.send_message('Gold Result: <br>' + str(csv_message.csv_rows).replace('],', '],<br>'), gold_box_images)
     csv_message.save_gold_symbols_record()

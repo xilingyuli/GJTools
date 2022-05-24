@@ -95,7 +95,7 @@ receive_addr = "786979248@qq.com"
 
 
 # 金像间隔
-gold_interval_time = 4 * 60 * 60 + 10 * 60
+gold_interval_time = 4 * 60 * 60 + 30 * 60
 
 # 绿图换角色间隔
 green_interval_time = 1 * 60 * 60
