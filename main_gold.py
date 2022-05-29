@@ -16,9 +16,9 @@ time.sleep(3)
 
 def do_dig_map(region_count, role_index):
     if region_count == 0:
-        return dig_huaixiucun.try_dig_map()
+        return dig_zhongnanshan.try_dig_map()
     if region_count == 1:
-        return dig_huaixiucun.try_dig_map()
+        return dig_zhongnanshan.try_dig_map()
     if region_count == 2:
         return dig_zhongnanshan.try_dig_map()
     return False

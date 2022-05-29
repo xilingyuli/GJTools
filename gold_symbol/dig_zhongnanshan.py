@@ -47,7 +47,7 @@ def hide_map_mark():
 
 def try_dig_map():
     if goto_zhongnanshan():
-        return role_action_gold.dig_box_on_position_list(position_list, 3, 5, hide_map_mark)
+        return role_action_gold.dig_box_on_position_list(position_list, 2, 5, hide_map_mark)
     return False
 
 
