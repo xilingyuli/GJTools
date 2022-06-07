@@ -80,7 +80,7 @@ move_distance_y = 3
 
 
 # 速度值
-move_speed = 0.1
+move_speed = 0.11
 move_back_speed = 2.5
 turn_speed = 1.5
 # 转动可识别的最小角度
@@ -98,7 +98,7 @@ receive_addr = "786979248@qq.com"
 gold_interval_time = 4 * 60 * 60 + 10 * 60
 
 # 绿图换角色间隔
-green_interval_time = 1 * 60 * 60
+green_interval_time = 0.8 * 60 * 60
 
 # 游戏界面变化检查时间
 check_game_state_step = 5
