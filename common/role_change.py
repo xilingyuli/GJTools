@@ -120,7 +120,10 @@ def open_regional(line, column, wait_times=10):
             in_game_start = True
             break
     if not in_game_start:
-        return False
+        pyautogui.doubleClick()
+        time.sleep(10)
+        if not is_in_role_choose():
+            return False
 
     pyautogui.doubleClick()
 
